@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/inspectionProfiles/
+.idea/koa-server.iml
+.idea/modules.xml
+.idea/workspace.xml
+
+/node_modules/
