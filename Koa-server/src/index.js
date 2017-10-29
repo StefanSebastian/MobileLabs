@@ -70,6 +70,26 @@ router.get('/tag', ctx => {
   ctx.response.status = 200; // OK
 });
 
+const createTag = async (ctx) => {
+  const tag = ctx.request.body;
+  if (!tag.name) { // validation
+    ctx.response.body = { issue: [{ error: 'Name is missing' }] };
+    ctx.response.status = 400; //  BAD REQUEST
+    return;
+  }
+  tag.id = `${parseInt(lastId) + 1}`;
+  lastId = tag.id;
+  tag.version = 1;
+  tags.push(tag);
+  ctx.response.body = tag;
+  ctx.response.status = 201; // CREATED
+  broadcast({ event: 'created', tag });
+};
+
+router.post('/tag', async (ctx) => {
+  await createTag(ctx);
+});
+
 
 app.use(router.routes());
 app.use(router.allowedMethods());
