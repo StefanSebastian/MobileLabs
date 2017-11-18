@@ -28,16 +28,11 @@ public class TagManager {
         mContext = context;
     }
 
-    public TagLoader getTagLoader(){
-        Log.d(TAG, "getTagLoader");
-        return new TagLoader(mContext, mTagRestClient);
-    }
-
     public void setOnUpdate(OnTagUpdateListener onUpdate){
         mOnUpdate = onUpdate;
     }
 
-    public void setmTagRestClient(TagRestClient tagRestClient){
+    public void setTagRestClient(TagRestClient tagRestClient){
         mTagRestClient = tagRestClient;
     }
 

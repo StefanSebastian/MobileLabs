@@ -22,7 +22,7 @@ public class SpendingApp extends Application {
         Log.d(TAG, "onCreate");
         mTagManager = new TagManager(this);
         mTagRestClient = new TagRestClient(this);
-        mTagManager.setmTagRestClient(mTagRestClient);
+        mTagManager.setTagRestClient(mTagRestClient);
     }
 
     public TagManager getTagManager(){
