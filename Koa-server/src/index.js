@@ -72,6 +72,7 @@ router.get('/tag', ctx => {
 
 const createTag = async (ctx) => {
   const tag = ctx.request.body;
+  console.log(tag);
   if (!tag.name) { // validation
     ctx.response.body = { issue: [{ error: 'Name is missing' }] };
     ctx.response.status = 400; //  BAD REQUEST
