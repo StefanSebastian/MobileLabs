@@ -108,7 +108,7 @@ export class TagRouter extends Router {
       let insertedTag = await this.tagStore.insert(tag);
       tagsLastUpdateMillis = tag.updated;
       this.setTagRes(res, CREATED, insertedTag);
-      this.io.emit('tag-created', insertedTag);
+      this.io.emit('tag/created', insertedTag);
   }
 
   setTagRes(res, status, tag){
