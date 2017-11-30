@@ -1,3 +1,17 @@
+export const action = (type, payload) => ({type, payload});
+
+export function timeout(ms) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => reject(new Error('Timed out')), ms);
+    });
+}
+
+export function sleep(ms) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(ms), ms);
+    });
+}
+
 export function getLogger(tag) {
     return message => console.log(`${tag}`, message);
 }
@@ -24,3 +38,12 @@ export class ResourceError extends ExtendableError {
         this.issue = issue;
     }
 }
+
+export const registerRightAction = (navigator, action) => {
+    let routes = navigator.getCurrentRoutes();
+    if (routes.length > 0) {
+        routes[routes.length - 1].rightAction = action;
+    }
+}
+
+export const errorPayload = (err) => err instanceof ResourceError ? {issue: err.issue}: {issue: [{error: err.message}]};
