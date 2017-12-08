@@ -12,7 +12,7 @@ const AUTH_FAILED = 'auth/failed';
 const USER_LOADED = 'auth/userLoaded';
 
 export const loadUserAndServer = () => async(dispatch) => {
-    log(`loadUser...`);
+    /*log(`loadUser...`);
     try {
         let result = await Promise.all([readUser(), readServer()]);
         let user = result[0], server = result[1];
@@ -23,7 +23,7 @@ export const loadUserAndServer = () => async(dispatch) => {
     } catch (err) {
         log(`loadUser failed`);
         dispatch(action(USER_LOADED, {user: new User('', ''), server: {url: serverUrl}}));
-    }
+    } */
 };
 
 export const login = (server, user) => async(dispatch, getState) => {

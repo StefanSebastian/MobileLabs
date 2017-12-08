@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RetrofitPractice</string>
+    <string name="tag_url">http://10.152.4.96:3000/</string>
+</resources>
