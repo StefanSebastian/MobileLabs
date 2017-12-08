@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidAppReactive</string>
+    <string name="server_url">http://10.152.4.96:3000</string>
+</resources>
