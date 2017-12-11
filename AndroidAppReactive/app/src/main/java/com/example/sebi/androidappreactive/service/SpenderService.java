@@ -7,11 +7,14 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.sebi.androidappreactive.model.Tag;
+import com.example.sebi.androidappreactive.net.TagEvent;
 import com.example.sebi.androidappreactive.net.TagResourceClient;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
 
 /**
  * Created by Sebi on 08-Dec-17.
@@ -30,21 +33,68 @@ public class SpenderService extends Service {
      */
     private ServiceBinder mBinder = new ServiceBinder();
 
+    /*
+    Used to capture updates from websocket ; and disposed when the service is destroyed
+     */
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+    /*
+    Handles local storage
+     */
+    private Realm mRealm;
 
     @Override
     public void onCreate() {
         Log.d(TAG, "onCreate");
         super.onCreate();
-        mTagResourceClient = new TagResourceClient(this);
+        mTagResourceClient = new TagResourceClient(this); // network communication
+        mRealm = Realm.getDefaultInstance(); // local storage
 
+        synchronizeLocalStorage();
+        listenUpdates();
+    }
+
+    /*
+    Gets a stream from resource client ; stream contains a list of tags
+    use realm to add response to local storage
+     */
+    private void synchronizeLocalStorage(){
         mTagResourceClient.find$()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tags -> Log.d(TAG, tags.toString()),
-                        error -> Log.e(TAG, "Failed to fetch tags " + error));
+                .subscribe(
+                        tags -> mRealm.executeTransactionAsync(
+                            realm -> realm.copyToRealmOrUpdate(tags),
+                            () -> Log.d(TAG, "updated tags"),
+                            error -> Log.e(TAG, "failed to persist tags", error)),
+                        error -> Log.e(TAG, "failed to fetch tags", error)
+                );
+    }
 
-        listenUpdates();
+    /*
+    Listen updates from websocket stream
+    sync objects with realm instance
+     */
+    private void listenUpdates(){
+        mCompositeDisposable.add(mTagResourceClient.tagSocket$()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tagEvent -> mRealm.executeTransactionAsync(
+                      realm -> updateOrDelete(realm, tagEvent),
+                        () -> Log.d(TAG, "update tag"),
+                        error -> Log.e(TAG, "failed to persist tag", error)
+                )));
+    }
+
+    /*
+    Updates or deletes a tag, based on event
+     */
+    private void updateOrDelete(Realm realm, TagEvent tagEvent) {
+        if (tagEvent.type == TagEvent.Type.DELETED) {
+            realm.where(Tag.class).equalTo("id", tagEvent.tagDto.getmId()).findAll().deleteAllFromRealm();
+        } else {
+            realm.copyToRealmOrUpdate(tagEvent.tagDto.toTag());
+        }
     }
 
     @Override
@@ -53,17 +103,14 @@ public class SpenderService extends Service {
         super.onDestroy();
 
         mCompositeDisposable.dispose();
-    }
-
-    private void listenUpdates(){
-        mCompositeDisposable.add(mTagResourceClient.tagSocket$()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tagEvent -> Log.d(TAG, tagEvent.toString()))
-                );
+        mRealm.close();
     }
 
 
+
+    /*
+    Used to bind to activities
+     */
     public class ServiceBinder extends Binder {
         public SpenderService getService() {
             return SpenderService.this;

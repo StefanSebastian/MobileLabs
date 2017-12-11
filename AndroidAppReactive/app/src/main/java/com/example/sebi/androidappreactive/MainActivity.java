@@ -7,30 +7,63 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
+import com.example.sebi.androidappreactive.utils.Utils;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SpenderService mSpenderService;
+    private Realm mRealm;
+
+    // temporary
+    private RealmChangeListener mRealmRealmChangeListener = realm -> updateUi();
+    private RealmResults<Tag> mTags;
+    private TextView mText;
+
+    private void updateUi() {
+        mText.setText(Utils.listToString(mTags));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mRealm = Realm.getDefaultInstance();
+
+        mText = (TextView) findViewById(R.id.text);
+        mTags = mRealm.where(Tag.class).findAll();
+        updateUi();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         bindService(new Intent(this, SpenderService.class), this, BIND_AUTO_CREATE);
+
+        mRealm.addChangeListener(mRealmRealmChangeListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         unbindService(this);
+        mRealm.removeAllChangeListeners();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        mRealm.close();
     }
 
     @Override

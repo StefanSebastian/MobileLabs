@@ -44,7 +44,7 @@ public class TagResourceClient {
     public TagResourceClient(Context context){
         mContext = context;
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.server_url) + "/")
+                .baseUrl(context.getString(R.string.server_url))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

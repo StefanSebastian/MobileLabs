@@ -1,11 +1,18 @@
 package com.example.sebi.androidappreactive.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
 /**
  * Created by Sebi on 08-Dec-17.
  */
 
-public class Tag {
+public class Tag extends RealmObject{
+    @PrimaryKey
     private String id;
+
+    @Required
     private String name;
 
     public Tag() {
