@@ -67,7 +67,7 @@ public class TagResourceClient {
      */
     public Observable<TagEvent> tagSocket$(){
         /*
-        Observable with custom subscribe even
+        Observable with custom subscribe event
          */
         return Observable.create(new ObservableOnSubscribe<TagEvent>() {
             private ObservableEmitter<TagEvent> mObservableEmitter;
