@@ -34,4 +34,8 @@ public class UserResourceClient {
     public Observable<TokenDto> login$(User user){
         return mUserResource.login$(user);
     }
+
+    public Observable<TokenDto> signup$(User user) {
+        return mUserResource.signup$(user);
+    }
 }

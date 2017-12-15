@@ -13,4 +13,7 @@ import retrofit2.http.POST;
 public interface UserResource {
     @POST("api/auth/session")
     Observable<TokenDto> login$(@Body User user);
+
+    @POST("api/auth/signup")
+    Observable<TokenDto> signup$(@Body User user);
 }

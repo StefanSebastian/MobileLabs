@@ -24,10 +24,27 @@ import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private Realm mRealm;
-    private UserResourceClient mUserResourceClient;
-    private Disposable mDisposable = new CompositeDisposable();
 
+    /*
+    Local storage
+    used to save user and token
+     */
+    private Realm mRealm;
+
+    /*
+    Network communication
+    Used for login requests
+     */
+    private UserResourceClient mUserResourceClient;
+
+    /*
+    Saves a stream of the login response, disposes it if the app is closed
+     */
+    private CompositeDisposable mDisposable = new CompositeDisposable();
+
+    /*
+    Indicate login progress
+     */
     private ProgressBar mProgressBar;
 
     @Override
@@ -44,6 +61,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.loginProgress);
         mProgressBar.setVisibility(View.GONE);
+
+        Button signup = (Button) findViewById(R.id.signupButton);
+        signup.setOnClickListener(v -> doSignup());
     }
 
     @Override
@@ -56,18 +76,20 @@ public class LoginActivity extends AppCompatActivity {
     private void doLogin(){
         mProgressBar.setVisibility(View.VISIBLE);
 
+        //clear saved user
         mRealm.executeTransactionAsync(
-                realm -> realm.where(User.class).findAll().deleteAllFromRealm(), // clear saved user
+                realm -> realm.where(User.class).findAll().deleteAllFromRealm(),
                 () -> Log.d(TAG, "Clear saved user"),
                 error -> Log.e(TAG, "Error clearing saved user", error));
 
+        //get login data
         String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordField)).getText().toString();
-
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        mDisposable = mUserResourceClient.login$(user)
+
+        mDisposable.add(mUserResourceClient.login$(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -88,6 +110,34 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "error authenticating", error);
                             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
                             toast.show();}
-                    );
+                    ));
+    }
+
+    private void doSignup(){
+        //get login data
+        String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
+        String password = ((EditText) findViewById(R.id.passwordField)).getText().toString();
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        mDisposable.add(mUserResourceClient.signup$(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        token -> {
+                            mProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(this, "Succesful signup", Toast.LENGTH_SHORT).show();
+                            },
+                        error -> {
+                            String msg = "signup error";
+                            if (error instanceof HttpException){
+                                HttpException e = (HttpException) error;
+                                msg = e.response().errorBody().string();
+                            }
+                            Log.e(TAG, "error signing up", error);
+                            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+                            toast.show();}
+                ));
     }
 }
