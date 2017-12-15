@@ -1,5 +1,6 @@
 package com.example.sebi.androidappreactive;
 
+import android.content.Intent;
 import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                         realm -> {
                             user.setToken(token.getToken());
                             realm.copyToRealmOrUpdate(user);
+                            startActivity(new Intent(this, MenuActivity.class));
                         }
                     ),
                         error -> {
