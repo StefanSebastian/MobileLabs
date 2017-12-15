@@ -1,12 +1,10 @@
-package com.example.sebi.androidappreactive.net;
+package com.example.sebi.androidappreactive.net.auth;
 
 import android.content.Context;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.User;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;

@@ -1,4 +1,4 @@
-package com.example.sebi.androidappreactive.net;
+package com.example.sebi.androidappreactive.net.tags;
 
 import com.example.sebi.androidappreactive.model.Tag;
 import com.google.gson.annotations.SerializedName;

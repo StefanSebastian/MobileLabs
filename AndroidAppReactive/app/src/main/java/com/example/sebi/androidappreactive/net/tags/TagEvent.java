@@ -1,4 +1,4 @@
-package com.example.sebi.androidappreactive.net;
+package com.example.sebi.androidappreactive.net.tags;
 
 /**
  * Created by Sebi on 08-Dec-17.

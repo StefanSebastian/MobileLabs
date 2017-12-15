@@ -1,26 +1,23 @@
 package com.example.sebi.androidappreactive;
 
 import android.content.Intent;
-import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sebi.androidappreactive.model.User;
-import com.example.sebi.androidappreactive.net.UserResourceClient;
+import com.example.sebi.androidappreactive.net.auth.UserResourceClient;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
-
-import org.json.JSONObject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -34,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mRealm = Realm.getDefaultInstance();
+
         mUserResourceClient = new UserResourceClient(this);
 
         Button login = (Button) findViewById(R.id.loginButton);
@@ -48,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin(){
+        mRealm.executeTransactionAsync(
+                realm -> realm.where(User.class).findAll().deleteAllFromRealm(), // clear saved user
+                () -> Log.d(TAG, "Clear saved user"),
+                error -> Log.e(TAG, "Error clearing saved user", error));
+
         String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordField)).getText().toString();
 

@@ -17,8 +17,8 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity implements ServiceConnection {
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class TagActivity extends AppCompatActivity implements ServiceConnection {
+    private static final String TAG = TagActivity.class.getSimpleName();
 
     private SpenderService mSpenderService;
     private Realm mRealm;

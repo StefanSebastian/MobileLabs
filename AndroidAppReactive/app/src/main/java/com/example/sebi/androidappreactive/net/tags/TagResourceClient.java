@@ -1,4 +1,4 @@
-package com.example.sebi.androidappreactive.net;
+package com.example.sebi.androidappreactive.net.tags;
 
 import android.content.Context;
 import android.util.Log;
@@ -54,9 +54,9 @@ public class TagResourceClient {
     /*
     A stream that returns a single value = a list ( result of get all )
      */
-    public Single<List<Tag>> find$(){
+    public Single<List<Tag>> find$(String authorization){
         Log.d(TAG, "find$");
-        return mTagResource.find$()
+        return mTagResource.find$(authorization)
                 .flatMap(dtos -> Observable.fromArray(dtos.toArray(new TagDto[dtos.size()])))
                 .map(TagDto::toTag)
                 .toList();

@@ -8,8 +8,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.sebi.androidappreactive.model.Tag;
-import com.example.sebi.androidappreactive.net.TagEvent;
-import com.example.sebi.androidappreactive.net.TagResourceClient;
+import com.example.sebi.androidappreactive.model.User;
+import com.example.sebi.androidappreactive.net.tags.TagEvent;
+import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,7 +51,9 @@ public class SpenderService extends Service {
         mTagResourceClient = new TagResourceClient(this); // network communication
         mRealm = Realm.getDefaultInstance(); // local storage
 
-        synchronizeLocalStorage();
+        User user = mRealm.where(User.class).findFirst();
+
+        synchronizeLocalStorage("Bearer " + user.getToken());
         listenUpdates();
     }
 
@@ -58,8 +61,8 @@ public class SpenderService extends Service {
     Gets a stream from resource client ; stream contains a list of tags
     use realm to add response to local storage
      */
-    private void synchronizeLocalStorage(){
-        mTagResourceClient.find$()
+    private void synchronizeLocalStorage(String authorization){
+        mTagResourceClient.find$(authorization)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

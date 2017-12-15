@@ -1,4 +1,4 @@
-package com.example.sebi.androidappreactive.net;
+package com.example.sebi.androidappreactive.net.auth;
 
 import com.example.sebi.androidappreactive.model.User;
 
