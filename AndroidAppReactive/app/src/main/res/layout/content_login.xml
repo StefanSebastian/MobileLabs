@@ -11,13 +11,15 @@
         android:id="@+id/usernameField"
         android:inputType="text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="username"/>
 
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:hint="password"/>
 
     <Button
         android:text="Login"

@@ -33,12 +33,23 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:retrofit-converters:2.1.0'
+
+    // socket io
     compile 'io.socket:socket.io-client:0.8.2'
+
+    // reactive java
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // gson with retrofit
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // rxjava with retrofit
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
     testCompile 'junit:junit:4.12'
 }

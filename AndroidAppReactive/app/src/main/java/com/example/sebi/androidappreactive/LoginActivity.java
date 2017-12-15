@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
+
         setContentView(R.layout.activity_login);
 
         mRealm = Realm.getDefaultInstance();
@@ -69,8 +71,33 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        Log.d(TAG, "onCreate");
 
         mDisposable.dispose();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d(TAG, "onStart");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d(TAG, "onStop");
     }
 
     private void doLogin(){
