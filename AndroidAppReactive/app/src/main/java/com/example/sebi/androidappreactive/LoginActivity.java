@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sebi.androidappreactive.model.User;
@@ -25,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserResourceClient mUserResourceClient;
     private Disposable mDisposable = new CompositeDisposable();
 
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.loginButton);
         login.setOnClickListener(v -> doLogin());
+
+        mProgressBar = (ProgressBar) findViewById(R.id.loginProgress);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -46,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin(){
+        mProgressBar.setVisibility(View.VISIBLE);
+
         mRealm.executeTransactionAsync(
                 realm -> realm.where(User.class).findAll().deleteAllFromRealm(), // clear saved user
                 () -> Log.d(TAG, "Clear saved user"),
@@ -60,13 +70,15 @@ public class LoginActivity extends AppCompatActivity {
         mDisposable = mUserResourceClient.login$(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(token -> mRealm.executeTransactionAsync(
-                        realm -> {
-                            user.setToken(token.getToken());
-                            realm.copyToRealmOrUpdate(user);
-                            startActivity(new Intent(this, MenuActivity.class));
-                        }
-                    ),
+                .subscribe(
+                        token -> {
+                            mRealm.executeTransactionAsync(
+                                realm -> {
+                                    user.setToken(token.getToken());
+                                    realm.copyToRealmOrUpdate(user);
+                                });
+                            mProgressBar.setVisibility(View.GONE);
+                            startActivity(new Intent(this, MenuActivity.class));},
                         error -> {
                             String msg = "authentication error";
                             if (error instanceof HttpException){
