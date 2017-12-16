@@ -48,13 +48,14 @@ public class SpenderService extends Service {
     public void onCreate() {
         Log.d(TAG, "onCreate");
         super.onCreate();
-        mTagResourceClient = new TagResourceClient(this); // network communication
-        mRealm = Realm.getDefaultInstance(); // local storage
 
+        mRealm = Realm.getDefaultInstance(); // local storage
         User user = mRealm.where(User.class).findFirst();
 
+        mTagResourceClient = new TagResourceClient(this); // network communication
+
         synchronizeLocalStorage("Bearer " + user.getToken());
-        listenUpdates();
+        listenUpdates(user.getUsername());
     }
 
     /*
@@ -81,8 +82,8 @@ public class SpenderService extends Service {
     Listen updates from websocket stream
     sync objects with realm instance
      */
-    private void listenUpdates(){
-        mCompositeDisposable.add(mTagResourceClient.tagSocket$()
+    private void listenUpdates(String username){
+        mCompositeDisposable.add(mTagResourceClient.tagSocket$(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tagEvent -> mRealm.executeTransactionAsync(
@@ -109,6 +110,7 @@ public class SpenderService extends Service {
         super.onDestroy();
 
         mCompositeDisposable.dispose();
+        mTagResourceClient.shutdown();
         mRealm.close();
     }
 

@@ -13,6 +13,7 @@
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-register": "^6.16.3",
+    "collections": "^5.1.1",
     "jsonwebtoken": "^7.1.9",
     "koa": "^2.0.0",
     "koa-bodyparser": "^2.2.0",

@@ -16,6 +16,7 @@ export class TagRouter extends Router {
         super(props);
         this.tagStore = props.tagStore;
         this.io = props.io;
+        this.connections = props.connections;
         this.get('/', async(ctx) => {
             let decoded = getDecodedTokenFromRequest(ctx);
             log(`decoded id ` + decoded._id);
@@ -52,7 +53,7 @@ export class TagRouter extends Router {
 
             tag.user = decoded._id;
             if (tag.name) {
-                await this.createTag(res, tag);
+                await this.createTag(res, tag, decoded.username);
             } else {
                 log('create /- 400 Bad request');
                 setIssueRes(res, BAD_REQUEST, [{error: 'Name is missing'}]);
@@ -112,13 +113,19 @@ export class TagRouter extends Router {
     });
   }
 
-  async createTag(res, tag){
+  async createTag(res, tag, username){
       tag.version = 1;
       tag.updated = Date.now();
       let insertedTag = await this.tagStore.insert(tag);
       tagsLastUpdateMillis = tag.updated;
       this.setTagRes(res, CREATED, insertedTag);
-      this.io.emit('tag/created', insertedTag);
+
+      let clients = this.connections[username];
+      if (clients != undefined){
+          for (let client of clients){
+              client.emit('tag/created', insertedTag);
+          }
+      }
   }
 
   setTagRes(res, status, tag){

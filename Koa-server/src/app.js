@@ -17,6 +17,11 @@ const server = http.createServer(app.callback());
 const io = socketIo(server);
 const log = getLogger('app');
 
+/*
+a map of sockets for clients
+*/
+const connections = {};
+
 app.use(timingLogger);
 app.use(errorHandler);
 app.use(bodyParser());
@@ -34,7 +39,7 @@ log('config protected routes');
 app.use(convert(koaJwt(jwtConfig)));
 const protectedApi = new Router({prefix: apiUrl});
 const tagStore = dataStore({filename: '../store/tags.json', autoload: true});
-protectedApi.use('/tag', new TagRouter({tagStore, io}).routes());
+protectedApi.use('/tag', new TagRouter({tagStore, io, connections}).routes());
 app.use(protectedApi.routes()).use(protectedApi.allowedMethods());
 
 log('config socket io');
@@ -42,6 +47,20 @@ io.on('connection', (socket) => {
     log('client connected');
     socket.on('disconnect', () => {
         log('client disconnected');
+    });
+    socket.on('userIdentification', (data) => {
+        log(data);
+        if (connections[data] == undefined){
+            connections[data] = [];
+        }
+        connections[data].push(socket);
+        log(connections[data].length);
+    });
+    socket.on('userDisconnect', (data) => {
+        var index = connections[data].indexOf(socket);
+        if (index > -1){
+            connections[data].splice(index, 1);
+        }
     });
 });
 

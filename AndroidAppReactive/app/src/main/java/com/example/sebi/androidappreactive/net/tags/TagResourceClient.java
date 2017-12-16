@@ -16,6 +16,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
+import io.realm.Realm;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import retrofit2.Retrofit;
@@ -36,6 +37,7 @@ public class TagResourceClient {
 
     // used to open / close websocket connections
     private Socket mSocket;
+    private String mUsername;
 
     /*
     Constructor
@@ -65,7 +67,8 @@ public class TagResourceClient {
     /*
     Stream of events from the server
      */
-    public Observable<TagEvent> tagSocket$(){
+    public Observable<TagEvent> tagSocket$(String username){
+        mUsername = username;
         /*
         Observable with custom subscribe event
          */
@@ -88,6 +91,7 @@ public class TagResourceClient {
                     mSocket.on("tag/updated", (args) -> onNext(TagEvent.Type.UPDATED, args));
                     mSocket.on("tag/deleted", (args) -> onNext(TagEvent.Type.DELETED, args));
                     mSocket.connect();
+                    mSocket.emit("userIdentification", username);
                 } catch (Exception ex) {
                     Log.e(TAG, "Socket error", ex);
                 }
@@ -99,6 +103,7 @@ public class TagResourceClient {
             private void onNext(TagEvent.Type eventType, Object[] args) {
                 if (mObservableEmitter != null) {
                     if (mObservableEmitter.isDisposed()) {
+                        mSocket.emit("userDisconnect", username);
                         mSocket.disconnect();
                     } else {
                         mObservableEmitter.onNext(new TagEvent(eventType, readTag(args)));
@@ -125,6 +130,7 @@ public class TagResourceClient {
     public void shutdown() {
         Log.d(TAG, "shutdown");
         if (mSocket != null) {
+            mSocket.emit("userDisconnect", mUsername);
             mSocket.disconnect();
         }
     }
