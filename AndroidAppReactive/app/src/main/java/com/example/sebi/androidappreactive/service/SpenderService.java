@@ -67,7 +67,10 @@ public class SpenderService extends Service {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         tags -> mRealm.executeTransactionAsync(
-                            realm -> realm.copyToRealmOrUpdate(tags),
+                            realm -> {
+                                realm.where(Tag.class).findAll().deleteAllFromRealm();
+                                realm.copyToRealmOrUpdate(tags);
+                            },
                             () -> Log.d(TAG, "updated tags"),
                             error -> Log.e(TAG, "failed to persist tags", error)),
                         error -> Log.e(TAG, "failed to fetch tags", error)

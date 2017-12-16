@@ -24,6 +24,20 @@ export function decodeToken(token) {
     return decoded;
 }
 
+/*
+Extracts the authorization header from the request
+get the token
+decodes it and returns the result
+*/
+export function getDecodedTokenFromRequest(ctx) {
+    // turn to string , and cut the Bearer part and the last "
+    let token = JSON.stringify(ctx.request.header.authorization).split(" ")[1];
+    token = token.substring(0, token.length - 1);
+
+    let decoded = decodeToken(token);
+    return decoded;
+}
+
 export class AuthRouter extends Router {
     constructor(args) {
         super(args);

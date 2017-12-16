@@ -47,25 +47,35 @@ io.on('connection', (socket) => {
 
 (async() => {
     log('set some default data');
-    let admin = await userStore.findOne({username: 'a'});
-  if (admin) {
-    log(`admin user was in the store`);
-  } else {
-    admin = await userStore.insert({username: 'a', password: 'a'});
-    log(`admin added ${JSON.stringify(admin)}`);
-  }
-  let tags = await tagStore.find({});
-  if (tags.length > 0) {
-    log(`tag store has ${tags.length} tags`)
-  } else {
-    log(`tag store was empty, adding some tag`)
-    let tag = await tagStore.insert({name: "Food", updated: Date.now(), user: admin._id, version: 1})
-    log(`tag added ${JSON.stringify(tag)}`);
-    let tag2 = await tagStore.insert({name: "Entertainment", updated: Date.now(), user: admin._id, version: 1})
-    log(`tag added ${JSON.stringify(tag)}`);
-    let tag3 = await tagStore.insert({name: "Bills", updated: Date.now(), user: admin._id, version: 1})
-    log(`tag added ${JSON.stringify(tag)}`);
-  }
+    let admin = await userStore.findOne({username: 'user1'});
+    if (admin) {
+        log(`admin user was in the store`);
+    } else {
+        admin = await userStore.insert({username: 'user1', password: 'password'});
+        log(`admin added ${JSON.stringify(admin)}`);
+    }
+
+    let participant = await userStore.findOne({username: 'user2'});
+    if (participant) {
+        log(`test user was in the store`);
+    } else {
+        participant = await userStore.insert({username: 'user2', password: 'password'});
+        log(`test user added ${JSON.stringify(participant)}`);
+    }
+
+
+    let tags = await tagStore.find({});
+    if (tags.length > 0) {
+        log(`tag store has ${tags.length} tags`)
+    } else {
+        log(`tag store was empty, adding some tag`)
+        let tag = await tagStore.insert({name: "Food", updated: Date.now(), user: admin._id, version: 1})
+        log(`tag added ${JSON.stringify(tag)}`);
+        let tag2 = await tagStore.insert({name: "Entertainment", updated: Date.now(), user: admin._id, version: 1})
+        log(`tag added ${JSON.stringify(tag)}`);
+        let tag3 = await tagStore.insert({name: "Bills", updated: Date.now(), user: participant._id, version: 1})
+        log(`tag added ${JSON.stringify(tag)}`);
+    }
 })();
 
 

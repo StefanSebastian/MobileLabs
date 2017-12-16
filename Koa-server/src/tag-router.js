@@ -4,10 +4,12 @@ import {
 } from './utils';
 import Router from 'koa-router';
 import {getLogger} from './utils';
+import {getDecodedTokenFromRequest} from './auth-router';
 
 const log = getLogger('tag');
 
 let tagsLastUpdateMillis = null;
+
 
 export class TagRouter extends Router {
     constructor(props) {
@@ -15,13 +17,16 @@ export class TagRouter extends Router {
         this.tagStore = props.tagStore;
         this.io = props.io;
         this.get('/', async(ctx) => {
+            let decoded = getDecodedTokenFromRequest(ctx);
+            log(`decoded id ` + decoded._id);
+
             let res = ctx.response;
             let lastModifed = ctx.request.get(LAST_MODIFIED);
             if (lastModifed && tagsLastUpdateMillis && tagsLastUpdateMillis <= new Date(lastModifed).getTime()){
                 log('search / - 304 Not Modified (the client can use the cached data)');
                 res.status = NOT_MODIFIED;
             } else {
-                res.body = await this.tagStore.find({});
+                res.body = await this.tagStore.find({user : decoded._id});
                 if (!tagsLastUpdateMillis){
                     tagsLastUpdateMillis = Date.now();
                 }
