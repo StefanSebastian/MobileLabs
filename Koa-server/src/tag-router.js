@@ -34,7 +34,8 @@ export class TagRouter extends Router {
                 log('search / - 200 Ok');
             }
         }).get('/:id', async(ctx) => {
-            let tag = await this.tagStore.findOne({_id: ctx.params.id});
+            let decoded = getDecodedTokenFromRequest(ctx);
+            let tag = await this.tagStore.findOne({_id: ctx.params.id, user: decoded._id});
             let res = ctx.response;
             if (tag) {
                 log('read /:id - 200 Ok');
@@ -44,8 +45,12 @@ export class TagRouter extends Router {
                 setIssueRes(res, NOT_FOUND, [{warning: 'Tag not found'}]);
             }
         }).post('/', async(ctx) => {
+            let decoded = getDecodedTokenFromRequest(ctx);
+
             let tag = ctx.request.body;
             let res = ctx.response;
+
+            tag.user = decoded._id;
             if (tag.name) {
                 await this.createTag(res, tag);
             } else {
