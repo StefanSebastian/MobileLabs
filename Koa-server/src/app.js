@@ -57,9 +57,11 @@ io.on('connection', (socket) => {
         log(connections[data].length);
     });
     socket.on('userDisconnect', (data) => {
-        var index = connections[data].indexOf(socket);
-        if (index > -1){
-            connections[data].splice(index, 1);
+        if (socket != undefined){
+            var index = connections[data].indexOf(socket);
+            if (index > -1){
+                connections[data].splice(index, 1);
+            }
         }
     });
 });

@@ -105,11 +105,33 @@ export class TagRouter extends Router {
             }
     }).del('/:id', async(ctx) => {
         let id = ctx.params.id;
+
+        // find the requested tag
+        let persistedTag = await this.tagStore.findOne({_id: id});
+
+        if (persistedTag == null){
+            setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Invalid id'}]);
+            return;
+        }
+
+        // delete it
         await this.tagStore.remove({_id: id});
-        this.io.emit('tag-deleted', {_id: id})
+        this.io.emit('tag-deleted', persistedTag)
         tagsLastUpdateMillis = Date.now();
-        ctx.response.status = NO_CONTENT;
-        log(`remove /:id - 204 No content (even if the resource was already deleted), or 200 Ok`);
+
+        this.setTagRes(ctx.response, OK, persistedTag);
+
+        log(`remove /:id`);
+
+        // notify clients of deletion
+        let decoded = getDecodedTokenFromRequest(ctx);
+        let username = decoded.username;
+        let clients = this.connections[username];
+        if (clients != undefined){
+            for (let client of clients){
+                client.emit('tag/deleted', persistedTag);
+            }
+        }
     });
   }
 
@@ -120,6 +142,7 @@ export class TagRouter extends Router {
       tagsLastUpdateMillis = tag.updated;
       this.setTagRes(res, CREATED, insertedTag);
 
+      // notify clients of creation
       let clients = this.connections[username];
       if (clients != undefined){
           for (let client of clients){
