@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +26,9 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class TagListActivity extends AppCompatActivity implements ServiceConnection {
     private static final String TAG = TagListActivity.class.getSimpleName();
 
@@ -32,16 +37,22 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     private RealmChangeListener mRealmRealmChangeListener = realm -> updateUi();
     private RealmResults<Tag> mTags;
 
+    // list view
     private RecyclerView mRecyclerView;
     private ProgressBar mContentLoadingView;
+
+    // add view
+    private ProgressBar mAddLoadingView;
+    private Button mAddTagButton;
+    private EditText mTagName;
 
     /*
     Modifies the list to be displayed
     called for every change in the realm
      */
     private void updateUi() {
-        mContentLoadingView.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mContentLoadingView.setVisibility(GONE);
+        mRecyclerView.setVisibility(VISIBLE);
 
         mRecyclerView.setAdapter(new TagRecyclerViewAdapter(mTags));
     }
@@ -55,8 +66,15 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
         mContentLoadingView = findViewById(R.id.tag_list_content_loading);
         mRecyclerView = findViewById(R.id.tag_list);
 
+        // add view
+        mAddLoadingView = findViewById(R.id.tagAddProgress);
+        mAddLoadingView.setVisibility(GONE);
+        mAddTagButton = findViewById(R.id.tagAddButton);
+        mAddTagButton.setOnClickListener(v -> addTag());
+        mTagName = findViewById(R.id.tagAddNameField);
+
         // loading is set to visible
-        mContentLoadingView.setVisibility(View.VISIBLE);
+        mContentLoadingView.setVisibility(VISIBLE);
 
         // get realm and the initial values for the tags
         mRealm = Realm.getDefaultInstance();
@@ -86,6 +104,23 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
         super.onDestroy();
 
         mRealm.close();
+    }
+
+
+    /*
+    Tag add
+     */
+    private void addTag(){
+        mAddLoadingView.setVisibility(VISIBLE);
+        mTagName.setVisibility(GONE);
+        mAddTagButton.setVisibility(GONE);
+
+        String tagName = mTagName.getText().toString();
+        Log.d(TAG, "This should add " + tagName);
+
+        mAddLoadingView.setVisibility(View.GONE);
+        mTagName.setVisibility(VISIBLE);
+        mAddTagButton.setVisibility(VISIBLE);
     }
 
     /*
