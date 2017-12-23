@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <service android:name=".service.SpenderService" />
 
-        <activity android:name=".TagActivity">
+        <activity android:name=".TagListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuActivity" />

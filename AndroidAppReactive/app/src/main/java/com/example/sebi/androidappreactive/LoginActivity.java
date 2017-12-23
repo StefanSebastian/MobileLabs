@@ -136,11 +136,15 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Log.e(TAG, "error authenticating", error);
                             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-                            toast.show();}
+                            toast.show();
+                            mProgressBar.setVisibility(View.GONE);
+                            }
                     ));
     }
 
     private void doSignup(){
+        mProgressBar.setVisibility(View.VISIBLE);
+
         //get login data
         String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordField)).getText().toString();
@@ -164,7 +168,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Log.e(TAG, "error signing up", error);
                             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-                            toast.show();}
+                            toast.show();
+                            mProgressBar.setVisibility(View.GONE);
+                            }
                 ));
     }
 }

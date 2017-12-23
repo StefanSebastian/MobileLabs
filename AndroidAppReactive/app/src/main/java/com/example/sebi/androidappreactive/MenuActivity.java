@@ -17,6 +17,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openTagMenu(){
-        startActivity(new Intent(this, TagActivity.class));
+        startActivity(new Intent(this, TagListActivity.class));
     }
 }
