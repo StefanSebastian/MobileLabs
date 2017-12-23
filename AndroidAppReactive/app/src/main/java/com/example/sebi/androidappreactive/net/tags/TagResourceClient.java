@@ -53,6 +53,11 @@ public class TagResourceClient {
         mTagResource = retrofit.create(TagResource.class);
     }
 
+    public Observable<TagDto> add$(String authorization, TagDto tagDto){
+        Log.d(TAG, "add$");
+        return mTagResource.add$(authorization, tagDto);
+    }
+
     /*
     A stream that returns a single value = a list ( result of get all )
      */

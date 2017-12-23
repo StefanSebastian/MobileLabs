@@ -1,5 +1,6 @@
 package com.example.sebi.androidappreactive;
 
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +19,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sebi.androidappreactive.model.Tag;
+import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.service.SpenderService;
+import com.example.sebi.androidappreactive.utils.Popups;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -45,6 +52,12 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     private ProgressBar mAddLoadingView;
     private Button mAddTagButton;
     private EditText mTagName;
+
+    // service
+    private SpenderService mSpenderService;
+
+    // disposing of network calls
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     /*
     Modifies the list to be displayed
@@ -102,8 +115,8 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     @Override
     protected void onDestroy(){
         super.onDestroy();
-
         mRealm.close();
+        mDisposable.dispose();
     }
 
 
@@ -111,17 +124,47 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     Tag add
      */
     private void addTag(){
-        mAddLoadingView.setVisibility(VISIBLE);
-        mTagName.setVisibility(GONE);
-        mAddTagButton.setVisibility(GONE);
+        setAddMenuVisibility(false);
 
         String tagName = mTagName.getText().toString();
-        Log.d(TAG, "This should add " + tagName);
+        Log.d(TAG, "Adding " + tagName);
 
-        mAddLoadingView.setVisibility(View.GONE);
-        mTagName.setVisibility(VISIBLE);
-        mAddTagButton.setVisibility(VISIBLE);
+        if (mSpenderService == null){
+            Popups.displayError("Service not connected", this);
+        } else {
+            Tag tag = new Tag();
+            tag.setName(tagName);
+            mDisposable.add(
+                    mSpenderService.addTag(tag)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                tagDto -> {
+                                    Popups.displayNotification("Successful add", this);
+                                },
+                                error -> {
+                                    Popups.displayError(error.getMessage(), this);
+                                }
+                    )
+            );
+
+        }
+
+        setAddMenuVisibility(true);
     }
+
+    private void setAddMenuVisibility(Boolean visible){
+        if (visible){
+            mAddLoadingView.setVisibility(View.GONE);
+            mTagName.setVisibility(VISIBLE);
+            mAddTagButton.setVisibility(VISIBLE);
+        } else {
+            mAddLoadingView.setVisibility(VISIBLE);
+            mTagName.setVisibility(GONE);
+            mAddTagButton.setVisibility(GONE);
+        }
+    }
+
 
     /*
     Service binding methods
@@ -130,11 +173,13 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     @Override
     public void onServiceConnected(ComponentName name, IBinder binder) {
         Log.d(TAG, "onServiceConnected");
+        mSpenderService = ((SpenderService.ServiceBinder) binder).getService();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
         Log.d(TAG, "onServiceDisconnected");
+        mSpenderService = null;
     }
 
     /*

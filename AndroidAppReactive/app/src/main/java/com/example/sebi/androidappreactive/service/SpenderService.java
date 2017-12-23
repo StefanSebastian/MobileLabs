@@ -9,9 +9,11 @@ import android.util.Log;
 
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
+import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagEvent;
 import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -40,6 +42,11 @@ public class SpenderService extends Service {
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     /*
+    String containing user authorization token
+     */
+    private String mAuthorization;
+
+    /*
     Handles local storage
      */
     private Realm mRealm;
@@ -54,6 +61,7 @@ public class SpenderService extends Service {
 
         mTagResourceClient = new TagResourceClient(this); // network communication
 
+        mAuthorization = "Bearer " + user.getToken();
         synchronizeLocalStorage("Bearer " + user.getToken());
         listenUpdates(user.getUsername());
     }
@@ -104,6 +112,15 @@ public class SpenderService extends Service {
         }
     }
 
+    /*
+    Adds a tag and returns a stream with the result
+     */
+    public Observable<TagDto> addTag(Tag tag){
+        TagDto tagDto = new TagDto();
+        tagDto.setmName(tag.getName());
+        return mTagResourceClient.add$(mAuthorization, tagDto);
+    }
+
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
@@ -113,7 +130,6 @@ public class SpenderService extends Service {
         mTagResourceClient.shutdown();
         mRealm.close();
     }
-
 
 
     /*
