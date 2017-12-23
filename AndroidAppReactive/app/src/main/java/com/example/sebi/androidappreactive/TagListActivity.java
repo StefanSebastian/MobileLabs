@@ -1,6 +1,7 @@
 package com.example.sebi.androidappreactive;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -126,6 +127,8 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
 
         /*
         When binding a view holder with data, set the corresponding text
+
+        also sets on click listener the opening of detail menu
          */
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
@@ -133,7 +136,10 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
             holder.mNameView.setText(mValues.get(position).getName());
 
             holder.mView.setOnClickListener(v -> {
-
+                Context context = v.getContext();
+                Intent intent = new Intent(context, TagDetailActivity.class);
+                intent.putExtra(TagDetailFragment.TAG_ID, holder.mItem.getId());
+                context.startActivity(intent);
             });
         }
 

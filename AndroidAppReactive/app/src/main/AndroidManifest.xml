@@ -20,6 +20,12 @@
                 android:value=".MenuActivity" />
         </activity>
 
+        <activity android:name=".TagDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TagListActivity" />
+        </activity>
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
