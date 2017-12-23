@@ -6,9 +6,11 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Sebi on 08-Dec-17.
@@ -20,4 +22,7 @@ public interface TagResource {
 
     @POST("api/tag")
     Observable<TagDto> add$(@Header("Authorization") String authorization, @Body TagDto tag);
+
+    @DELETE("api/tag/{id}")
+    Observable<TagDto> delete$(@Header("Authorization") String authorization, @Path("id") String id);
 }

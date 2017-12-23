@@ -58,6 +58,11 @@ public class TagResourceClient {
         return mTagResource.add$(authorization, tagDto);
     }
 
+    public Observable<TagDto> delete$(String authorization, String id){
+        Log.d(TAG, "delete$");
+        return mTagResource.delete$(authorization, id);
+    }
+
     /*
     A stream that returns a single value = a list ( result of get all )
      */
