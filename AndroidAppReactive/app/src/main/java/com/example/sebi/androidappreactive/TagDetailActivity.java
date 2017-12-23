@@ -17,6 +17,8 @@ public class TagDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_detail);
 
+        setTitle("Tag detail");
+
         // add the new fragment
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity

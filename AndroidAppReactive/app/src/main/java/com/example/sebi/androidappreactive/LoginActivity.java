@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button signup = (Button) findViewById(R.id.signupButton);
         signup.setOnClickListener(v -> doSignup());
+
+        setTitle("Login");
     }
 
     @Override

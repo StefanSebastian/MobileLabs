@@ -93,6 +93,8 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
         mRealm = Realm.getDefaultInstance();
         mTags = mRealm.where(Tag.class).findAll();
 
+        setTitle("Tag list");
+
         // update UI
         updateUi();
     }

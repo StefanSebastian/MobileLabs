@@ -12,6 +12,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        setTitle("Main menu");
+
         Button tagView = (Button) findViewById(R.id.tagMenuButton);
         tagView.setOnClickListener(v -> openTagMenu());
     }
