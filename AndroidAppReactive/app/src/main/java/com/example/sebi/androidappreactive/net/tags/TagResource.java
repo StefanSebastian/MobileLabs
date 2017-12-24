@@ -10,6 +10,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -25,4 +26,7 @@ public interface TagResource {
 
     @DELETE("api/tag/{id}")
     Observable<TagDto> delete$(@Header("Authorization") String authorization, @Path("id") String id);
+
+    @PUT("api/tag/{id}")
+    Observable<TagDto> update$(@Header("Authorization") String authorization, @Path("id") String id, @Body TagDto tag);
 }

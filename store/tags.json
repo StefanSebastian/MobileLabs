@@ -3,18 +3,16 @@
 {"name":"Test tag 22222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513431494495,"_id":"0zzRSdLTfMA1oMYx"}
 {"name":"tag9","user":"X47al0hXhzhbRqKO","version":1,"updated":1514032757769,"_id":"3CGkBFYxJ7ChByJV"}
 {"name":"tag6","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031389627,"_id":"3bLfuRicoGkhsV04"}
-{"name":"tag3","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514041161975,"_id":"3giTnJRwEtBMymVt"}
-{"name":"tag2","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514041033054,"_id":"3tWqxzfEqTe1Fils"}
 {"name":"tag11","user":"X47al0hXhzhbRqKO","version":1,"updated":1514032789948,"_id":"4GL1UZxsyTsFwRKP"}
 {"name":"Test tag 22222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513431467486,"_id":"4LxpFvbEn9adj58q"}
 {"name":"tag13","user":"X47al0hXhzhbRqKO","version":1,"updated":1514033068711,"_id":"5a5n7W6Zq8gPpT2d"}
 {"name":"tag8","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031394443,"_id":"5v0BveIMgnDsIhQB"}
 {"name":"Test tag 222","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429503376,"_id":"ATgz6QpLNWsWmg7a"}
 {"name":"Test tag 222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513429633986,"_id":"GxZgFTL7DuDUhweE"}
-{"name":"tag5","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514043398783,"_id":"HgvCHXjDkR4sBnHx"}
 {"name":"tag2","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031379723,"_id":"K4g4eSI6vvnTUDtK"}
 {"name":"Test tag 222","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429614193,"_id":"Kh3gPs0SMJJWhg2U"}
 {"name":"Test tag 222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513430680903,"_id":"LGPMHGHsBlpTHXjH"}
+{"id":"PjWFrzQMfS05datZ","name":"tagupdt2","version":12,"user":"WT1VWRiOzB5wQBWq","updated":1514107915109,"_id":"PjWFrzQMfS05datZ"}
 {"name":"tag3","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031382087,"_id":"Qj0oBuCGNDWAluNd"}
 {"name":"Bills","updated":1513423967809,"user":"BCQ7uasTK3zi78CW","version":1,"_id":"RWWiiqB2nGXvu88f"}
 {"name":"adaugat din aplicatie","user":"X47al0hXhzhbRqKO","version":1,"updated":1514040931524,"_id":"RWm4spMWk2WpVTT5"}
@@ -26,6 +24,8 @@
 {"name":"Test tag 2","user":"X47al0hXhzhbRqKO","version":1,"updated":1513429396734,"_id":"iKbKTJcU3KvI65hd"}
 {"name":"Test tag 222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513430672907,"_id":"kcjZhB96t9CpXbPg"}
 {"name":"Test tag 22222","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513431504381,"_id":"l0G82lbSZbQTVV5n"}
+{"name":"tag2","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049137007,"_id":"lvl6mN6foJomYGcH"}
+{"id":"m5PgZvqwNKEDm3el","name":"tag5","version":112,"user":"WT1VWRiOzB5wQBWq","updated":1514105438060,"_id":"m5PgZvqwNKEDm3el"}
 {"name":"Test tag 222","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429563206,"_id":"mFaG0Gd93FeHk2SP"}
 {"name":"test","user":"BCQ7uasTK3zi78CW","version":1,"updated":1514041009950,"_id":"oFNjxFbuML7enL0q"}
 {"name":"tag5","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031386861,"_id":"qtIzHZRqP0DZIeWW"}
@@ -33,19 +33,13 @@
 {"name":"Test tag","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513425212695,"_id":"u7N4T32y3uJWpr0i"}
 {"name":"Test tag 2","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429312572,"_id":"xUY0iJMtKmMvrxpt"}
 {"name":"tag4","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031384320,"_id":"zWYNjbqdDDCjZWpR"}
-{"$$deleted":true,"_id":"3giTnJRwEtBMymVt"}
-{"$$deleted":true,"_id":"3tWqxzfEqTe1Fils"}
-{"$$deleted":true,"_id":"HgvCHXjDkR4sBnHx"}
-{"name":"tag2","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049137007,"_id":"lvl6mN6foJomYGcH"}
-{"name":"tag3","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049140099,"_id":"ANqYxOoMYjK6AcEe"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049157293,"_id":"mFuP9L1W9F10WWzd"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049165704,"_id":"nCwRSZhUglOH2ORc"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049167517,"_id":"0GKPMa8PTPC0zwWv"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049167686,"_id":"ZZBmRPZv441DUFCm"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049167854,"_id":"m5PgZvqwNKEDm3el"}
-{"name":"tag4","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514049168006,"_id":"WyanLUdhbg6J1jJP"}
-{"$$deleted":true,"_id":"WyanLUdhbg6J1jJP"}
-{"$$deleted":true,"_id":"0GKPMa8PTPC0zwWv"}
-{"$$deleted":true,"_id":"nCwRSZhUglOH2ORc"}
-{"$$deleted":true,"_id":"ZZBmRPZv441DUFCm"}
-{"$$deleted":true,"_id":"mFuP9L1W9F10WWzd"}
+{"id":"PjWFrzQMfS05datZ","name":"tagupdt3","version":13,"user":"WT1VWRiOzB5wQBWq","updated":1514107950710,"_id":"PjWFrzQMfS05datZ"}
+{"_id":"PjWFrzQMfS05datZ","name":"tagupdt3","version":14,"user":"WT1VWRiOzB5wQBWq","updated":1514108006340}
+{"_id":"PjWFrzQMfS05datZ","name":"tagupdt4","version":15,"user":"WT1VWRiOzB5wQBWq","updated":1514108071256}
+{"_id":"PjWFrzQMfS05datZ","name":"tagupdt5","version":16,"user":"WT1VWRiOzB5wQBWq","updated":1514108143418}
+{"_id":"PjWFrzQMfS05datZ","name":"tagupdt6","version":17,"user":"WT1VWRiOzB5wQBWq","updated":1514108146650}
+{"_id":"PjWFrzQMfS05datZ","name":"tagupdt6","version":18,"user":"WT1VWRiOzB5wQBWq","updated":1514108150729}
+{"$$deleted":true,"_id":"PjWFrzQMfS05datZ"}
+{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou","version":2,"user":"X47al0hXhzhbRqKO","updated":1514108175305}
+{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou2","version":3,"user":"X47al0hXhzhbRqKO","updated":1514108181341}
+{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou3","version":4,"user":"X47al0hXhzhbRqKO","updated":1514108183644}

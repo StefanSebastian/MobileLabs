@@ -7,7 +7,7 @@
     tools:context=".TagDetailActivity"
     tools:showIn="@layout/activity_tag_detail">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/tag_name"
         style="?android:attr/textAppearanceLarge"
@@ -17,9 +17,15 @@
         tools:context="com.example.sebi.androidappreactive.TagDetailFragment" />
 
     <Button
-    android:text="Delete"
-    android:id="@+id/tagDeleteButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+        android:text="Delete"
+        android:id="@+id/tagDeleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="Update"
+        android:id="@+id/tagUpdateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

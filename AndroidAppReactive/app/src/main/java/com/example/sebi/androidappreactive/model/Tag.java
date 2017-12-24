@@ -15,12 +15,16 @@ public class Tag extends RealmObject{
     @Required
     private String name;
 
+    @Required
+    private Integer version;
+
     public Tag() {
     }
 
-    public Tag(String id, String name) {
+    public Tag(String id, String name, Integer version) {
         this.id = id;
         this.name = name;
+        this.version = version;
     }
 
     public String getId() {
@@ -39,11 +43,20 @@ public class Tag extends RealmObject{
         this.name = name;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "Tag{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", version=" + version +
                 '}';
     }
 }

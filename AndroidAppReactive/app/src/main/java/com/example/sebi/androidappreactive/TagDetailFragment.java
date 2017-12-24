@@ -14,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.auth.UserResourceClient;
+import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
@@ -54,8 +56,9 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
      */
     private Tag mTag;
 
-    private TextView mTagTextView;
+    private EditText mTagTextView;
     private Button mDeleteButton;
+    private Button mUpdateButton;
 
     private Realm mRealm;
 
@@ -100,6 +103,8 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
         mTagTextView = rootView.findViewById(R.id.tag_name);
         mDeleteButton = rootView.findViewById(R.id.tagDeleteButton);
         mDeleteButton.setOnClickListener(v -> deleteTag());
+        mUpdateButton = rootView.findViewById(R.id.tagUpdateButton);
+        mUpdateButton.setOnClickListener(v -> updateTag());
 
         fillTagDetails();
 
@@ -110,6 +115,14 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
     public void onStop() {
         Log.d(TAG, "onStop");
         super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+        super.onDestroy();
+
+        mDisposable.dispose();
     }
 
     private void fillTagDetails(){
@@ -129,6 +142,27 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
                     tag -> {
                         Popups.displayNotification("Success", getContext());
                         startActivity(new Intent(getContext(), TagListActivity.class));
+                    },
+                    error -> {
+                        Popups.displayError(error.getMessage(), getContext());
+                    }
+            )
+        );
+    }
+
+    private void updateTag(){
+        Log.d(TAG, "updating tag");
+        String newName = mTagTextView.getText().toString();
+        TagDto tagDto = new TagDto(mTag.getId(), newName, mTag.getVersion());
+        mDisposable.add(mTagResourceClient.update$(mAuthorization, mTag.getId(), tagDto)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    tagDtoReceived -> {
+                        Popups.displayNotification("Success", getContext());
+                        // update the local reference
+                        Log.d(TAG, "Received as update response " + tagDtoReceived.toString());
+                        mTag = tagDtoReceived.toTag();
                     },
                     error -> {
                         Popups.displayError(error.getMessage(), getContext());

@@ -14,12 +14,16 @@ public class TagDto {
     @SerializedName("name")
     private String mName;
 
+    @SerializedName("version")
+    private Integer mVersion;
+
     public TagDto() {
     }
 
-    public TagDto(String mId, String mName) {
+    public TagDto(String mId, String mName, Integer mVersion) {
         this.mId = mId;
         this.mName = mName;
+        this.mVersion = mVersion;
     }
 
     public String getmId() {
@@ -38,11 +42,20 @@ public class TagDto {
         this.mName = mName;
     }
 
+    public Integer getmVersion() {
+        return mVersion;
+    }
+
+    public void setmVersion(Integer mVersion) {
+        this.mVersion = mVersion;
+    }
+
     @Override
     public String toString() {
         return "TagDto{" +
                 "mId='" + mId + '\'' +
                 ", mName='" + mName + '\'' +
+                ", mVersion=" + mVersion +
                 '}';
     }
 
@@ -50,6 +63,9 @@ public class TagDto {
         Tag tag = new Tag();
         tag.setId(mId);
         tag.setName(mName);
+        tag.setVersion(mVersion);
         return tag;
     }
+
+
 }

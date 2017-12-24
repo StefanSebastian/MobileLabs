@@ -63,6 +63,11 @@ public class TagResourceClient {
         return mTagResource.delete$(authorization, id);
     }
 
+    public Observable<TagDto> update$(String authorization, String id, TagDto tag){
+        Log.d(TAG, "update$");
+        return mTagResource.update$(authorization, id, tag);
+    }
+
     /*
     A stream that returns a single value = a list ( result of get all )
      */
@@ -129,6 +134,7 @@ public class TagResourceClient {
             TagDto tagDto = new TagDto();
             tagDto.setmId(obj.getString("_id"));
             tagDto.setmName(obj.getString("name"));
+            tagDto.setmVersion(obj.getInt("version"));
             Log.d(TAG, String.format("readTag %s", obj.toString()));
             return tagDto;
         } catch (JSONException e) {
