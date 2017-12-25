@@ -9,6 +9,7 @@ import dataStore from 'nedb-promise';
 import {getLogger, timingLogger, errorHandler} from './utils';
 import {TagRouter} from './tag-router';
 import {AuthRouter, jwtConfig} from './auth-router';
+import {ExpenseRouter} from './expense-router';
 import koaJwt from 'koa-jwt';
 
 const app = new Koa();
@@ -40,7 +41,12 @@ app.use(convert(koaJwt(jwtConfig)));
 const protectedApi = new Router({prefix: apiUrl});
 const tagStore = dataStore({filename: '../store/tags.json', autoload: true});
 protectedApi.use('/tag', new TagRouter({tagStore, io, connections}).routes());
+
+const expenseStore = dataStore({filename: '../store/expenses.json', autoload: true});
+protectedApi.use('/expense', new ExpenseRouter({expenseStore, io, connections}).routes());
+
 app.use(protectedApi.routes()).use(protectedApi.allowedMethods());
+
 
 log('config socket io');
 io.on('connection', (socket) => {

@@ -1,4 +1,4 @@
-{"name":"Test tag","user":"X47al0hXhzhbRqKO","version":1,"updated":1513429334196,"_id":"0O9ghvQGAEprm5nh"}
+{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou3","version":4,"user":"X47al0hXhzhbRqKO","updated":1514108183644}
 {"name":"Test tag 2","user":"X47al0hXhzhbRqKO","version":1,"updated":1513429381666,"_id":"0kUbhBlQauI6TB0w"}
 {"name":"Test tag 22222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513431494495,"_id":"0zzRSdLTfMA1oMYx"}
 {"name":"tag9","user":"X47al0hXhzhbRqKO","version":1,"updated":1514032757769,"_id":"3CGkBFYxJ7ChByJV"}
@@ -12,7 +12,6 @@
 {"name":"tag2","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031379723,"_id":"K4g4eSI6vvnTUDtK"}
 {"name":"Test tag 222","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429614193,"_id":"Kh3gPs0SMJJWhg2U"}
 {"name":"Test tag 222","user":"X47al0hXhzhbRqKO","version":1,"updated":1513430680903,"_id":"LGPMHGHsBlpTHXjH"}
-{"id":"PjWFrzQMfS05datZ","name":"tagupdt2","version":12,"user":"WT1VWRiOzB5wQBWq","updated":1514107915109,"_id":"PjWFrzQMfS05datZ"}
 {"name":"tag3","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031382087,"_id":"Qj0oBuCGNDWAluNd"}
 {"name":"Bills","updated":1513423967809,"user":"BCQ7uasTK3zi78CW","version":1,"_id":"RWWiiqB2nGXvu88f"}
 {"name":"adaugat din aplicatie","user":"X47al0hXhzhbRqKO","version":1,"updated":1514040931524,"_id":"RWm4spMWk2WpVTT5"}
@@ -33,13 +32,3 @@
 {"name":"Test tag","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513425212695,"_id":"u7N4T32y3uJWpr0i"}
 {"name":"Test tag 2","user":"BCQ7uasTK3zi78CW","version":1,"updated":1513429312572,"_id":"xUY0iJMtKmMvrxpt"}
 {"name":"tag4","user":"X47al0hXhzhbRqKO","version":1,"updated":1514031384320,"_id":"zWYNjbqdDDCjZWpR"}
-{"id":"PjWFrzQMfS05datZ","name":"tagupdt3","version":13,"user":"WT1VWRiOzB5wQBWq","updated":1514107950710,"_id":"PjWFrzQMfS05datZ"}
-{"_id":"PjWFrzQMfS05datZ","name":"tagupdt3","version":14,"user":"WT1VWRiOzB5wQBWq","updated":1514108006340}
-{"_id":"PjWFrzQMfS05datZ","name":"tagupdt4","version":15,"user":"WT1VWRiOzB5wQBWq","updated":1514108071256}
-{"_id":"PjWFrzQMfS05datZ","name":"tagupdt5","version":16,"user":"WT1VWRiOzB5wQBWq","updated":1514108143418}
-{"_id":"PjWFrzQMfS05datZ","name":"tagupdt6","version":17,"user":"WT1VWRiOzB5wQBWq","updated":1514108146650}
-{"_id":"PjWFrzQMfS05datZ","name":"tagupdt6","version":18,"user":"WT1VWRiOzB5wQBWq","updated":1514108150729}
-{"$$deleted":true,"_id":"PjWFrzQMfS05datZ"}
-{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou","version":2,"user":"X47al0hXhzhbRqKO","updated":1514108175305}
-{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou2","version":3,"user":"X47al0hXhzhbRqKO","updated":1514108181341}
-{"_id":"0O9ghvQGAEprm5nh","name":"Nume nou3","version":4,"user":"X47al0hXhzhbRqKO","updated":1514108183644}

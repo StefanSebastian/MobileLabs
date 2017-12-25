@@ -123,7 +123,6 @@ export class TagRouter extends Router {
 
         // delete it
         await this.tagStore.remove({_id: id});
-        this.io.emit('tag-deleted', persistedTag)
         tagsLastUpdateMillis = Date.now();
 
         this.setTagRes(ctx.response, OK, persistedTag);
