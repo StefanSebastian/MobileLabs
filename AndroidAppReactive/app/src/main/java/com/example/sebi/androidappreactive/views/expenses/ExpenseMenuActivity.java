@@ -1,5 +1,6 @@
 package com.example.sebi.androidappreactive.views.expenses;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.sebi.androidappreactive.R;
+import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
 public class ExpenseMenuActivity extends AppCompatActivity {
 
@@ -27,7 +29,7 @@ public class ExpenseMenuActivity extends AppCompatActivity {
     }
 
     private void openAddExpenseView(){
-
+        startActivity(new Intent(this, AddExpenseActivity.class));
     }
 
     private void openListExpensesView(){

@@ -7,8 +7,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
+import com.example.sebi.androidappreactive.net.expenses.ExpenseDto;
+import com.example.sebi.androidappreactive.net.expenses.ExpenseEvent;
+import com.example.sebi.androidappreactive.net.expenses.ExpenseResourceClient;
 import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagEvent;
 import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
@@ -30,6 +34,7 @@ public class SpenderService extends Service {
     REST client
      */
     private TagResourceClient mTagResourceClient;
+    private ExpenseResourceClient mExpenseResourceClient;
 
     /*
     Used to bind to activities
@@ -60,6 +65,7 @@ public class SpenderService extends Service {
         User user = mRealm.where(User.class).findFirst();
 
         mTagResourceClient = new TagResourceClient(this); // network communication
+        mExpenseResourceClient = new ExpenseResourceClient(this);
 
         mAuthorization = "Bearer " + user.getToken();
         synchronizeLocalStorage("Bearer " + user.getToken());
@@ -84,6 +90,8 @@ public class SpenderService extends Service {
                             error -> Log.e(TAG, "failed to persist tags", error)),
                         error -> Log.e(TAG, "failed to fetch tags", error)
                 );
+
+
     }
 
     /*
@@ -99,6 +107,15 @@ public class SpenderService extends Service {
                         () -> Log.d(TAG, "update tag"),
                         error -> Log.e(TAG, "failed to persist tag", error)
                 )));
+        mCompositeDisposable.add(mExpenseResourceClient.expenseSocket$(username)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(expenseEvent -> mRealm.executeTransactionAsync(
+                realm -> updateOrDelete(realm, expenseEvent),
+                () -> Log.d(TAG, "update expense"),
+                error -> Log.e(TAG, "failed to persist expense", error)
+            ))
+        );
     }
 
     /*
@@ -112,6 +129,14 @@ public class SpenderService extends Service {
         }
     }
 
+    private void updateOrDelete(Realm realm, ExpenseEvent expenseEvent){
+        if (expenseEvent.type == ExpenseEvent.Type.DELETED){
+            realm.where(Expense.class).equalTo("id", expenseEvent.expenseDto.getmId()).findAll().deleteAllFromRealm();
+        } else {
+            realm.copyToRealmOrUpdate(expenseEvent.expenseDto.toExpense());
+        }
+    }
+
     /*
     Adds a tag and returns a stream with the result
      */
@@ -119,6 +144,16 @@ public class SpenderService extends Service {
         TagDto tagDto = new TagDto();
         tagDto.setmName(tag.getName());
         return mTagResourceClient.add$(mAuthorization, tagDto);
+    }
+
+    public Observable<ExpenseDto> addExpense(Expense expense){
+        ExpenseDto expenseDto = new ExpenseDto();
+        expenseDto.setmAmount(expense.getAmount());
+        expenseDto.setmTagName(expense.getTagName());
+        expenseDto.setmTimestamp(expense.getTimestamp());
+        expenseDto.setmInfo(expense.getInfo());
+        expenseDto.setmId(expense.getId());
+        return mExpenseResourceClient.add$(mAuthorization, expenseDto);
     }
 
     @Override

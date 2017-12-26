@@ -39,7 +39,7 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
 
     // local storage
     private Realm mRealm;
-    private RealmChangeListener mRealmRealmChangeListener = realm -> updateUi();
+    private RealmChangeListener mRealmChangeListener = realm -> updateUi();
     private RealmResults<Tag> mTags;
 
     // list view
@@ -100,9 +100,11 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart");
+        Log.d(TAG, "binding service");
         bindService(new Intent(this, SpenderService.class), this, BIND_AUTO_CREATE);
 
-        mRealm.addChangeListener(mRealmRealmChangeListener);
+        mRealm.addChangeListener(mRealmChangeListener);
     }
 
     @Override
