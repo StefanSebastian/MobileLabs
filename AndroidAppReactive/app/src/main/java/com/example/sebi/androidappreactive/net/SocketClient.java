@@ -133,8 +133,10 @@ public class SocketClient {
             expenseDto.setmTagName(obj.getString("tagName"));
             expenseDto.setmAmount(obj.getDouble("amount"));
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            Date date = formatter.parse(obj.getString("timestamp").replaceAll("Z$", "+0000"));
+           // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+           // Date date = formatter.parse(obj.getString("timestamp").replaceAll("Z$", "+0000"));
+            SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+            Date date = format.parse(obj.getString("timestamp"));
 
             expenseDto.setmTimestamp(date);
 

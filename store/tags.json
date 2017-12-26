@@ -53,3 +53,7 @@
 {"$$deleted":true,"_id":"f9n1sUh07D2Zwchj"}
 {"name":"wtf","user":"m1turWPPpgrvYaaZ","version":1,"updated":1514312411229,"_id":"6JVnIq1tIb8a2dHp"}
 {"$$deleted":true,"_id":"6JVnIq1tIb8a2dHp"}
+{"name":"test","amount":"10","tagName":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514313763594,"_id":"ZLtlVM0Y8LcJAkde"}
+{"name":"test","tagName":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514313764342,"_id":"3SQzQlaIdQAS16oe"}
+{"name":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514313767248,"_id":"6YC1d8qrHjPPJlYn"}
+{"name":"test2","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514313776309,"_id":"3Vq2Ct1mbboiIKBq"}
