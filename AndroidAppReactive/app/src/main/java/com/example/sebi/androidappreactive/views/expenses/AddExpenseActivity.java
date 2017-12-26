@@ -51,7 +51,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
     private void updateUi() {
         if (mTags.size() == 0){
             Popups.displayNotification("You must insert some tags first", this);
-            startActivity(new Intent(this, TagListActivity.class));
+            startActivity(new Intent(this, ExpenseMenuActivity.class));
         }
 
         String[] tags = new String[mTags.size()];

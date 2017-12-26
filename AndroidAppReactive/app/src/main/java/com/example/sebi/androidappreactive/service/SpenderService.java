@@ -10,6 +10,8 @@ import android.util.Log;
 import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
+import com.example.sebi.androidappreactive.net.SocketClient;
+import com.example.sebi.androidappreactive.net.SpenderEvent;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseDto;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseEvent;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseResourceClient;
@@ -22,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+import io.socket.client.Socket;
 
 /**
  * Created by Sebi on 08-Dec-17.
@@ -56,6 +59,8 @@ public class SpenderService extends Service {
      */
     private Realm mRealm;
 
+    private SocketClient mSocketClient;
+
     @Override
     public void onCreate() {
         Log.d(TAG, "onCreate");
@@ -66,6 +71,8 @@ public class SpenderService extends Service {
 
         mTagResourceClient = new TagResourceClient(this); // network communication
         mExpenseResourceClient = new ExpenseResourceClient(this);
+
+        mSocketClient = new SocketClient(this);
 
         mAuthorization = "Bearer " + user.getToken();
         synchronizeLocalStorage("Bearer " + user.getToken());
@@ -94,28 +101,24 @@ public class SpenderService extends Service {
 
     }
 
-    /*
-    Listen updates from websocket stream
-    sync objects with realm instance
-     */
     private void listenUpdates(String username){
-        mCompositeDisposable.add(mTagResourceClient.tagSocket$(username)
+        mCompositeDisposable.add(
+                mSocketClient.eventSocket$(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tagEvent -> mRealm.executeTransactionAsync(
-                      realm -> updateOrDelete(realm, tagEvent),
+                .subscribe(spenderEvent -> mRealm.executeTransactionAsync(
+                        realm -> updateOrDelete(realm, spenderEvent),
                         () -> Log.d(TAG, "update tag"),
                         error -> Log.e(TAG, "failed to persist tag", error)
                 )));
-        mCompositeDisposable.add(mExpenseResourceClient.expenseSocket$(username)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(expenseEvent -> mRealm.executeTransactionAsync(
-                realm -> updateOrDelete(realm, expenseEvent),
-                () -> Log.d(TAG, "update expense"),
-                error -> Log.e(TAG, "failed to persist expense", error)
-            ))
-        );
+    }
+
+    private void updateOrDelete(Realm realm, SpenderEvent spenderEvent){
+        if (spenderEvent.type == SpenderEvent.Type.TAG){
+            updateOrDelete(realm, spenderEvent.tagEvent);
+        } else {
+            updateOrDelete(realm, spenderEvent.expenseEvent);
+        }
     }
 
     /*
@@ -162,7 +165,8 @@ public class SpenderService extends Service {
         super.onDestroy();
 
         mCompositeDisposable.dispose();
-        mTagResourceClient.shutdown();
+        mSocketClient.shutdown();
+
         mRealm.close();
     }
 
