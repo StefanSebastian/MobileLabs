@@ -22,6 +22,7 @@ import com.example.sebi.androidappreactive.utils.Popups;
 import com.example.sebi.androidappreactive.utils.Utils;
 import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -127,6 +128,11 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         String amount = mAmountField.getText().toString();
         String tagName = mTagDropdown.getSelectedItem().toString();
 
+        if (!validateExpense(info, amount, tagName)){
+            setLoadingView(false);
+            return;
+        }
+
         Log.d(TAG, "Adding " + info + " " + amount + " " + tagName);
 
         if (mSpenderService == null){
@@ -155,6 +161,31 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         }
 
         setLoadingView(false);
+    }
+
+    private boolean validateExpense(String info, String amount, String name){
+        if (info.length() == 0){
+            Popups.displayError("You must complete the info field", this);
+            return false;
+        }
+        if (amount.length() == 0){
+            Popups.displayError("You must complete the amount field", this);
+            return false;
+        }
+
+        try {
+            Double.parseDouble(amount);
+        } catch (NumberFormatException e){
+            Popups.displayError(amount + " is not a valid number", this);
+            return false;
+        }
+
+        if (name.length() == 0){
+            Popups.displayError("You must select a tag", this);
+            return false;
+        }
+
+        return true;
     }
 
     @Override
