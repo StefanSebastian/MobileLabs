@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TagDetailActivity"
+    tools:context=".views.tags.TagDetailActivity"
     tools:showIn="@layout/activity_tag_detail">
 
     <EditText xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        tools:context="com.example.sebi.androidappreactive.TagDetailFragment" />
+        tools:context="com.example.sebi.androidappreactive.views.tags.TagDetailFragment" />
 
     <Button
         android:text="Delete"

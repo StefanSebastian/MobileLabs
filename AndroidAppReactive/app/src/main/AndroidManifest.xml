@@ -14,29 +14,34 @@
         android:theme="@style/AppTheme">
         <service android:name=".service.SpenderService" />
 
-        <activity android:name=".TagListActivity">
+        <activity android:name=".views.tags.TagListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MenuActivity" />
+                android:value=".views.MenuActivity" />
         </activity>
-
-        <activity android:name=".TagDetailActivity">
+        <activity android:name=".views.tags.TagDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TagListActivity" />
+                android:value=".views.tags.TagListActivity" />
         </activity>
-
-        <activity android:name=".LoginActivity">
+        <activity android:name=".views.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MenuActivity">
+        <activity android:name=".views.MenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
+                android:value=".views.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".views.expenses.ExpenseMenuActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.MenuActivity" />
         </activity>
     </application>
 

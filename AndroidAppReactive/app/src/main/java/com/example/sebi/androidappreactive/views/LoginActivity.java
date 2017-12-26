@@ -1,4 +1,4 @@
-package com.example.sebi.androidappreactive;
+package com.example.sebi.androidappreactive.views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.auth.UserResourceClient;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();

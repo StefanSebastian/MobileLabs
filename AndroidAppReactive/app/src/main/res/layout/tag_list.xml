@@ -10,5 +10,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.sebi.androidappreactive.TagListActivity"
+    tools:context="com.example.sebi.androidappreactive.views.tags.TagListActivity"
     tools:listitem="@layout/tag_list_content" />

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sebi.androidappreactive.MenuActivity">
+    tools:context="com.example.sebi.androidappreactive.views.MenuActivity">
 
     <include layout="@layout/content_main"/>
 

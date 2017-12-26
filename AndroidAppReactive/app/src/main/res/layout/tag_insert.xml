@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".TagListActivity"
+    tools:context=".views.tags.TagListActivity"
     tools:showIn="@layout/activity_tag_list">
 
     <EditText

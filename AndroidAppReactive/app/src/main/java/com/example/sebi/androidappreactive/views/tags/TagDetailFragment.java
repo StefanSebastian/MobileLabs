@@ -1,7 +1,6 @@
-package com.example.sebi.androidappreactive;
+package com.example.sebi.androidappreactive.views.tags;
 
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,14 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
-import com.example.sebi.androidappreactive.net.auth.UserResourceClient;
 import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
-import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

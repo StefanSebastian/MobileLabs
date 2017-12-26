@@ -1,9 +1,13 @@
-package com.example.sebi.androidappreactive;
+package com.example.sebi.androidappreactive.views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.sebi.androidappreactive.R;
+import com.example.sebi.androidappreactive.views.expenses.ExpenseMenuActivity;
+import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -14,11 +18,16 @@ public class MenuActivity extends AppCompatActivity {
 
         setTitle("Main menu");
 
-        Button tagView = (Button) findViewById(R.id.tagMenuButton);
+        Button tagView = findViewById(R.id.tagMenuButton);
         tagView.setOnClickListener(v -> openTagMenu());
+
+        Button expenseMenu = findViewById(R.id.expenseMenuButton);
+        expenseMenu.setOnClickListener(v -> openExpenseMenu());
     }
 
     private void openTagMenu(){
         startActivity(new Intent(this, TagListActivity.class));
     }
+
+    private void openExpenseMenu() {startActivity(new Intent(this, ExpenseMenuActivity.class));}
 }

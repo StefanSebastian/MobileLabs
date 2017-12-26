@@ -1,7 +1,9 @@
-package com.example.sebi.androidappreactive;
+package com.example.sebi.androidappreactive.views.tags;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.sebi.androidappreactive.R;
 
 /**
  * Created by Sebi on 23-Dec-17.

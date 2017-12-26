@@ -1,6 +1,5 @@
-package com.example.sebi.androidappreactive;
+package com.example.sebi.androidappreactive.views.tags;
 
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +17,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Tag;
-import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
