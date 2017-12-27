@@ -53,6 +53,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.expenses.ExpenseMenuActivity" />
         </activity>
+        <activity android:name=".views.expenses.ExpenseDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.expenses.ListExpenseActivity" />
+        </activity>
     </application>
 
 </manifest>

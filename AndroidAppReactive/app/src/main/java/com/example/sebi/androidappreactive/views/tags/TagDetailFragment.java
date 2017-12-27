@@ -41,9 +41,6 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
      */
     private TagResourceClient mTagResourceClient;
 
-    /*
-    Saves a stream of the login response, disposes it if the app is closed
-     */
     private CompositeDisposable mDisposable = new CompositeDisposable();
 
     private String mAuthorization;

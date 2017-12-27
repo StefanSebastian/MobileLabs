@@ -1,6 +1,7 @@
 package com.example.sebi.androidappreactive.views.expenses;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Utils;
+import com.example.sebi.androidappreactive.views.tags.TagDetailActivity;
+import com.example.sebi.androidappreactive.views.tags.TagDetailFragment;
 import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
 import java.text.SimpleDateFormat;
@@ -154,6 +157,13 @@ public class ListExpenseActivity extends AppCompatActivity implements ServiceCon
 
             String dateText = Utils.getDefaultDateFormat().format(mValues.get(position).getTimestamp());
             holder.mExpenseTimestamp.setText(dateText);
+
+            holder.mView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, ExpenseDetailActivity.class);
+                intent.putExtra(ExpenseDetailActivity.EXPENSE_ID, holder.mItem.getId());
+                context.startActivity(intent);
+            });
         }
 
         /*

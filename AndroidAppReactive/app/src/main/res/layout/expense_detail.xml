@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.expenses.ExpenseDetailActivity">
+
+    <TextView
+        android:id="@+id/expenseInfoDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:id="@+id/expenseAmountDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:id="@+id/expenseTagNameDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:id="@+id/expenseTimestampDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"/>
+
+    <Button
+        android:text="Delete"
+        android:id="@+id/expenseDeleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
