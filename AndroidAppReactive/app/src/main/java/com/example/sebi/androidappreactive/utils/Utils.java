@@ -1,9 +1,13 @@
 package com.example.sebi.androidappreactive.utils;
 
+
+import android.graphics.Color;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 /**
@@ -29,5 +33,10 @@ public class Utils {
 
     public static DateFormat getDefaultDateFormat(){
         return new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+    }
+
+    public static int getRandomColor(){
+        Random rnd = new Random();
+        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 }
