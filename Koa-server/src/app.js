@@ -43,7 +43,7 @@ const tagStore = dataStore({filename: '../store/tags.json', autoload: true});
 protectedApi.use('/tag', new TagRouter({tagStore, io, connections}).routes());
 
 const expenseStore = dataStore({filename: '../store/expenses.json', autoload: true});
-protectedApi.use('/expense', new ExpenseRouter({expenseStore, io, connections}).routes());
+protectedApi.use('/expense', new ExpenseRouter({expenseStore, tagStore, io, connections}).routes());
 
 app.use(protectedApi.routes()).use(protectedApi.allowedMethods());
 

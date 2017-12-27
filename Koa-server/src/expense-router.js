@@ -14,6 +14,7 @@ export class ExpenseRouter extends Router {
     constructor(props) {
         super(props);
         this.expenseStore = props.expenseStore;
+        this.tagStore = props.tagStore;
         this.io = props.io;
         this.connections = props.connections;
         this.get('/', async(ctx) => {
@@ -50,12 +51,18 @@ export class ExpenseRouter extends Router {
             let expense = ctx.request.body;
             let res = ctx.response;
 
-            expense.user = decoded._id;
-            if (expense.tagName && expense.timestamp && expense.info && expense.amount) {
-                await this.createExpense(res, expense, decoded.username);
+            let tag = await this.tagStore.findOne({name: expense.tagName, user: decoded._id});
+            if (tag){
+                expense.user = decoded._id;
+                if (expense.tagName && expense.timestamp && expense.info && expense.amount) {
+                    await this.createExpense(res, expense, decoded.username);
+                } else {
+                    log('create /- 400 Bad request');
+                    setIssueRes(res, BAD_REQUEST, [{error: 'All fields must be completed'}]);
+                }
             } else {
-                log('create /- 400 Bad request');
-                setIssueRes(res, BAD_REQUEST, [{error: 'All fields must be completed'}]);
+                    log('invalid tag for user');
+                    setIssueRes(res, NOT_FOUND, [{warning: 'Tag was not found for user'}]);
             }
         }).put('/:id', async(ctx) => {
             // get the new expense from body
