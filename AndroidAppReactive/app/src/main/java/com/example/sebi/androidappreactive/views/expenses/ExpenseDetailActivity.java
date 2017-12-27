@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Expense;
+import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseResourceClient;
 import com.example.sebi.androidappreactive.utils.Popups;
@@ -87,10 +88,12 @@ public class ExpenseDetailActivity extends AppCompatActivity {
             Expense expense = mRealm.where(Expense.class).equalTo("id", expenseId).findFirst();
             mExpense = expense;
 
+            Tag tag = mRealm.where(Tag.class).equalTo("id", expense.getTagId()).findFirst();
+
             mInfo.setText(expense.getInfo());
             mAmount.setText("Amount: " + expense.getAmount().toString());
             mTimestamp.setText(Utils.getDefaultDateFormat().format(expense.getTimestamp()));
-            mTagName.setText("Category: " + expense.getTagName());
+            mTagName.setText("Category: " + tag.getName());
         }
 
 

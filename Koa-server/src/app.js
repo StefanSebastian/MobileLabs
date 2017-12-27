@@ -40,9 +40,8 @@ log('config protected routes');
 app.use(convert(koaJwt(jwtConfig)));
 const protectedApi = new Router({prefix: apiUrl});
 const tagStore = dataStore({filename: '../store/tags.json', autoload: true});
-protectedApi.use('/tag', new TagRouter({tagStore, io, connections}).routes());
-
 const expenseStore = dataStore({filename: '../store/expenses.json', autoload: true});
+protectedApi.use('/tag', new TagRouter({tagStore, expenseStore, io, connections}).routes());
 protectedApi.use('/expense', new ExpenseRouter({expenseStore, tagStore, io, connections}).routes());
 
 app.use(protectedApi.routes()).use(protectedApi.allowedMethods());
@@ -63,7 +62,7 @@ io.on('connection', (socket) => {
         log(connections[data].length);
     });
     socket.on('userDisconnect', (data) => {
-        if (socket != undefined){
+        if (socket != undefined && connections[data] != undefined){
             var index = connections[data].indexOf(socket);
             if (index > -1){
                 connections[data].splice(index, 1);

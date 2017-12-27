@@ -15,6 +15,7 @@ export class TagRouter extends Router {
     constructor(props) {
         super(props);
         this.tagStore = props.tagStore;
+        this.expenseStore = props.expenseStore;
         this.io = props.io;
         this.connections = props.connections;
         this.get('/', async(ctx) => {
@@ -102,6 +103,7 @@ export class TagRouter extends Router {
                     tagsLastUpdateMillis = tag.updated;
                     if (updatedCount == 1) {
                       this.setTagRes(res, OK, tag); //200 Ok
+                      tag._id = id;
                       this.notifyClients(decoded.username, 'tag/updated', tag);
                     } else {
                       log(`update /:id - 405 Method Not Allowed (resource no longer exists)`);
@@ -128,6 +130,14 @@ export class TagRouter extends Router {
         // delete it
         await this.tagStore.remove({_id: id});
         tagsLastUpdateMillis = Date.now();
+
+        // remove related expenses
+        var expenses = await this.expenseStore.find({tagId:id});
+        for (var i = 0; i < expenses.length; i++){
+            var expense = expenses[i];
+            await this.expenseStore.remove({_id:expense._id});
+            this.notifyClients(decoded.username, 'expense/deleted', expense);
+        }
 
         this.setTagRes(ctx.response, OK, persistedTag);
 

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Expense;
+import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Utils;
 
@@ -68,21 +69,21 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         // collect data
         Map<String, Double> amountPerCategory = new HashMap<>();
         for (Expense expense : mExpenses){
-            if (amountPerCategory.containsKey(expense.getTagName())){
-                Double current = amountPerCategory.get(expense.getTagName());
-                amountPerCategory.put(expense.getTagName(), current + expense.getAmount());
+            if (amountPerCategory.containsKey(expense.getTagId())){
+                Double current = amountPerCategory.get(expense.getTagId());
+                amountPerCategory.put(expense.getTagId(), current + expense.getAmount());
             } else {
-                amountPerCategory.put(expense.getTagName(), expense.getAmount());
+                amountPerCategory.put(expense.getTagId(), expense.getAmount());
             }
         }
-
-        Log.d(TAG, amountPerCategory.toString());
 
         for (String key : amountPerCategory.keySet()){
             Double value = amountPerCategory.get(key);
 
+            Tag tag = mRealm.where(Tag.class).equalTo("id", key).findFirst();
+
             float valueFl = (float)((double)value);
-            mPieChart.addPieSlice(new PieModel(key, valueFl, Utils.getRandomColor()));
+            mPieChart.addPieSlice(new PieModel(tag.getName(), valueFl, Utils.getRandomColor()));
         }
 
         mPieChart.startAnimation();

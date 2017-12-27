@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.reactivex.Observable;
@@ -131,7 +130,7 @@ public class SocketClient {
             ExpenseDto expenseDto = new ExpenseDto();
             expenseDto.setmId(obj.getString("_id"));
             expenseDto.setmInfo(obj.getString("info"));
-            expenseDto.setmTagName(obj.getString("tagName"));
+            expenseDto.setmTagId(obj.getString("tagId"));
             expenseDto.setmAmount(obj.getDouble("amount"));
 
             Date date = Utils.getDefaultDateFormat().parse(obj.getString("timestamp"));

@@ -51,10 +51,10 @@ export class ExpenseRouter extends Router {
             let expense = ctx.request.body;
             let res = ctx.response;
 
-            let tag = await this.tagStore.findOne({name: expense.tagName, user: decoded._id});
+            let tag = await this.tagStore.findOne({_id: expense.tagId, user: decoded._id});
             if (tag){
                 expense.user = decoded._id;
-                if (expense.tagName && expense.timestamp && expense.info && expense.amount) {
+                if (expense.tagId && expense.timestamp && expense.info && expense.amount) {
                     await this.createExpense(res, expense, decoded.username);
                 } else {
                     log('create /- 400 Bad request');
@@ -83,7 +83,7 @@ export class ExpenseRouter extends Router {
                 return;
             }
             // new expense should be valid
-            if (!expense.tagName || !expense.timestamp || !expense.info || !expense.amount) {
+            if (!expense.tagId || !expense.timestamp || !expense.info || !expense.amount) {
                 log('update /:id - 400 Bad Request');
                 setIssueRes(res, BAD_REQUEST, [{error: 'All fields must be completed'}]);
                 return;

@@ -24,7 +24,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
-import io.socket.client.Socket;
 
 /**
  * Created by Sebi on 08-Dec-17.
@@ -166,7 +165,7 @@ public class SpenderService extends Service {
     public Observable<ExpenseDto> addExpense(Expense expense){
         ExpenseDto expenseDto = new ExpenseDto();
         expenseDto.setmAmount(expense.getAmount());
-        expenseDto.setmTagName(expense.getTagName());
+        expenseDto.setmTagId(expense.getTagId());
         expenseDto.setmTimestamp(expense.getTimestamp());
         expenseDto.setmInfo(expense.getInfo());
         expenseDto.setmId(expense.getId());

@@ -19,11 +19,7 @@ import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
-import com.example.sebi.androidappreactive.utils.Utils;
-import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,8 +28,6 @@ import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
-
-import static android.view.View.GONE;
 
 /**
  * Created by Sebi on 26-Dec-17.
@@ -128,12 +122,15 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         String amount = mAmountField.getText().toString();
         String tagName = mTagDropdown.getSelectedItem().toString();
 
-        if (!validateExpense(info, amount, tagName)){
+        Tag tag = mRealm.where(Tag.class).equalTo("name", tagName).findFirst();
+        String tagId = tag.getId();
+
+        if (!validateExpense(info, amount, tagId)){
             setLoadingView(false);
             return;
         }
 
-        Log.d(TAG, "Adding " + info + " " + amount + " " + tagName);
+        Log.d(TAG, "Adding " + info + " " + amount + " " + tagId);
 
         if (mSpenderService == null){
             Popups.displayError("Service not connected", this);
@@ -142,7 +139,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
             expense.setTimestamp(new Date());
             expense.setInfo(info);
             expense.setAmount(Double.parseDouble(amount));
-            expense.setTagName(tagName);
+            expense.setTagId(tagId);
 
             mDisposable.add(
                     mSpenderService.addExpense(expense)
@@ -163,7 +160,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         setLoadingView(false);
     }
 
-    private boolean validateExpense(String info, String amount, String name){
+    private boolean validateExpense(String info, String amount, String id){
         if (info.length() == 0){
             Popups.displayError("You must complete the info field", this);
             return false;
@@ -180,7 +177,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
             return false;
         }
 
-        if (name.length() == 0){
+        if (id == null || id.length() == 0){
             Popups.displayError("You must select a tag", this);
             return false;
         }

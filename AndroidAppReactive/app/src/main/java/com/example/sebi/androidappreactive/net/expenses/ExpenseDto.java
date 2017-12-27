@@ -22,8 +22,8 @@ public class ExpenseDto {
     @SerializedName("amount")
     private Double mAmount;
 
-    @SerializedName("tagName")
-    private String mTagName;
+    @SerializedName("tagId")
+    private String mTagId;
 
     public ExpenseDto() {
     }
@@ -60,12 +60,12 @@ public class ExpenseDto {
         this.mAmount = mAmount;
     }
 
-    public String getmTagName() {
-        return mTagName;
+    public String getmTagId() {
+        return mTagId;
     }
 
-    public void setmTagName(String mTagName) {
-        this.mTagName = mTagName;
+    public void setmTagId(String mTagId) {
+        this.mTagId = mTagId;
     }
 
     public Expense toExpense(){
@@ -73,7 +73,7 @@ public class ExpenseDto {
         expense.setAmount(mAmount);
         expense.setId(mId);
         expense.setInfo(mInfo);
-        expense.setTagName(mTagName);
+        expense.setTagId(mTagId);
         expense.setTimestamp(mTimestamp);
         return expense;
     }

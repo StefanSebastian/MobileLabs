@@ -24,7 +24,7 @@ public class Expense extends RealmObject{
     private Double amount;
 
     @Required
-    private String tagName;
+    private String tagId;
 
     public Expense() {
     }
@@ -34,7 +34,7 @@ public class Expense extends RealmObject{
         this.info = info;
         this.timestamp = timestamp;
         this.amount = amount;
-        this.tagName = tagName;
+        this.tagId = tagName;
     }
 
     public String getId() {
@@ -69,12 +69,12 @@ public class Expense extends RealmObject{
         this.amount = amount;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getTagId() {
+        return tagId;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Expense extends RealmObject{
                 ", info='" + info + '\'' +
                 ", timestamp=" + timestamp +
                 ", amount=" + amount +
-                ", tagName='" + tagName + '\'' +
+                ", tagId='" + tagId + '\'' +
                 '}';
     }
 }

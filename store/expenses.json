@@ -1,14 +1,7 @@
-{"amount":12,"info":"wdee","tagName":"test","timestamp":"Dec 27, 2017 13:20:14","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514373610524,"_id":"1TlyUEjC6xe5TANZ"}
-{"amount":3,"info":"dfd","tagName":"test","timestamp":"Dec 27, 2017 13:00:42","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514372438598,"_id":"VO9KDX7baknPpnpu"}
-{"$$deleted":true,"_id":"VO9KDX7baknPpnpu"}
-{"$$deleted":true,"_id":"1TlyUEjC6xe5TANZ"}
-{"amount":2,"info":"edfd","tagName":"test","timestamp":"Dec 27, 2017 13:58:28","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514375904427,"_id":"6gImFuMh6RZXHgOD"}
-{"amount":2,"info":"edfd","tagName":"test","timestamp":"Dec 27, 2017 13:58:28","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514375905020,"_id":"DV6J9Aow5FSXRfhN"}
-{"amount":2,"info":"edfd","tagName":"test","timestamp":"Dec 27, 2017 13:58:29","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514375905915,"_id":"bH4E2nMeutLyHxE2"}
-{"$$deleted":true,"_id":"6gImFuMh6RZXHgOD"}
-{"$$deleted":true,"_id":"bH4E2nMeutLyHxE2"}
-{"amount":16,"info":"dggf","tagName":"test1","timestamp":"Dec 27, 2017 14:19:29","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514377165531,"_id":"sy6plduau8DO8cF1"}
-{"amount":5,"info":"dfgg","tagName":"test","timestamp":"Dec 27, 2017 15:00:05","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514379601631,"_id":"8pArw5sJMlN565hp"}
-{"info":"info","timestamp":"Jan 21, 2017 20:20:20","amount":"10","tagName":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514380340617,"_id":"yOUzkN5nQdm87k6s"}
-{"info":"info","timestamp":"Jan 21, 2017 20:20:20","amount":"10","tagName":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514380621184,"_id":"RwUxX5fCvTKgirFc"}
-{"info":"info","timestamp":"Jan 21, 2017 20:20:20","amount":"10","tagName":"test","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514380632801,"_id":"BaKzemSsZUck9GlE"}
+{"amount":11,"info":"sdff","tagId":"fh6hCekZ6MF7L4k9","timestamp":"Dec 27, 2017 15:46:24","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382380551,"_id":"AsljWWFH1lDaqyGv"}
+{"$$deleted":true,"_id":"AsljWWFH1lDaqyGv"}
+{"amount":5,"info":"Butter","tagId":"4V8zPC2YR8iPuM3o","timestamp":"Dec 27, 2017 15:53:24","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382800971,"_id":"VFScFyQKSqzqy9jR"}
+{"amount":20,"info":"electrifity","tagId":"C2S9eKSRLJOjXjwi","timestamp":"Dec 27, 2017 15:54:04","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382840452,"_id":"YamibFyx9LxBlYOZ"}
+{"amount":25,"info":"thor movie","tagId":"vEP6p7xLk7lVQPps","timestamp":"Dec 27, 2017 15:54:23","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382859177,"_id":"aO0ONlZPl31y2Tqw"}
+{"$$deleted":true,"_id":"YamibFyx9LxBlYOZ"}
+{"amount":50,"info":"gas","tagId":"C2S9eKSRLJOjXjwi","timestamp":"Dec 27, 2017 15:54:42","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382878049,"_id":"GnsZALpFEpdpNa7y"}
