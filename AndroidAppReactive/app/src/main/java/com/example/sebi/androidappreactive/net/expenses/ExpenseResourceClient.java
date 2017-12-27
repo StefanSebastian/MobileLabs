@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.sebi.androidappreactive.R;
+import com.example.sebi.androidappreactive.model.Expense;
+import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagEvent;
 import com.example.sebi.androidappreactive.net.tags.TagResource;
@@ -16,10 +18,12 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import retrofit2.Retrofit;
@@ -57,4 +61,15 @@ public class ExpenseResourceClient {
         return mExpenseResource.add$(authorization, expenseDto);
     }
 
+
+    /*
+    A stream that returns a single value = a list ( result of get all )
+     */
+    public Single<List<Expense>> find$(String authorization){
+        Log.d(TAG, "find$");
+        return mExpenseResource.find$(authorization)
+                .flatMap(dtos -> Observable.fromArray(dtos.toArray(new ExpenseDto[dtos.size()])))
+                .map(ExpenseDto::toExpense)
+                .toList();
+    }
 }

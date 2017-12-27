@@ -8,6 +8,7 @@ import com.example.sebi.androidappreactive.net.expenses.ExpenseDto;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseEvent;
 import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagEvent;
+import com.example.sebi.androidappreactive.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,8 +134,7 @@ public class SocketClient {
             expenseDto.setmTagName(obj.getString("tagName"));
             expenseDto.setmAmount(obj.getDouble("amount"));
 
-            SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
-            Date date = format.parse(obj.getString("timestamp"));
+            Date date = Utils.getDefaultDateFormat().parse(obj.getString("timestamp"));
 
             expenseDto.setmTimestamp(date);
 

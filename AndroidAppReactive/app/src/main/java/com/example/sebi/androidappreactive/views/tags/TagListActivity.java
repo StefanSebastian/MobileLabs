@@ -62,10 +62,10 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
     called for every change in the realm
      */
     private void updateUi() {
+        mRecyclerView.setAdapter(new TagRecyclerViewAdapter(mTags));
+
         mContentLoadingView.setVisibility(GONE);
         mRecyclerView.setVisibility(VISIBLE);
-
-        mRecyclerView.setAdapter(new TagRecyclerViewAdapter(mTags));
     }
 
     @Override
@@ -79,12 +79,12 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
 
         // add view
         mAddLoadingView = findViewById(R.id.tagAddProgress);
-        mAddLoadingView.setVisibility(GONE);
         mAddTagButton = findViewById(R.id.tagAddButton);
         mAddTagButton.setOnClickListener(v -> addTag());
         mTagName = findViewById(R.id.tagAddNameField);
 
         // loading is set to visible
+        mAddLoadingView.setVisibility(GONE);
         mContentLoadingView.setVisibility(VISIBLE);
 
         // get realm and the initial values for the tags

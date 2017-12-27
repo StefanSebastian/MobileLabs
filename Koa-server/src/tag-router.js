@@ -112,9 +112,10 @@ export class TagRouter extends Router {
 
     }).del('/:id', async(ctx) => {
         let id = ctx.params.id;
+        let decoded = getDecodedTokenFromRequest(ctx);
 
         // find the requested tag
-        let persistedTag = await this.tagStore.findOne({_id: id});
+        let persistedTag = await this.tagStore.findOne({_id: id, user:decoded._id});
 
         if (persistedTag == null){
             setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Invalid id'}]);
@@ -130,7 +131,6 @@ export class TagRouter extends Router {
         log(`remove /:id`);
 
         // notify clients of deletion
-        let decoded = getDecodedTokenFromRequest(ctx);
         let username = decoded.username;
         this.notifyClients(username, 'tag/deleted', persistedTag);
     });

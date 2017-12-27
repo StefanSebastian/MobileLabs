@@ -111,9 +111,10 @@ export class ExpenseRouter extends Router {
 
     }).del('/:id', async(ctx) => {
         let id = ctx.params.id;
+        let decoded = getDecodedTokenFromRequest(ctx);
 
         // find the requested expense
-        let persistedExpense = await this.expenseStore.findOne({_id: id});
+        let persistedExpense = await this.expenseStore.findOne({_id: id, user:decoded._id});
 
         if (persistedExpense == null){
             setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Invalid id'}]);
@@ -129,7 +130,7 @@ export class ExpenseRouter extends Router {
         log(`remove /:id`);
 
         // notify clients of deletion
-        let decoded = getDecodedTokenFromRequest(ctx);
+
         let username = decoded.username;
         this.notifyClients(username, 'expense/deleted', persistedExpense);
     });

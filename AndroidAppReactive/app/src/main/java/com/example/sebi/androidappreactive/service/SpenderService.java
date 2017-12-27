@@ -99,6 +99,20 @@ public class SpenderService extends Service {
                 );
 
 
+        mExpenseResourceClient.find$(authorization)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        expenses -> mRealm.executeTransactionAsync(
+                            realm -> {
+                                realm.where(Expense.class).findAll().deleteAllFromRealm();
+                                realm.copyToRealmOrUpdate(expenses);
+                            },
+                                () -> Log.d(TAG, "updated expenses"),
+                                error -> Log.e(TAG, "failed to persist expenses", error)
+                        ),
+                        error -> Log.e(TAG, "failed to fetch expenses", error)
+                );
     }
 
     private void listenUpdates(String username){

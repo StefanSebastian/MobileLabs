@@ -26,4 +26,8 @@ public class Utils {
         df.setTimeZone(tz);
         return df.format(date);
     }
+
+    public static DateFormat getDefaultDateFormat(){
+        return new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+    }
 }

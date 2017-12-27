@@ -33,7 +33,7 @@ public class ExpenseMenuActivity extends AppCompatActivity {
     }
 
     private void openListExpensesView(){
-
+        startActivity(new Intent(this, ListExpenseActivity.class));
     }
 
     private void openChartExpensesView(){
