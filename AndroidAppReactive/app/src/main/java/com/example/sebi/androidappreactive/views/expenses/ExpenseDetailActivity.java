@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sebi.androidappreactive.R;
@@ -13,10 +15,6 @@ import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.expenses.ExpenseResourceClient;
 import com.example.sebi.androidappreactive.utils.Popups;
 import com.example.sebi.androidappreactive.utils.Utils;
-import com.example.sebi.androidappreactive.views.tags.TagDetailFragment;
-import com.example.sebi.androidappreactive.views.tags.TagListActivity;
-
-import org.w3c.dom.Text;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -40,6 +38,8 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     private TextView mTimestamp;
 
     private Button mDeleteExpense;
+
+    private ProgressBar mDeleteProgress;
 
     private Expense mExpense;
 
@@ -70,9 +70,12 @@ public class ExpenseDetailActivity extends AppCompatActivity {
         mAmount = findViewById(R.id.expenseAmountDetail);
         mTimestamp = findViewById(R.id.expenseTimestampDetail);
         mTagName = findViewById(R.id.expenseTagNameDetail);
+        mDeleteProgress = findViewById(R.id.expenseDeleteProgress);
 
         mDeleteExpense = findViewById(R.id.expenseDeleteButton);
         mDeleteExpense.setOnClickListener(v -> deleteExpense());
+
+        showLoading(false);
 
         String expenseId = getIntent().getStringExtra(ExpenseDetailActivity.EXPENSE_ID);
         if (expenseId == null){
@@ -93,6 +96,24 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
     }
 
+    private void showLoading(Boolean loading){
+        if (loading){
+            mDeleteProgress.setVisibility(View.VISIBLE);
+            mInfo.setVisibility(View.GONE);
+            mAmount.setVisibility(View.GONE);
+            mTimestamp.setVisibility(View.GONE);
+            mTagName.setVisibility(View.GONE);
+            mDeleteExpense.setVisibility(View.GONE);
+        } else {
+            mDeleteProgress.setVisibility(View.GONE);
+            mInfo.setVisibility(View.VISIBLE);
+            mAmount.setVisibility(View.VISIBLE);
+            mTimestamp.setVisibility(View.VISIBLE);
+            mTagName.setVisibility(View.VISIBLE);
+            mDeleteExpense.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -105,6 +126,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     private void deleteExpense(){
         Log.d(TAG, "deleting " + mExpense.getId());
 
+        showLoading(true);
         mDisposable.add(mExpenseResourceClient.delete$(mAuthorization, mExpense.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,9 +134,11 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                         expenseDto -> {
                             Popups.displayNotification("Success", this);
                             startActivity(new Intent(this, ListExpenseActivity.class));
+                            showLoading(false);
                         },
                         error -> {
                             Popups.displayError(error.getMessage(), this);
+                            showLoading(false);
                         }
                 )
         );

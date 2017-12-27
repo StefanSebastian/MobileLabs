@@ -55,5 +55,8 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.0.1'
 
+    // charts
+    compile "com.androidplot:androidplot-core:1.5.2"
+
     testCompile 'junit:junit:4.12'
 }
