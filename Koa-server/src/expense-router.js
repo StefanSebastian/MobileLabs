@@ -73,6 +73,9 @@ export class ExpenseRouter extends Router {
             let expenseId = expense._id;
             // extract response
             let res = ctx.response;
+
+            let decoded = getDecodedTokenFromRequest(ctx);
+
             // new expense and path id should be the same
             if (expenseId && expenseId != id){
                 log('update /:id - 400 bad request');
@@ -87,7 +90,7 @@ export class ExpenseRouter extends Router {
             }
 
 
-            let persistedExpense = await this.expenseStore.findOne({_id: id});
+            let persistedExpense = await this.expenseStore.findOne({_id: id, user:decoded._id});
             if (persistedExpense) {
               let expenseVersion = parseInt(ctx.request.get(ETAG)) || expense.version;
               if (!expenseVersion) {
@@ -97,7 +100,7 @@ export class ExpenseRouter extends Router {
                     log(`update /:id - 409 Conflict`);
                     setIssueRes(res, CONFLICT, [{error: 'Version conflict'}]); //409 Conflict
                 } else {
-                    let decoded = getDecodedTokenFromRequest(ctx);
+
                     expense.user = decoded._id;
                     expense.version = parseInt(expenseVersion) + 1;
                     expense.updated = Date.now();

@@ -72,4 +72,9 @@ public class ExpenseResourceClient {
                 .map(ExpenseDto::toExpense)
                 .toList();
     }
+
+    public Observable<ExpenseDto> delete$(String authorization, String id){
+        Log.d(TAG, "delete$");
+        return mExpenseResource.delete$(authorization, id);
+    }
 }

@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        Log.d(TAG, "onCreate");
+        Log.d(TAG, "onDestroy");
 
         mDisposable.dispose();
     }

@@ -67,6 +67,9 @@ export class TagRouter extends Router {
             let tagId = tag._id;
             // extract response
             let res = ctx.response;
+
+            let decoded = getDecodedTokenFromRequest(ctx);
+
             // new tag and path id should be the same
             if (tagId && tagId != id){
                 log('update /:id - 400 bad request');
@@ -81,7 +84,7 @@ export class TagRouter extends Router {
             }
 
 
-            let persistedTag = await this.tagStore.findOne({_id: id});
+            let persistedTag = await this.tagStore.findOne({_id: id, user:decoded._id});
             if (persistedTag) {
               let tagVersion = parseInt(ctx.request.get(ETAG)) || tag.version;
               if (!tagVersion) {
@@ -91,7 +94,7 @@ export class TagRouter extends Router {
                     log(`update /:id - 409 Conflict`);
                     setIssueRes(res, CONFLICT, [{error: 'Version conflict'}]); //409 Conflict
                 } else {
-                    let decoded = getDecodedTokenFromRequest(ctx);
+
                     tag.user = decoded._id;
                     tag.version = parseInt(tagVersion) + 1;
                     tag.updated = Date.now();
