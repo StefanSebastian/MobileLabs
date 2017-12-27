@@ -13,4 +13,10 @@
         app:egUsePieRotation="true"
         app:egValueTextSize="36sp"/>
 
+    <Button
+        android:id="@+id/sendEmailExpenses"
+        android:text="Email expenses per category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -3,10 +3,12 @@ package com.example.sebi.androidappreactive.views.expenses;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Expense;
@@ -39,6 +41,9 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
     // chart
     private PieChart mPieChart;
 
+    // email button
+    private Button mEmailButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -52,6 +57,10 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         // init chart
         mPieChart = findViewById(R.id.expenseChart);
 
+        // get button
+        mEmailButton = findViewById(R.id.sendEmailExpenses);
+        mEmailButton.setOnClickListener(v -> sendEmail());
+
         updateUi();
 
     }
@@ -63,9 +72,7 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         mRealm.addChangeListener(mRealmChangeListener);
     }
 
-    private void updateUi(){
-        mPieChart.clearChart();
-
+    private Map<String, Double> getAmountPerCategory(){
         // collect data
         Map<String, Double> amountPerCategory = new HashMap<>();
         for (Expense expense : mExpenses){
@@ -76,6 +83,13 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
                 amountPerCategory.put(expense.getTagId(), expense.getAmount());
             }
         }
+        return amountPerCategory;
+    }
+
+    private void updateUi(){
+        mPieChart.clearChart();
+
+        Map<String, Double> amountPerCategory = getAmountPerCategory();
 
         for (String key : amountPerCategory.keySet()){
             Double value = amountPerCategory.get(key);
@@ -89,6 +103,33 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         mPieChart.startAnimation();
     }
 
+    private String buildEmailMessage(){
+        Map<String, Double> amountPerCategory = getAmountPerCategory();
+
+        StringBuilder emailData = new StringBuilder();
+
+        for (String key : amountPerCategory.keySet()){
+            Double value = amountPerCategory.get(key);
+
+            Tag tag = mRealm.where(Tag.class).equalTo("id", key).findFirst();
+
+            emailData.append(tag.getName()).append(" ").append(value);
+            emailData.append("\n");
+        }
+
+        return emailData.toString();
+    }
+
+    private void sendEmail(){
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Spending list");
+        intent.putExtra(Intent.EXTRA_TEXT, buildEmailMessage());
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 
 
 
