@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.auth.UserResourceClient;
+import com.example.sebi.androidappreactive.utils.Popups;
+import com.example.sebi.androidappreactive.utils.Utils;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -148,15 +150,13 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(this, MenuActivity.class));},
                         error -> {
                             String msg = "authentication error";
-                            if (error instanceof HttpException){
-                                HttpException e = (HttpException) error;
-                                msg = e.response().errorBody().string();
-                            }
+                            String parsed = Utils.getErrorMessageFromHttp(error);
+                            msg = parsed == null ? msg : parsed;
                             Log.e(TAG, "error authenticating", error);
-                            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-                            toast.show();
+
+                            Popups.displayError(msg, this);
                             showLoading(false);
-                            }
+                        }
                     ));
     }
 
@@ -180,15 +180,13 @@ public class LoginActivity extends AppCompatActivity {
                             },
                         error -> {
                             String msg = "signup error";
-                            if (error instanceof HttpException){
-                                HttpException e = (HttpException) error;
-                                msg = e.response().errorBody().string();
-                            }
+                            String parsed = Utils.getErrorMessageFromHttp(error);
+                            msg = parsed == null ? msg : parsed;
                             Log.e(TAG, "error signing up", error);
-                            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-                            toast.show();
-                            mProgressBar.setVisibility(View.GONE);
-                            }
+
+                            Popups.displayError(msg, this);
+                            showLoading(false);
+                        }
                 ));
     }
 }
