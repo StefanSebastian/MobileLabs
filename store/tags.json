@@ -1,15 +1,6 @@
-{"name":"test1","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382354026,"_id":"CWdKFo1GtWfAfH1a"}
+{"name":"Food","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382781087,"_id":"4V8zPC2YR8iPuM3o"}
+{"name":"Bills","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382815862,"_id":"C2S9eKSRLJOjXjwi"}
 {"name":"Bills","updated":1513423967809,"user":"BCQ7uasTK3zi78CW","version":1,"_id":"RWWiiqB2nGXvu88f"}
 {"name":"Entertainment","updated":1513423967806,"user":"X47al0hXhzhbRqKO","version":1,"_id":"SAEaGafK1UQ8Oz7N"}
-{"name":"test37","version":8,"user":"WT1VWRiOzB5wQBWq","updated":1514382587946,"_id":"fh6hCekZ6MF7L4k9"}
 {"name":"Food","updated":1513423967803,"user":"X47al0hXhzhbRqKO","version":1,"_id":"g7StOV9MurWZgDmg"}
-{"name":"test38","version":9,"user":"WT1VWRiOzB5wQBWq","updated":1514382696812,"_id":"fh6hCekZ6MF7L4k9"}
-{"name":"test2","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382769607,"_id":"RmPyVIsbW3nMPTF1"}
-{"_id":"RmPyVIsbW3nMPTF1","name":"test3","version":2,"user":"WT1VWRiOzB5wQBWq","updated":1514382773922}
-{"_id":"RmPyVIsbW3nMPTF1","name":"test3","version":3,"user":"WT1VWRiOzB5wQBWq","updated":1514382775036}
-{"name":"Food","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382781087,"_id":"4V8zPC2YR8iPuM3o"}
-{"$$deleted":true,"_id":"fh6hCekZ6MF7L4k9"}
-{"name":"Bills","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382815862,"_id":"C2S9eKSRLJOjXjwi"}
-{"$$deleted":true,"_id":"RmPyVIsbW3nMPTF1"}
-{"$$deleted":true,"_id":"CWdKFo1GtWfAfH1a"}
 {"name":"Entertainment","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382827227,"_id":"vEP6p7xLk7lVQPps"}
