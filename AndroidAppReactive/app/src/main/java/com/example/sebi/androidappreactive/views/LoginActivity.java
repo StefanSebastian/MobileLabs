@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -45,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     private ProgressBar mProgressBar;
 
+    /*
+    Login ui components
+     */
+    private LinearLayout mContentLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +62,15 @@ public class LoginActivity extends AppCompatActivity {
 
         mUserResourceClient = new UserResourceClient(this);
 
-        Button login = (Button) findViewById(R.id.loginButton);
+        Button login = findViewById(R.id.loginButton);
         login.setOnClickListener(v -> doLogin());
 
-        mProgressBar = (ProgressBar) findViewById(R.id.loginProgress);
-        mProgressBar.setVisibility(View.GONE);
+        mContentLogin = findViewById(R.id.contentLogin);
+        mProgressBar = findViewById(R.id.loginProgress);
 
-        Button signup = (Button) findViewById(R.id.signupButton);
+        showLoading(false);
+
+        Button signup = findViewById(R.id.signupButton);
         signup.setOnClickListener(v -> doSignup());
 
         setTitle("Login");
@@ -100,8 +108,18 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "onStop");
     }
 
+    private void showLoading(Boolean loading){
+        if (loading){
+            mProgressBar.setVisibility(View.VISIBLE);
+            mContentLogin.setVisibility(View.GONE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mContentLogin.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void doLogin(){
-        mProgressBar.setVisibility(View.VISIBLE);
+        showLoading(true);
 
         //clear saved user
         mRealm.executeTransactionAsync(
@@ -126,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                     user.setToken(token.getToken());
                                     realm.copyToRealmOrUpdate(user);
                                 });
-                            mProgressBar.setVisibility(View.GONE);
+                            showLoading(false);
                             startActivity(new Intent(this, MenuActivity.class));},
                         error -> {
                             String msg = "authentication error";
@@ -137,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "error authenticating", error);
                             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
                             toast.show();
-                            mProgressBar.setVisibility(View.GONE);
+                            showLoading(false);
                             }
                     ));
     }

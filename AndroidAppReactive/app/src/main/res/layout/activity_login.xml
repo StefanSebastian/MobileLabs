@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.sebi.androidappreactive.views.LoginActivity">
 
-    <include layout="@layout/content_login" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <requestFocus />
 
+        <include layout="@layout/content_login" />
+
+        <ProgressBar
+            android:id="@+id/loginProgress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
