@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
 
+        // if the user is saved in local storage , we dont need to make the network call
         if (checkLocalStorage(username, password)){
             showLoading(false);
             startActivity(new Intent(this, MenuActivity.class));
@@ -190,9 +191,9 @@ public class LoginActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         token -> {
-                            mProgressBar.setVisibility(View.GONE);
                             Toast.makeText(this, "Succesful signup", Toast.LENGTH_SHORT).show();
-                            },
+                            showLoading(false);
+                        },
                         error -> {
                             String msg = "signup error";
                             String parsed = Utils.getErrorMessageFromHttp(error);

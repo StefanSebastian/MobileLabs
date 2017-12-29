@@ -51,6 +51,7 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
 
         setTitle("Expense chart");
 
+        // local storage
         mRealm = Realm.getDefaultInstance();
         mExpenses = mRealm.where(Expense.class).findAll();
 
@@ -72,6 +73,10 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         mRealm.addChangeListener(mRealmChangeListener);
     }
 
+    /*
+    Gets a map with keys equal to category (tag name)
+    and values equal to total amount spent per category
+     */
     private Map<String, Double> getAmountPerCategory(){
         // collect data
         Map<String, Double> amountPerCategory = new HashMap<>();
@@ -86,6 +91,9 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         return amountPerCategory;
     }
 
+    /*
+    Redraws the chart
+     */
     private void updateUi(){
         mPieChart.clearChart();
 
@@ -94,6 +102,7 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         for (String key : amountPerCategory.keySet()){
             Double value = amountPerCategory.get(key);
 
+            //get tag for id
             Tag tag = mRealm.where(Tag.class).equalTo("id", key).findFirst();
 
             float valueFl = (float)((double)value);
@@ -103,6 +112,9 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         mPieChart.startAnimation();
     }
 
+    /*
+    Builds the text of the email message ; it will be the content of the chart data
+     */
     private String buildEmailMessage(){
         Map<String, Double> amountPerCategory = getAmountPerCategory();
 
@@ -120,6 +132,9 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
         return emailData.toString();
     }
 
+    /*
+    Opens email activity
+     */
     private void sendEmail(){
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);

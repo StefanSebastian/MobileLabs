@@ -31,8 +31,10 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
     public static final String EXPENSE_ID = "EXPENSE_ID";
 
+    // local storage
     private Realm mRealm;
 
+    // views
     private TextView mInfo;
     private TextView mAmount;
     private TextView mTagName;
@@ -42,8 +44,10 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
     private ProgressBar mDeleteProgress;
 
+    // expense to display
     private Expense mExpense;
 
+    // network connection
     private ExpenseResourceClient mExpenseResourceClient;
     private CompositeDisposable mDisposable;
     private String mAuthorization;
@@ -78,6 +82,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
         showLoading(false);
 
+        // retrieve expense to display
         String expenseId = getIntent().getStringExtra(ExpenseDetailActivity.EXPENSE_ID);
         if (expenseId == null){
             Popups.displayError("Invalid expense", this);
@@ -99,6 +104,7 @@ public class ExpenseDetailActivity extends AppCompatActivity {
 
     }
 
+    // toggle menu visibility
     private void showLoading(Boolean loading){
         if (loading){
             mDeleteProgress.setVisibility(View.VISIBLE);
@@ -126,6 +132,9 @@ public class ExpenseDetailActivity extends AppCompatActivity {
     }
 
 
+    /*
+    Deletes the selected expense
+     */
     private void deleteExpense(){
         Log.d(TAG, "deleting " + mExpense.getId());
 

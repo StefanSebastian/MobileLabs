@@ -23,32 +23,26 @@ import java.util.TimeZone;
  */
 
 public class Utils {
-    public static String listToString(List<?> list) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n");
-        for (Object obj : list) {
-            sb.append(obj.toString()).append("\n");
-        }
-        return sb.toString();
-    }
 
-    public static String dateToIso8601(Date date){
-        TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-        df.setTimeZone(tz);
-        return df.format(date);
-    }
-
+    /*
+    Returns a DateFormat with the format used in the application
+     */
     public static DateFormat getDefaultDateFormat(){
         return new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
     }
 
+    /*
+    Returns the code of a random color
+     */
     public static int getRandomColor(){
         Random rnd = new Random();
         return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
-    public static String getErrorFromJsonIssue(String jsonIssue){
+    /*
+    Extracts the error string from a json issue message
+     */
+    private static String getErrorFromJsonIssue(String jsonIssue){
         JsonElement jelement = new JsonParser().parse(jsonIssue);
         JsonObject jobject = jelement.getAsJsonObject();
 
@@ -59,6 +53,9 @@ public class Utils {
         return jobject.get("error").getAsString();
     }
 
+    /*
+    Extracts the error message if the Throwable is an HttpException
+     */
     public static String getErrorMessageFromHttp(Throwable error){
         String msg = null;
         if (error instanceof HttpException){

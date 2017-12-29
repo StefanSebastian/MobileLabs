@@ -85,6 +85,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         mRealm = Realm.getDefaultInstance();
         mTags = mRealm.where(Tag.class).findAll();
 
+        // get view elements
         mTagDropdown = findViewById(R.id.expenseAddTagNameField);
         mAddLoadingView = findViewById(R.id.expenseAddProgress);
         mInfoField = findViewById(R.id.expenseAddInfoField);
@@ -100,6 +101,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         updateUi();
     }
 
+    // toggles the view between normal and loading
     private void setLoadingView(Boolean loading){
         if (loading){
             mAddLoadingView.setVisibility(View.VISIBLE);
@@ -116,16 +118,20 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         }
     }
 
+    // tries to add the expense input by the user
     private void addExpense(){
         setLoadingView(true);
 
+        // extract input data
         String info = mInfoField.getText().toString();
         String amount = mAmountField.getText().toString();
         String tagName = mTagDropdown.getSelectedItem().toString();
 
+        // get tag id
         Tag tag = mRealm.where(Tag.class).equalTo("name", tagName).findFirst();
         String tagId = tag.getId();
 
+        // validation
         if (!validateExpense(info, amount, tagId)){
             setLoadingView(false);
             return;
@@ -136,6 +142,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         if (mSpenderService == null){
             Popups.displayError("Service not connected", this);
         } else {
+            // build expense to add
             Expense expense = new Expense();
             expense.setTimestamp(new Date());
             expense.setInfo(info);
@@ -166,6 +173,9 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         }
     }
 
+    /*
+    Expense validation
+     */
     private boolean validateExpense(String info, String amount, String id){
         if (info.length() == 0){
             Popups.displayError("You must complete the info field", this);
@@ -213,6 +223,7 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
         mDisposable.dispose();
     }
 
+    // Service connections
     @Override
     public void onServiceConnected(ComponentName name, IBinder binder) {
         mSpenderService = ((SpenderService.ServiceBinder) binder).getService();

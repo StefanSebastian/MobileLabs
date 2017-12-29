@@ -12,6 +12,9 @@ import android.widget.Button;
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.views.tags.TagListActivity;
 
+/*
+Simple menu activity
+ */
 public class ExpenseMenuActivity extends AppCompatActivity {
 
     @Override

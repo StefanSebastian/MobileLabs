@@ -7,6 +7,9 @@ import com.example.sebi.androidappreactive.net.tags.TagEvent;
  * Created by Sebi on 26-Dec-17.
  */
 
+/*
+Encapsulates both types of events ; if type is set to Tag then expenseEvent is null and vice versa
+ */
 public class SpenderEvent {
     public enum Type {TAG, EXPENSE};
 

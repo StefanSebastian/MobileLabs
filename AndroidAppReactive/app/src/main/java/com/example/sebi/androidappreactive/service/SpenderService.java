@@ -126,6 +126,9 @@ public class SpenderService extends Service {
                 )));
     }
 
+    /*
+    Calls the update/delete method based on event type
+     */
     private void updateOrDelete(Realm realm, SpenderEvent spenderEvent){
         if (spenderEvent.type == SpenderEvent.Type.TAG){
             updateOrDelete(realm, spenderEvent.tagEvent);
@@ -145,6 +148,9 @@ public class SpenderService extends Service {
         }
     }
 
+    /*
+    Updates or deletes an expense, based on event
+     */
     private void updateOrDelete(Realm realm, ExpenseEvent expenseEvent){
         if (expenseEvent.type == ExpenseEvent.Type.DELETED){
             realm.where(Expense.class).equalTo("id", expenseEvent.expenseDto.getmId()).findAll().deleteAllFromRealm();
@@ -162,6 +168,9 @@ public class SpenderService extends Service {
         return mTagResourceClient.add$(mAuthorization, tagDto);
     }
 
+    /*
+    Adds an expense and returns a stream with the result
+     */
     public Observable<ExpenseDto> addExpense(Expense expense){
         ExpenseDto expenseDto = new ExpenseDto();
         expenseDto.setmAmount(expense.getAmount());

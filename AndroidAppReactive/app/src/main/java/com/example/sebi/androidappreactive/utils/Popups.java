@@ -8,11 +8,17 @@ import android.widget.Toast;
  */
 
 public class Popups {
+    /*
+    Display a popup for errors
+     */
     public static void displayError(String msg, Context context){
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
+    /*
+    Display a popup for notifications
+     */
     public static void displayNotification(String msg, Context context){
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         toast.show();

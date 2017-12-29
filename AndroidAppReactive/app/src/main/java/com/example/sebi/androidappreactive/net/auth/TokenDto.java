@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Sebi on 11-Dec-17.
  */
 
+/*
+Result of login network call
+ */
 public class TokenDto {
     @SerializedName("token")
     private String token;
