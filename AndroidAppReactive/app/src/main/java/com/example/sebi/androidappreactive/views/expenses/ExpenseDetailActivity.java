@@ -140,7 +140,12 @@ public class ExpenseDetailActivity extends AppCompatActivity {
                             showLoading(false);
                         },
                         error -> {
-                            Popups.displayError(error.getMessage(), this);
+                            String msg = error.getMessage();
+                            String parsed = Utils.getErrorMessageFromHttp(error);
+                            msg = parsed == null ? msg : parsed;
+                            Log.e(TAG, "error adding expense", error);
+
+                            Popups.displayError(msg, this);
                             showLoading(false);
                         }
                 )

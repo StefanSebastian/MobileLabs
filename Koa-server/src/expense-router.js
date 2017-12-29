@@ -93,6 +93,12 @@ export class ExpenseRouter extends Router {
                 return;
             }
 
+            if (!expense.amount || isNaN(parseFloat(expense.amount))){
+                log('create /- 400 Bad request');
+                setIssueRes(res, BAD_REQUEST, [{error: 'Invalid amount'}]);
+                return;
+            }
+
 
             let persistedExpense = await this.expenseStore.findOne({_id: id, user:decoded._id});
             if (persistedExpense) {
@@ -131,7 +137,7 @@ export class ExpenseRouter extends Router {
         let persistedExpense = await this.expenseStore.findOne({_id: id, user:decoded._id});
 
         if (persistedExpense == null){
-            setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Invalid id'}]);
+            setIssueRes(ctx.response, BAD_REQUEST, [{error: 'This expense was already deleted'}]);
             return;
         }
 
