@@ -7,25 +7,47 @@
     tools:context=".views.tags.TagDetailActivity"
     tools:showIn="@layout/activity_tag_detail">
 
-    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/tag_name"
-        style="?android:attr/textAppearanceLarge"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context="com.example.sebi.androidappreactive.views.tags.TagDetailFragment" />
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <requestFocus />
 
-    <Button
-        android:text="Delete"
-        android:id="@+id/tagDeleteButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <Button
-        android:text="Update"
-        android:id="@+id/tagUpdateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/tagUpdateDeleteContent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/tag_name"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                tools:context="com.example.sebi.androidappreactive.views.tags.TagDetailFragment" />
+
+            <Button
+                android:text="Delete"
+                android:id="@+id/tagDeleteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="Update"
+                android:id="@+id/tagUpdateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/tagUpdateDeleteProgress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </LinearLayout>

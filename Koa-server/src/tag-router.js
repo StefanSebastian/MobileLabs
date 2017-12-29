@@ -123,7 +123,7 @@ export class TagRouter extends Router {
         let persistedTag = await this.tagStore.findOne({_id: id, user:decoded._id});
 
         if (persistedTag == null){
-            setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Invalid id'}]);
+            setIssueRes(ctx.response, BAD_REQUEST, [{error: 'Tag no longer exists'}]);
             return;
         }
 

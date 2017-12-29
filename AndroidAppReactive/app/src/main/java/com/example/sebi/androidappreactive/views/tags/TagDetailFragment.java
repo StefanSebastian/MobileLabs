@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Tag;
@@ -21,11 +23,14 @@ import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.net.tags.TagDto;
 import com.example.sebi.androidappreactive.net.tags.TagResourceClient;
 import com.example.sebi.androidappreactive.utils.Popups;
+import com.example.sebi.androidappreactive.utils.Utils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import static android.view.View.GONE;
 
 /**
  * Created by Sebi on 23-Dec-17.
@@ -53,6 +58,10 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
     private EditText mTagTextView;
     private Button mDeleteButton;
     private Button mUpdateButton;
+
+    // loading
+    private ProgressBar mProgressBar;
+    private LinearLayout mDeleteUpdateContent;
 
     private Realm mRealm;
 
@@ -100,6 +109,10 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
         mUpdateButton = rootView.findViewById(R.id.tagUpdateButton);
         mUpdateButton.setOnClickListener(v -> updateTag());
 
+        mDeleteUpdateContent = rootView.findViewById(R.id.tagUpdateDeleteContent);
+        mProgressBar = rootView.findViewById(R.id.tagUpdateDeleteProgress);
+        setLoading(false);
+
         fillTagDetails();
 
         return rootView;
@@ -129,6 +142,8 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
     private void deleteTag(){
         Log.d(TAG, "deleting " + mTag.getId());
 
+        setLoading(true);
+
         mDisposable.add(mTagResourceClient.delete$(mAuthorization, mTag.getId())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -136,9 +151,16 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
                     tag -> {
                         Popups.displayNotification("Success", getContext());
                         startActivity(new Intent(getContext(), TagListActivity.class));
+                        setLoading(false);
                     },
                     error -> {
-                        Popups.displayError(error.getMessage(), getContext());
+                        String msg = error.getMessage();
+                        String parsed = Utils.getErrorMessageFromHttp(error);
+                        msg = parsed == null ? msg : parsed;
+                        Log.e(TAG, "error deleting tag", error);
+
+                        Popups.displayError(msg, getContext());
+                        setLoading(false);
                     }
             )
         );
@@ -146,6 +168,9 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
 
     private void updateTag(){
         Log.d(TAG, "updating tag");
+
+        setLoading(true);
+
         String newName = mTagTextView.getText().toString();
         TagDto tagDto = new TagDto(mTag.getId(), newName, mTag.getVersion());
         mDisposable.add(mTagResourceClient.update$(mAuthorization, mTag.getId(), tagDto)
@@ -157,12 +182,29 @@ public class TagDetailFragment extends Fragment implements ServiceConnection{
                         // update the local reference
                         Log.d(TAG, "Received as update response " + tagDtoReceived.toString());
                         mTag = tagDtoReceived.toTag();
+                        setLoading(false);
                     },
                     error -> {
-                        Popups.displayError(error.getMessage(), getContext());
+                        String msg = error.getMessage();
+                        String parsed = Utils.getErrorMessageFromHttp(error);
+                        msg = parsed == null ? msg : parsed;
+                        Log.e(TAG, "error updating tag", error);
+
+                        Popups.displayError(msg, getContext());
+                        setLoading(false);
                     }
             )
         );
+    }
+
+    private void setLoading(Boolean loading){
+        if (loading){
+            mDeleteUpdateContent.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mDeleteUpdateContent.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     /*

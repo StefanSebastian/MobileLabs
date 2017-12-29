@@ -21,6 +21,7 @@ import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
+import com.example.sebi.androidappreactive.utils.Utils;
 
 import java.util.List;
 
@@ -143,16 +144,23 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
                             .subscribe(
                                 tagDto -> {
                                     Popups.displayNotification("Successful add", this);
+                                    setAddMenuVisibility(true);
                                 },
                                 error -> {
-                                    Popups.displayError(error.getMessage(), this);
+                                    String msg = error.getMessage();
+                                    String parsed = Utils.getErrorMessageFromHttp(error);
+                                    msg = parsed == null ? msg : parsed;
+                                    Log.e(TAG, "error adding tag", error);
+
+                                    Popups.displayError(msg, this);
+                                    setAddMenuVisibility(true);
                                 }
                     )
             );
 
         }
 
-        setAddMenuVisibility(true);
+
     }
 
     private void setAddMenuVisibility(Boolean visible){
