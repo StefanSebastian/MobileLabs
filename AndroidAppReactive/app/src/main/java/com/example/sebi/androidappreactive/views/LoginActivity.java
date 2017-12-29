@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                             showLoading(false);
                             startActivity(new Intent(this, MenuActivity.class));},
                         error -> {
-                            String msg = "authentication error";
+                            String msg = error.getMessage();
                             String parsed = Utils.getErrorMessageFromHttp(error);
                             msg = parsed == null ? msg : parsed;
                             Log.e(TAG, "error authenticating", error);
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void doSignup(){
-        mProgressBar.setVisibility(View.VISIBLE);
+        showLoading(true);
 
         //get login data
         String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                             showLoading(false);
                         },
                         error -> {
-                            String msg = "signup error";
+                            String msg = error.getMessage();
                             String parsed = Utils.getErrorMessageFromHttp(error);
                             msg = parsed == null ? msg : parsed;
                             Log.e(TAG, "error signing up", error);
