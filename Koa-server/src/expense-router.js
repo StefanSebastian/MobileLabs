@@ -54,11 +54,15 @@ export class ExpenseRouter extends Router {
             let tag = await this.tagStore.findOne({_id: expense.tagId, user: decoded._id});
             if (tag){
                 expense.user = decoded._id;
-                if (expense.tagId && expense.timestamp && expense.info && expense.amount) {
-                    await this.createExpense(res, expense, decoded.username);
-                } else {
+                if (!expense.amount || isNaN(parseFloat(expense.amount))){
+                    log('create /- 400 Bad request');
+                    setIssueRes(res, BAD_REQUEST, [{error: 'Invalid amount'}]);
+                } else if (!expense.tagId || !expense.timestamp || !expense.info){
                     log('create /- 400 Bad request');
                     setIssueRes(res, BAD_REQUEST, [{error: 'All fields must be completed'}]);
+                } else {
+                    expense.amount = parseFloat(expense.amount);
+                    await this.createExpense(res, expense, decoded.username);
                 }
             } else {
                     log('invalid tag for user');

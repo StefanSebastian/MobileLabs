@@ -19,6 +19,7 @@ import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
+import com.example.sebi.androidappreactive.utils.Utils;
 
 import java.util.Date;
 
@@ -148,16 +149,21 @@ public class AddExpenseActivity extends AppCompatActivity implements ServiceConn
                             .subscribe(
                                     expenseDto -> {
                                         Popups.displayNotification("Successful add", this);
+                                        setLoadingView(false);
                                     },
                                     error -> {
-                                        Popups.displayError(error.getMessage(), this);
+                                        String msg = error.getMessage();
+                                        String parsed = Utils.getErrorMessageFromHttp(error);
+                                        msg = parsed == null ? msg : parsed;
+                                        Log.e(TAG, "error adding expense", error);
+
+                                        Popups.displayError(msg, this);
+                                        setLoadingView(false);
                                     }
                             )
             );
 
         }
-
-        setLoadingView(false);
     }
 
     private boolean validateExpense(String info, String amount, String id){
