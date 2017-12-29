@@ -120,14 +120,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    checks if the user was saved in local storage
+     */
+    private Boolean checkLocalStorage(String username, String password){
+        User user = mRealm.where(User.class).equalTo("username", username).findFirst();
+        return user != null && user.getPassword().equals(password);
+    }
+
     private void doLogin(){
         showLoading(true);
-
-        //clear saved user
-        mRealm.executeTransactionAsync(
-                realm -> realm.where(User.class).findAll().deleteAllFromRealm(),
-                () -> Log.d(TAG, "Clear saved user"),
-                error -> Log.e(TAG, "Error clearing saved user", error));
 
         //get login data
         String username = ((EditText) findViewById(R.id.usernameField)).getText().toString();
@@ -135,6 +137,18 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+
+        if (checkLocalStorage(username, password)){
+            showLoading(false);
+            startActivity(new Intent(this, MenuActivity.class));
+            return;
+        }
+
+        //clear saved user
+        mRealm.executeTransactionAsync(
+                realm -> realm.where(User.class).findAll().deleteAllFromRealm(),
+                () -> Log.d(TAG, "Clear saved user"),
+                error -> Log.e(TAG, "Error clearing saved user", error));
 
         mDisposable.add(mUserResourceClient.login$(user)
                 .subscribeOn(Schedulers.io())
@@ -159,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     ));
     }
+
 
     private void doSignup(){
         mProgressBar.setVisibility(View.VISIBLE);
