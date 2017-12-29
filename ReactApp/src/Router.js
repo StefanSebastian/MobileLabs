@@ -102,26 +102,31 @@ const NavigationBarRouteMapper = {
 const styles = StyleSheet.create({
     navigationBar: {
         backgroundColor: 'blue',
+        paddingTop: Expo.Constants.statusBarHeight
     },
     leftButton: {
         color: '#ffffff',
         margin: 10,
         fontSize: 17,
+        paddingTop: Expo.Constants.statusBarHeight
     },
     title: {
         paddingVertical: 10,
         color: '#ffffff',
         justifyContent: 'center',
-        fontSize: 18
+        fontSize: 18,
+        paddingTop: Expo.Constants.statusBarHeight
     },
     rightButton: {
         color: 'white',
         margin: 10,
-        fontSize: 16
+        fontSize: 16,
+        paddingTop: Expo.Constants.statusBarHeight
     },
     content: {
         marginTop: 90,
         marginLeft: 20,
         marginRight: 20,
+        paddingTop: Expo.Constants.statusBarHeight,
     },
 });

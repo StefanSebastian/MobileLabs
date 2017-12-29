@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, StyleSheet, ActivityIndicator} from 'react-native';
-import {login, loadUserAndServer} from './service';
+import {login, loadUserAndServer, clearIssue} from './service';
 import {getLogger, registerRightAction, issueToText} from '../core/utils';
 import styles from '../core/styles';
+import {Alert} from 'react-native';
 
 const log = getLogger('auth/Login');
 
@@ -41,15 +42,25 @@ export class Login extends Component {
         return (
             <View style={styles.content}>
                 <ActivityIndicator animating={state.isLoading} style={styles.activityIndicator} size="large"/>
-                <Text>Server</Text>
-                <TextInput value={state.url} onChangeText={(text) => this.setState({...state, url: text})}/>
                 <Text>Username</Text>
                 <TextInput value={state.username} onChangeText={(text) => this.setState({...state, username: text})}/>
                 <Text>Password</Text>
                 <TextInput value={state.password} onChangeText={(text) => this.setState({...state, password: text})}/>
-                {message && <Text>{message}</Text>}
+                {message && this.displayAlert("Error", message)}
             </View>
         );
+    }
+
+    displayAlert(title, message){
+        Alert.alert(
+            title,
+            message,
+            [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+        );
+        this.store.dispatch(clearIssue());
     }
 
     componentDidMount() {

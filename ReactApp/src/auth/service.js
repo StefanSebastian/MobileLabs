@@ -10,6 +10,7 @@ const AUTH_STARTED = 'auth/started';
 const AUTH_SUCCEEDED = 'auth/succeeded';
 const AUTH_FAILED = 'auth/failed';
 const USER_LOADED = 'auth/userLoaded';
+const CLEAR_ISSUE = 'auth/clearIssue'
 
 export const loadUserAndServer = () => async(dispatch) => {
     /*log(`loadUser...`);
@@ -24,6 +25,10 @@ export const loadUserAndServer = () => async(dispatch) => {
         log(`loadUser failed`);
         dispatch(action(USER_LOADED, {user: new User('', ''), server: {url: serverUrl}}));
     } */
+};
+
+export const clearIssue = () => async(dispatch) => {
+    dispatch(action(CLEAR_ISSUE));
 };
 
 export const login = (server, user) => async(dispatch, getState) => {
@@ -54,6 +59,8 @@ export const authReducer = (state = initialState, action) => {
             return {...state, user: payload.user, server: payload.server, token: payload.token, isLoading: false};
         case AUTH_FAILED:
             return {...state, issue: payload.issue, isLoading: false};
+        case CLEAR_ISSUE:
+            return {...state, issue: null};
         default:
             return state;
     }
