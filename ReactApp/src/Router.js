@@ -4,6 +4,7 @@ import {Login} from './auth/Login';
 import {getLogger} from './core/utils';
 import {TagList} from "./tag/TagList";
 import {TagEdit} from "./tag/TagEdit";
+import {MainMenu} from "./menu/MainMenu";
 import {NotificationClient} from "./tag/NotificationClient";
 import {Navigator} from 'react-native-deprecated-custom-components'
 
@@ -51,16 +52,43 @@ export class Router extends Component {
                 return <TagEdit
                     store={this.store}
                     navigator={navigator}/>;
+            case MainMenu.routeName:
+                return <MainMenu
+                    store={this.store}
+                    navigator={navigator}
+                    onTagMenuOpen={() => this.onTagMenuOpen()}
+                />;
             case TagList.routeName:
+                return <TagList
+                    store={this.store}
+                    navigator={navigator}/>;
             default:
                 return <TagList
                     store={this.store}
-                    navigator={navigator}/>
+                    navigator={navigator}/>;
         }
     };
 
     onAuthSucceeded() {
-        this.navigator.push(TagList.route);
+        this.navigator.push(MainMenu.route);
+        if (this.notificationClient) {
+            this.notificationClient.disconnect();
+        }
+        this.notificationClient = new NotificationClient(this.store);
+        this.notificationClient.connect();
+    }
+
+    pushView(route) {
+        this.navigator.push(route);
+        if (this.notificationClient) {
+            this.notificationClient.disconnect();
+        }
+        this.notificationClient = new NotificationClient(this.store);
+        this.notificationClient.connect();
+    }
+
+    onTagMenuOpen(){
+        this.navigator.push(MainMenu.route);
         if (this.notificationClient) {
             this.notificationClient.disconnect();
         }

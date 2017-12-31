@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, StyleSheet, ActivityIndicator} from 'react-native';
+import {Text, View, TextInput, ActivityIndicator} from 'react-native';
 import {login, loadUserAndServer, clearIssue} from './service';
 import {getLogger, registerRightAction, issueToText} from '../core/utils';
 import styles from '../core/styles';
