@@ -15,5 +15,9 @@ export class ResourceError extends ExtendableError {
 }
 
 // retrieve error message
-export const errorPayload =
-    (err) => err instanceof ResourceError ? {issue: err.issue}: {issue: {error: err.message}};
+export function errorPayload(err){
+    if (err.issue){
+        return {issue: err.issue[0].error};
+    }
+    return {issue: err.message};
+}

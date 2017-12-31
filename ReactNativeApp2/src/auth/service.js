@@ -1,7 +1,7 @@
 import {action} from "../core/redux_utils";
 import {getLogger} from "../core/utils";
 import {getToken} from "./resource";
-import {errorPayload} from "../core/errors";
+import {errorPayload, ResourceError} from "../core/errors";
 import {serverUrl} from "../core/api";
 import {User} from "./User";
 
@@ -24,7 +24,7 @@ export const login = (user) => async(dispatch, getState) => {
         dispatch(action(AUTH_SUCCEEDED, {user, token}));
     } catch (err) {
         log(`login failed`);
-        log(JSON.stringify(err));
+        log(JSON.stringify(errorPayload(err)));
         dispatch(action(AUTH_FAILED, errorPayload(err)));
     }
 };
