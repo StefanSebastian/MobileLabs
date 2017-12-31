@@ -6,6 +6,9 @@ import {View, Button} from 'react-native';
 const log = getLogger('menu/main');
 
 export class MainMenu extends Component {
+    static navigationOptions = {
+        title: 'Main menu',
+    };
 
     constructor(props) {
         super(props);

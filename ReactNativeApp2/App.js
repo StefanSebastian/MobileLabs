@@ -23,7 +23,19 @@ const Navigator = StackNavigator({
     MainMenu: {
         screen: MainMenu,
     }
-});
+
+    },
+    {
+        navigationOptions: {
+            headerStyle: {
+                marginTop: Expo.Constants.statusBarHeight
+            },
+            headerTitleStyle: {
+                alignSelf: "stretch"
+            }
+        }
+    }
+);
 
 export default class App extends Component{
     render(){

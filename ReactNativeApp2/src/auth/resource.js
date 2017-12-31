@@ -31,7 +31,7 @@ returns the created user
 export async function signUpCall(server, user) {
     const url = `${server.url}/api/auth/signup`;
     log(`signUp ${url}`);
-    
+
     let ok;
     let json = await fetch(url, {method: 'POST', headers, body: JSON.stringify(user)})
         .then(res => {

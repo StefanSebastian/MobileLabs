@@ -4,6 +4,7 @@ import {Text, View, TextInput, ActivityIndicator, Button} from 'react-native';
 import {getLogger, issueToText} from "../core/utils";
 import {clearIssue, login, signup} from "./service";
 import {displayAlert} from "../core/popups";
+import {styles} from "../core/styles";
 
 const log = getLogger('auth/login');
 
@@ -12,7 +13,7 @@ export class Login extends Component {
         title: 'Login',
     };
 
-    constructor(props){
+    constructor(props) {
         log('constructor');
         super(props);
 
@@ -20,10 +21,10 @@ export class Login extends Component {
         this.store = this.props.screenProps.store;
 
         //set initial state
-        this.state = {username:'', password:''};
+        this.state = {username: '', password: ''};
     }
 
-    componentWillMount(){
+    componentWillMount() {
         log('Component will mount');
 
         // get state from store
@@ -52,49 +53,69 @@ export class Login extends Component {
         const message = issueToText(state.issue);
         // build view
         return (
-         <View>
-              <ActivityIndicator size="large" animating={state.isLoading}/>
-              <Text>Username</Text>
-              <TextInput onChangeText={(text) => this.setState({...state, username: text})}/>
-              <Text>Password</Text>
-              <TextInput onChangeText={(text) => this.setState({...state, password: text})}/>
-              <Button title='Login' onPress={() => this.loginPressed()}/>
-              <Button title='Signup' onPress={() => this.signupPressed()}/>
-              {message && this.errorMessage(message)}
-          </View>
+            <View style={styles.content}>
+                <Text style={styles.text}>Username</Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => this.setState({...state, username: text})}/>
+
+                <Text style={styles.text}>Password</Text>
+                <TextInput
+                    style={styles.textInput}
+                    secureTextEntry={true}
+                    onChangeText={(text) => this.setState({...state, password: text})}/>
+
+                <View style={styles.button}>
+                    <Button
+                        title='Login'
+                        disabled={state.isLoading}
+                        onPress={() => this.loginPressed()}/>
+                </View>
+
+                <View style={styles.button}>
+                    <Button
+                        title='Signup'
+                        disabled={state.isLoading}
+                        onPress={() => this.signupPressed()}/>
+                </View>
+                {message && this.errorMessage(message)}
+                {state.isLoading && <ActivityIndicator size="large"/>}
+            </View>
         );
     }
 
     /*
     Called for every store change
      */
-    updateState(){
+    updateState() {
         const auth = this.store.getState().auth;
 
         // combine auth state with component state
         const state = {...this.state, ...auth};
 
+        log('state updated' + JSON.stringify(state));
+
         // set new state
         this.setState(state);
     }
 
-    errorMessage(message){
+    errorMessage(message) {
         const action = () => this.store.dispatch(clearIssue());
         displayAlert("Error", message, action);
     }
 
-    signupPressed(){
+    signupPressed() {
         log('Signup');
 
         const state = this.state;
-        this.store.dispatch(signup({username: state.username, password:state.password}));
+        this.store.dispatch(signup({username: state.username, password: state.password}));
     }
 
-    loginPressed(){
+    loginPressed() {
         log('Login');
 
         const state = this.state;
-        this.store.dispatch(login({username: state.username, password:state.password}))
+        this.store.dispatch(login({username: state.username, password: state.password}))
             .then(() => {
                 if (this.store.getState().auth.token) {
                     const {navigate} = this.props.navigation;
@@ -103,3 +124,4 @@ export class Login extends Component {
             });
     }
 }
+
