@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, TextInput, ActivityIndicator, Button} from 'react-native';
 
 import {getLogger, issueToText} from "../core/utils";
-import {clearIssue, login} from "./service";
+import {clearIssue, login, signup} from "./service";
 import {displayAlert} from "../core/popups";
 
 const log = getLogger('auth/login');
@@ -85,6 +85,9 @@ export class Login extends Component {
 
     signupPressed(){
         log('Signup');
+
+        const state = this.state;
+        this.store.dispatch(signup({username: state.username, password:state.password}));
     }
 
     loginPressed(){

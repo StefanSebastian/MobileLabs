@@ -45,7 +45,7 @@ export class AuthRouter extends Router {
         this.post('/signup', async(ctx, next) => {
             let data = ctx.request.body;
             let res = ctx.response;
-            
+
             if (!data.username || !data.password){
                 log('create /- 400 Bad request');
                 setIssueRes(res, BAD_REQUEST, [{error: 'Username or password is missing'}]);
@@ -54,9 +54,15 @@ export class AuthRouter extends Router {
                 setIssueRes(res, BAD_REQUEST, [{error: 'Password is too short'}]);
             }
             else {
-                let user = await this.userStore.insert(ctx.request.body);
-                ctx.response.body = {token: createToken(user)};
-                ctx.status = CREATED;
+                let userOld = await this.userStore.findOne({username:data.username});
+                if (userOld){
+                    log('create /- 400 Bad request');
+                    setIssueRes(res, BAD_REQUEST, [{error: 'Username is already taken'}]);
+                } else {
+                    let user = await this.userStore.insert(ctx.request.body);
+                    ctx.response.body = {token: createToken(user)};
+                    ctx.status = CREATED;
+                }
             }
         });
         this.post('/session', async(ctx, next) => {
