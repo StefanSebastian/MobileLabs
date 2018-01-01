@@ -18,5 +18,8 @@ export const styles = StyleSheet.create({
     },
     listItem: {
         margin: 10,
+    },
+    cardContent: {
+        fontSize: 15
     }
 });
