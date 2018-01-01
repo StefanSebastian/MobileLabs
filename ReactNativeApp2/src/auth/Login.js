@@ -93,7 +93,7 @@ export class Login extends Component {
         // combine auth state with component state
         const state = {...this.state, ...auth};
 
-        log('state updated' + JSON.stringify(state));
+        //log('state updated' + JSON.stringify(state));
 
         // set new state
         this.setState(state);

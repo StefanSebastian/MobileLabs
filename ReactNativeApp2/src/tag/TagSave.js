@@ -3,7 +3,7 @@ import {Button, Text, TextInput, View} from "react-native";
 import {Keyboard} from 'react-native';
 
 import {styles} from "../core/styles";
-import {saveTag} from "./service";
+import {addTag} from "./service";
 import {displayAlert} from "../core/popups";
 import {getLogger} from "../core/utils";
 import {Tag} from "./Tag";
@@ -64,7 +64,7 @@ export class TagSave extends Component{
         // combine auth state with component state
         const state = {...this.state, ...tag};
 
-        log('state updated' + JSON.stringify(state));
+       // log('state updated' + JSON.stringify(state));
 
         // set new state
         this.setState(state);
@@ -73,12 +73,6 @@ export class TagSave extends Component{
     addTagPressed(){
         log('Save tag');
 
-        this.store.dispatch(saveTag(new Tag(null, this.state.tagName, null)))
-            .then(() => {
-                if (this.state.issue === null) {
-                    const action = () => log('save finalized');
-                    displayAlert("Success", 'Tag was saved', action);
-                }
-            });
+        this.store.dispatch(addTag(new Tag(null, this.state.tagName, null)));
     }
 }

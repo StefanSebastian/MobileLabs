@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, View, FlatList, TextInput, Button, Text, ScrollView} from "react-native";
 
-import {cancelLoadTags, loadTags, saveTag} from "./service";
+import {cancelLoadTags, loadTags, addTag, cancelAddTag, clearNotification} from "./service";
 import {getLogger, issueToText} from "../core/utils";
 import {styles} from "../core/styles";
 import {displayAlert} from "../core/popups";
@@ -50,11 +50,14 @@ export class TagList extends Component {
         log('render');
         const state = this.state;
         let message = issueToText(state.issue);
+        let notification = state.notification;
         return (
             <ScrollView>
                 { this.state.isLoading && <ActivityIndicator animating={true} size="large"/> }
 
                 {message && this.errorMessage(message)}
+
+                {notification && this.notificationMessage(notification)}
 
                 <TagSave store={this.store}/>
 
@@ -73,11 +76,20 @@ export class TagList extends Component {
 
     componentWillUnmount() {
         log('componentWillUnmount');
+        this.notificationClient.disconnect();
+        this.cancelCalls();
+
         this.unsubscribe();
+    }
+
+    /*
+    cancels any ongoing calls
+     */
+    cancelCalls(){
         if (this.state.isLoading) {
             this.store.dispatch(cancelLoadTags());
+            this.store.dispatch(cancelAddTag());
         }
-        this.notificationClient.disconnect();
     }
 
     /*
@@ -89,7 +101,7 @@ export class TagList extends Component {
         // combine auth state with component state
         const state = {...this.state, ...tag};
 
-        log('state updated' + JSON.stringify(state));
+       // log('state updated' + JSON.stringify(state));
 
         // set new state
         this.setState(state);
@@ -104,11 +116,21 @@ export class TagList extends Component {
     }
 
     /*
+    notification popup
+     */
+    notificationMessage(message){
+        const action = () => this.store.dispatch(clearNotification());
+        displayAlert("Success", message, action);
+    }
+
+    /*
     Callback for when a tag from the flatlist is pressed
     navigates to TagDetail view and passes a parameter
      */
     onTagPressed(tag){
         log(tag.name + ' pressed');
+        this.cancelCalls();
+
         const {navigate} = this.props.navigation;
         navigate('TagDetail', {tag: tag});
     }
