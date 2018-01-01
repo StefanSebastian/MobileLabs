@@ -33,5 +33,18 @@ export const styles = StyleSheet.create({
     },
     tagItemView: {
         backgroundColor: "white",
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginTop: 10,
+        borderRadius: 2,
+        borderColor: '#b9c0cc',
+        borderWidth: 1,
+        shadowColor: 'rgba(0, 0, 0, 0.12)',
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        shadowOffset: {
+            height: 1,
+            width: 2,
+        },
     }
 });

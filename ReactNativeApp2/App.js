@@ -11,6 +11,7 @@ import {MainMenu} from "./src/menu/MainMenu";
 import {authReducer} from "./src/auth/service";
 import {tagReducer} from "./src/tag/service";
 import {TagList} from "./src/tag/TagList";
+import {TagDetail} from "./src/tag/TagDetail";
 
 
 // reducers for redux
@@ -27,6 +28,9 @@ const Navigator = StackNavigator({
     },
     TagList: {
         screen: TagList,
+    },
+    TagDetail: {
+        screen: TagDetail
     }
 
     },

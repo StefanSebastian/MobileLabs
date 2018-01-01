@@ -62,7 +62,8 @@ export class TagList extends Component {
                 <FlatList
                     data = {this.state.items}
                     keyExtractor = {this._keyExtractor}
-                    renderItem = { tag => <TagView tag={tag.item}/> }/>
+                    // render item with onTagPressed callback
+                    renderItem = { tag => <TagView tag={tag.item} onTagPressed = {() => this.onTagPressed(tag.item)}/> }/>
             </ScrollView>
         );
     }
@@ -102,6 +103,13 @@ export class TagList extends Component {
         displayAlert("Error", message, action);
     }
 
-
-
+    /*
+    Callback for when a tag from the flatlist is pressed
+    navigates to TagDetail view and passes a parameter
+     */
+    onTagPressed(tag){
+        log(tag.name + ' pressed');
+        const {navigate} = this.props.navigation;
+        navigate('TagDetail', {tag: tag});
+    }
 }
