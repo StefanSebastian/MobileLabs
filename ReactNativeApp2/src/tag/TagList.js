@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, View, FlatList} from "react-native";
+import {ActivityIndicator, View, FlatList, TextInput, Button, Text} from "react-native";
 
-import {cancelLoadTags, loadTags} from "./service";
+import {cancelLoadTags, loadTags, saveTag} from "./service";
 import {getLogger, issueToText} from "../core/utils";
 import {styles} from "../core/styles";
 import {displayAlert} from "../core/popups";
 import {clearIssue} from "./service";
 import {TagView} from "./TagView";
+import {Tag} from "./Tag";
+import {TagSave} from "./TagSave";
+
 
 const log = getLogger('tag/list');
 
@@ -38,12 +41,15 @@ export class TagList extends Component {
 
     render() {
         log('render');
-        let message = issueToText(this.state.issue);
+        const state = this.state;
+        let message = issueToText(state.issue);
         return (
-            <View style={styles.content}>
+            <View>
                 { this.state.isLoading && <ActivityIndicator animating={true} size="large"/> }
 
                 {message && this.errorMessage(message)}
+
+                <TagSave store={this.store}/>
 
                 <FlatList
                     data = {this.state.items}
@@ -53,6 +59,7 @@ export class TagList extends Component {
         );
     }
 
+    // sets the key for the FlatList component
     _keyExtractor = (item, index) => item.id;
 
     componentWillUnmount() {
@@ -85,5 +92,7 @@ export class TagList extends Component {
         const action = () => this.store.dispatch(clearIssue());
         displayAlert("Error", message, action);
     }
+
+
 
 }

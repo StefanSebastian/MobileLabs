@@ -4,6 +4,9 @@ import {ResourceError} from "../core/errors";
 
 const log = getLogger('tag/resource');
 
+/*
+Gets all tags
+ */
 export const getAllCall = async(server, token) => {
     const url = `${server.url}/api/tag`;
     log(`get ${url}`);
@@ -16,6 +19,24 @@ export const getAllCall = async(server, token) => {
         });
     return interpretResult('GET', url, ok, json);
 
+};
+
+/*
+Depending on the id field send a POST or PUT request for a tag
+ */
+export const saveOrUpdateCall = async(server, token, tag) => {
+    const body = JSON.stringify(tag);
+    const url = tag.id ? `${server.url}/api/tag/${tag.id}` : `${server.url}/api/tag`;
+    const method = tag.id ? 'PUT' : 'POST';
+
+    log(`${method} ${url}`);
+    let ok;
+    let json = await fetch(url, {method, headers: authHeaders(token), body})
+        .then(res => {
+            ok = res.ok;
+            return res.json();
+        });
+    return interpretResult(method, url, ok, json);
 };
 
 function interpretResult(method, url, result, json){
