@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import Card from "react-native-material-cards/Card";
-import CardContent from "react-native-material-cards/CardContent";
-import {Text} from "react-native";
+import {Text, View} from "react-native";
 
 import {getLogger} from "../core/utils";
 import {styles} from "../core/styles";
@@ -16,9 +14,9 @@ export class TagView extends Component {
 
     render(){
         return (
-            <Card>
-                <CardContent><Text style={styles.cardContent}>{this.props.tag.name}</Text></CardContent>
-            </Card>
+             <View style={styles.tagItemView}>
+                <Text style={styles.cardContent}>{this.props.tag.name}</Text>
+             </View>
         );
     }
 }

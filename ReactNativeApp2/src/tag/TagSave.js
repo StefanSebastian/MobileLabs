@@ -79,7 +79,6 @@ export class TagSave extends Component{
                     const action = () => log('save finalized');
                     displayAlert("Success", 'Tag was saved', action);
                 }
-                Keyboard.dismiss();
             });
     }
 }

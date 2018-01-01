@@ -15,7 +15,7 @@ import koaJwt from 'koa-jwt';
 const app = new Koa();
 const router = new Router();
 const server = http.createServer(app.callback());
-const io = socketIo(server);
+const io = socketIo(server, {pingTimeout: 30000});
 const log = getLogger('app');
 
 /*

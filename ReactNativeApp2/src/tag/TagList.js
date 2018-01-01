@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, View, FlatList, TextInput, Button, Text} from "react-native";
+import {ActivityIndicator, View, FlatList, TextInput, Button, Text, ScrollView} from "react-native";
 
 import {cancelLoadTags, loadTags, saveTag} from "./service";
 import {getLogger, issueToText} from "../core/utils";
@@ -9,6 +9,7 @@ import {clearIssue} from "./service";
 import {TagView} from "./TagView";
 import {Tag} from "./Tag";
 import {TagSave} from "./TagSave";
+import {NotificationClient} from "./NotificationClient";
 
 
 const log = getLogger('tag/list');
@@ -33,9 +34,15 @@ export class TagList extends Component {
 
     componentDidMount() {
         log('componentDidMount');
+
+        // subscribe to store updates
         const store = this.store;
         this.unsubscribe = store.subscribe(() => this.updateState());
         store.dispatch(loadTags());
+
+        // subscribe to server notifications
+        this.notificationClient = new NotificationClient(this.store);
+        this.notificationClient.connect();
     }
 
 
@@ -44,7 +51,7 @@ export class TagList extends Component {
         const state = this.state;
         let message = issueToText(state.issue);
         return (
-            <View>
+            <ScrollView>
                 { this.state.isLoading && <ActivityIndicator animating={true} size="large"/> }
 
                 {message && this.errorMessage(message)}
@@ -56,7 +63,7 @@ export class TagList extends Component {
                     data = {this.state.items}
                     keyExtractor = {this._keyExtractor}
                     renderItem = { tag => <TagView tag={tag.item}/> }/>
-            </View>
+            </ScrollView>
         );
     }
 
@@ -69,6 +76,7 @@ export class TagList extends Component {
         if (this.state.isLoading) {
             this.store.dispatch(cancelLoadTags());
         }
+        this.notificationClient.disconnect();
     }
 
     /*

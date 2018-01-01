@@ -22,12 +22,16 @@ export const styles = StyleSheet.create({
         margin: 10,
     },
     cardContent: {
-        fontSize: 15
+        fontSize: 20,
+        paddingTop: 10
     },
     tagSaveView: {
         backgroundColor: "white",
         marginTop: 40,
         marginBottom: 40,
         padding: 10
+    },
+    tagItemView: {
+        backgroundColor: "white",
     }
 });
