@@ -9,10 +9,12 @@ import thunk from 'redux-thunk';
 import {Login} from "./src/auth/Login";
 import {MainMenu} from "./src/menu/MainMenu";
 import {authReducer} from "./src/auth/service";
+import {tagReducer} from "./src/tag/service";
+import {TagList} from "./src/tag/TagList";
 
 
 // reducers for redux
-const rootReducer = combineReducers({auth: authReducer});
+const rootReducer = combineReducers({auth: authReducer, tag: tagReducer});
 // store for redux
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -22,6 +24,9 @@ const Navigator = StackNavigator({
     },
     MainMenu: {
         screen: MainMenu,
+    },
+    TagList: {
+        screen: TagList,
     }
 
     },

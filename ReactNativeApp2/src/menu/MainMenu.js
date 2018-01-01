@@ -20,13 +20,13 @@ export class MainMenu extends Component {
         return (
             <View>
                 <Button
-                    onPress={this.openExpenseMenu}
+                    onPress={() => this.openExpenseMenu()}
                     title="Expenses"
                     color="#841584"
                     accessibilityLabel="Open expense menu"
                 />
                 <Button
-                    onPress={this.openTagMenu}
+                    onPress={() => this.openTagMenu()}
                     title="Tags"
                     color="#841584"
                     accessibilityLabel="Open tag menu"
@@ -36,9 +36,12 @@ export class MainMenu extends Component {
     }
 
     openExpenseMenu(){
+
     }
 
     openTagMenu(){
+        const {navigate} = this.props.navigation;
+        navigate('TagList');
     }
 
 }
