@@ -9,7 +9,9 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        paddingTop: 10
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignSelf: "center"
     },
     textInput: {
         fontSize: 20,
@@ -21,5 +23,11 @@ export const styles = StyleSheet.create({
     },
     cardContent: {
         fontSize: 15
+    },
+    tagSaveView: {
+        backgroundColor: "white",
+        marginTop: 40,
+        marginBottom: 40,
+        padding: 10
     }
 });

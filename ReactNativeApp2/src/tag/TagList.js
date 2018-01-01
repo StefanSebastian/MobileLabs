@@ -51,6 +51,7 @@ export class TagList extends Component {
 
                 <TagSave store={this.store}/>
 
+                <Text style={styles.text}>All tags</Text>
                 <FlatList
                     data = {this.state.items}
                     keyExtractor = {this._keyExtractor}

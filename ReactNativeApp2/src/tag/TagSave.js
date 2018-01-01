@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Text, TextInput, View} from "react-native";
+import {Keyboard} from 'react-native';
 
 import {styles} from "../core/styles";
 import {saveTag} from "./service";
@@ -34,7 +35,7 @@ export class TagSave extends Component{
     render(){
         const state = this.state;
         return (
-            <View>
+            <View style={styles.tagSaveView}>
                 <Text style={styles.text}>Add a new tag</Text>
                 <TextInput
                     style={styles.textInput}
@@ -78,6 +79,7 @@ export class TagSave extends Component{
                     const action = () => log('save finalized');
                     displayAlert("Success", 'Tag was saved', action);
                 }
+                Keyboard.dismiss();
             });
     }
 }
