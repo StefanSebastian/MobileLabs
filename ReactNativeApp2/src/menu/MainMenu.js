@@ -4,7 +4,7 @@ import {Keyboard} from 'react-native';
 import {getLogger} from '../core/utils';
 import {View, Button} from 'react-native';
 import {styles} from "../core/styles";
-
+import {FadeInView} from "../animations/FadeInView";
 const log = getLogger('menu/main');
 
 export class MainMenu extends Component {
@@ -23,7 +23,7 @@ export class MainMenu extends Component {
     render() {
         log('render');
         return (
-            <View>
+            <FadeInView>
                 <View style={styles.button}>
                     <Button
                         onPress={() => this.openExpenseMenu()}
@@ -41,7 +41,7 @@ export class MainMenu extends Component {
                         accessibilityLabel="Open tag menu"
                     />
                 </View>
-            </View>
+            </FadeInView>
         );
     }
 

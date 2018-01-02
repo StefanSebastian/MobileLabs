@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View} from 'react-native';
-
+import {Button, View} from 'react-native';
 import { Bar } from 'react-native-pathjs-charts'
+
 import {getLogger} from "../core/utils";
 import {cancelLoadTags, loadTags} from "../tag/service";
 import {cancelLoadExpenses, loadExpenses} from "./service";
@@ -157,4 +157,5 @@ export class ExpenseChart extends Component {
             }
         }
     };
+
 }
