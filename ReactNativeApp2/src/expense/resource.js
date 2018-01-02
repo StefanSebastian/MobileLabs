@@ -35,3 +35,17 @@ export const addCall = async(server, token, expense) => {
         });
     return interpretResult(log, method, url, ok, json);
 };
+
+export const deleteCall = async(server, token, expense) => {
+    const url = `${server.url}/api/expense/${expense.id}`;
+    const method = 'DELETE';
+
+    log(`${method} ${url}`);
+    let ok;
+    let json = await fetch(url, {method, headers: authHeaders(token)})
+        .then(res => {
+            ok = res.ok;
+            return res.json();
+        });
+    return interpretResult(log, method, url, ok, json);
+};

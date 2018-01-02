@@ -4,7 +4,7 @@ import {Button, View, TextInput, ActivityIndicator, Text} from "react-native";
 import {styles} from "../core/styles";
 import {getLogger, issueToText} from "../core/utils";
 import {displayAlert} from "../core/popups";
-import {clearIssue, clearNotification} from "./service";
+import {cancelDeleteExpense, clearIssue, clearNotification, deleteExpense} from "./service";
 import {cancelLoadTags, loadTags} from "../tag/service";
 
 
@@ -79,8 +79,8 @@ export class ExpenseDetail extends Component {
         log(`componentWillUnmount`);
         if (this.state.isLoading){
             this.store.dispatch(cancelLoadTags());
+            this.store.dispatch(cancelDeleteExpense());
         }
-
         this.unsubscribe();
     }
 
@@ -128,6 +128,11 @@ export class ExpenseDetail extends Component {
     Delete the currently selected expense
      */
     deleteExpensePressed(){
-
+        this.store.dispatch(deleteExpense(this.expense)).then(() => {
+            if (this.state.issue === null) {
+                const {goBack} = this.props.navigation;
+                goBack();
+            }
+        });
     }
 }
