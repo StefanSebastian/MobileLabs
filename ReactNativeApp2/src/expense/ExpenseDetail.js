@@ -5,6 +5,7 @@ import {styles} from "../core/styles";
 import {getLogger, issueToText} from "../core/utils";
 import {displayAlert} from "../core/popups";
 import {clearIssue, clearNotification} from "./service";
+import {cancelLoadTags, loadTags} from "../tag/service";
 
 
 const log = getLogger('expense/detail');
@@ -24,10 +25,12 @@ export class ExpenseDetail extends Component {
 
         // get the store
         this.store = this.props.screenProps.store;
+        this.state = {category:''};
     }
 
     componentWillMount() {
         log('Component will mount');
+        this.store.dispatch(loadTags());
 
         // get state from store
         this.updateState();
@@ -53,8 +56,9 @@ export class ExpenseDetail extends Component {
 
                 {notification && this.notificationMessage(notification)}
 
-                <Text>{this.expense.amount}</Text>
-                <Text>{this.expense.timestamp}</Text>
+                <Text style={styles.text}>Amount: {this.expense.amount}</Text>
+                <Text style={styles.text}>{this.expense.timestamp}</Text>
+                <Text style={styles.text}>{this.state.category}</Text>
 
                 <View style={styles.button}>
                     <Button
@@ -74,7 +78,7 @@ export class ExpenseDetail extends Component {
     componentWillUnmount() {
         log(`componentWillUnmount`);
         if (this.state.isLoading){
-
+            this.store.dispatch(cancelLoadTags());
         }
 
         this.unsubscribe();
@@ -84,10 +88,18 @@ export class ExpenseDetail extends Component {
    Called for every store change
     */
     updateState() {
-        const expense = this.store.getState().expense;
+        const expenseStore = this.store.getState().expense;
+        const tagStore = this.store.getState().tag;
+        const tags = tagStore.items;
+
+        // get tag for this expense
+        let tag = tags.find((element) => element.id === this.expense.category);
+        if (!tag){
+            tag = '';
+        }
 
         // combine auth state with component state
-        const state = {...this.state, ...expense};
+        const state = {...this.state, ...expenseStore, category: tag.name};
 
         //log('state updated' + JSON.stringify(state));
 
