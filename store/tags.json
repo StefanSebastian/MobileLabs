@@ -1,8 +1,7 @@
 {"name":"Bills","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382815862,"_id":"C2S9eKSRLJOjXjwi"}
-{"name":"Food","user":"rJRUgeH2XtCqkbek","version":1,"updated":1514544462339,"_id":"DI4QrX9WZ3gisR91"}
-{"id":null,"name":"Food","version":1,"user":"WT1VWRiOzB5wQBWq","updated":1514833923192,"_id":"DLRNQZmGFPlceQoO"}
-{"_id":"Dai1cm3wTbhEIuRE","name":"Drinks","version":3,"user":"rJRUgeH2XtCqkbek","updated":1514544378546}
-{"name":"Bills","updated":1513423967809,"user":"BCQ7uasTK3zi78CW","version":1,"_id":"RWWiiqB2nGXvu88f"}
-{"name":"Entertainment","updated":1513423967806,"user":"X47al0hXhzhbRqKO","version":1,"_id":"SAEaGafK1UQ8Oz7N"}
 {"name":"Food","updated":1513423967803,"user":"X47al0hXhzhbRqKO","version":1,"_id":"g7StOV9MurWZgDmg"}
 {"name":"Entertainment","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514382827227,"_id":"vEP6p7xLk7lVQPps"}
+{"name":"Tst","user":"WT1VWRiOzB5wQBWq","version":1,"updated":1514892465975,"_id":"7V47q7PSaEyj8vky"}
+{"_id":"7V47q7PSaEyj8vky","name":"Tst2","version":2,"user":"WT1VWRiOzB5wQBWq","updated":1514892480548}
+{"_id":"7V47q7PSaEyj8vky","name":"TsrE","version":3,"user":"WT1VWRiOzB5wQBWq","updated":1514892505236}
+{"$$deleted":true,"_id":"7V47q7PSaEyj8vky"}

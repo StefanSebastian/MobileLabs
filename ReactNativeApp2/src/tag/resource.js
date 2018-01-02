@@ -1,5 +1,6 @@
 import {getLogger, interpretResult} from "../core/utils";
 import {authHeaders} from "../core/api";
+import {TagDto} from "./TagDto";
 
 const log = getLogger('tag/resource');
 
@@ -24,7 +25,14 @@ export const getAllCall = async(server, token) => {
 Depending on the id field send a POST or PUT request for a tag
  */
 export const saveOrUpdateCall = async(server, token, tag) => {
-    const body = JSON.stringify(tag);
+    let body;
+    if (tag.id){
+        let tagDto = new TagDto(tag.id, tag.name, tag.version);
+        body = JSON.stringify(tagDto);
+    } else {
+        body = JSON.stringify({name: tag.name});
+    }
+
     const url = tag.id ? `${server.url}/api/tag/${tag.id}` : `${server.url}/api/tag`;
     const method = tag.id ? 'PUT' : 'POST';
 
