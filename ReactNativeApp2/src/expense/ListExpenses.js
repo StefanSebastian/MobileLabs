@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, FlatList, ScrollView} from "react-native";
 
 import {getLogger, issueToText} from "../core/utils";
-import {NotificationClient} from "../tag/NotificationClient";
+import {NotificationClient} from "../core/NotificationClient";
 import {displayAlert} from "../core/popups";
 import {cancelLoadExpenses, clearIssue, clearNotification, loadExpenses} from "./service";
 import {ExpenseView} from "./ExpenseView";

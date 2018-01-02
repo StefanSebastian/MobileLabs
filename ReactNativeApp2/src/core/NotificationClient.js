@@ -1,14 +1,19 @@
-import {tagCreated, tagDeleted, tagUpdated} from "./service";
+import {tagCreated, tagDeleted, tagUpdated} from "../tag/service";
 
 const io = require('socket.io-client');
 
-import {getLogger} from "../core/utils";
+import {getLogger} from "./utils";
+import {expenseCreated, expenseDeleted, expenseUpdated} from "../expense/service";
 
 const log = getLogger('NotificationClient');
 
 const TAG_CREATED = 'tag/created';
 const TAG_UPDATED = 'tag/updated';
 const TAG_DELETED = 'tag/deleted';
+
+const EXPENSE_CREATED = 'expense/created';
+const EXPENSE_UPDATED = 'expense/updated';
+const EXPENSE_DELETED = 'expense/deleted';
 
 export class NotificationClient {
     constructor(store) {
@@ -41,6 +46,18 @@ export class NotificationClient {
         socket.on(TAG_DELETED, (tag) => {
             log(TAG_DELETED);
             store.dispatch(tagDeleted(tag))
+        });
+        socket.on(EXPENSE_CREATED, (expense) => {
+            log(EXPENSE_CREATED);
+            store.dispatch(expenseCreated(expense));
+        });
+        socket.on(EXPENSE_DELETED, (expense) => {
+           log(EXPENSE_DELETED);
+           store.dispatch(expenseDeleted(expense));
+        });
+        socket.on(EXPENSE_UPDATED, (expense) => {
+           log(EXPENSE_UPDATED);
+           store.dispatch(expenseUpdated(expense));
         });
     };
 

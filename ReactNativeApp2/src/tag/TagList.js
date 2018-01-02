@@ -9,7 +9,7 @@ import {clearIssue} from "./service";
 import {TagView} from "./TagView";
 import {Tag} from "./Tag";
 import {TagSave} from "./TagSave";
-import {NotificationClient} from "./NotificationClient";
+import {NotificationClient} from "../core/NotificationClient";
 
 
 const log = getLogger('tag/list');

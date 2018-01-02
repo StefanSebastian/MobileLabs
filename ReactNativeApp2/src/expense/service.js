@@ -18,6 +18,16 @@ const CANCEL_LOAD_EXPENSES = 'expense/cancelLoad';
 const CLEAR_ISSUE = 'expense/clearIssue';
 const CLEAR_NOTIFICATION = 'expense/clearNotification';
 
+// notifications
+const EXPENSE_UPDATED_ADDED = 'expense/updatedAdded';
+const EXPENSE_DELETED = 'expense/deleted';
+
+// socket notifications
+// update and add are treaded in the same case
+export const expenseCreated = (createdExpense) => action(EXPENSE_UPDATED_ADDED, convertExpense(createdExpense));
+export const expenseUpdated = (updatedExpense) => action(EXPENSE_UPDATED_ADDED, convertExpense(updatedExpense));
+export const expenseDeleted = (deletedExpense) => action(EXPENSE_DELETED, convertExpense(deletedExpense));
+
 // network calls
 export const loadExpenses = () => async(dispatch, getState) => {
     log('load expenses');
@@ -73,6 +83,26 @@ export const expenseReducer = (state = initialState, action) => {
             return {...state, issue: null};
         case CLEAR_NOTIFICATION:
             return {...state, notification: null};
+
+        // server notifications
+        case EXPENSE_UPDATED_ADDED:
+            let items = [...state.items];
+            let index = items.findIndex((i) => i.id === action.payload.id);
+            if (index !== -1) {
+                items.splice(index, 1, action.payload);
+            } else {
+                items.push(action.payload);
+            }
+            return {...state, items};
+        case EXPENSE_DELETED:
+            items = [...state.items];
+            const deletedExpense = action.payload;
+            index = state.items.findIndex((tag) => tag.id === deletedExpense.id);
+            if (index !== -1) {
+                items.splice(index, 1);
+                return {...state, items};
+            }
+            return state;
 
         default:
             return state;
