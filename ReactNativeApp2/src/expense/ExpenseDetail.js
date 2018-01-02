@@ -1,0 +1,121 @@
+import React, {Component} from 'react';
+import {Button, View, TextInput, ActivityIndicator, Text} from "react-native";
+
+import {styles} from "../core/styles";
+import {getLogger, issueToText} from "../core/utils";
+import {displayAlert} from "../core/popups";
+import {clearIssue, clearNotification} from "./service";
+
+
+const log = getLogger('expense/detail');
+
+export class ExpenseDetail extends Component {
+    // navigation header
+    static navigationOptions = ({ navigation }) => ({
+        title: `${navigation.state.params.expense.info}`,
+    });
+
+    constructor(props){
+        super(props);
+
+        // get the expense passed from parent view
+        const { params } = this.props.navigation.state;
+        this.expense = params.expense;
+
+        // get the store
+        this.store = this.props.screenProps.store;
+    }
+
+    componentWillMount() {
+        log('Component will mount');
+
+        // get state from store
+        this.updateState();
+    }
+
+    componentDidMount() {
+        log('componentDidMount');
+
+        // subscribe to store updates
+        const store = this.store;
+        this.unsubscribe = store.subscribe(() => this.updateState());
+    }
+
+    render(){
+        const state = this.state;
+        let message = issueToText(state.issue);
+        let notification = state.notification;
+        return (
+            <View>
+                {state.isLoading && <ActivityIndicator size="large"/>}
+
+                {message && this.errorMessage(message)}
+
+                {notification && this.notificationMessage(notification)}
+
+                <Text>{this.expense.amount}</Text>
+                <Text>{this.expense.timestamp}</Text>
+
+                <View style={styles.button}>
+                    <Button
+                        onPress={() => this.deleteExpensePressed()}
+                        title="Delete expense"
+                        color="#841584"
+                        disabled={state.isLoading}
+                    />
+                </View>
+            </View>
+        );
+    }
+
+    /*
+    Unsubscribe from store updates
+     */
+    componentWillUnmount() {
+        log(`componentWillUnmount`);
+        if (this.state.isLoading){
+
+        }
+
+        this.unsubscribe();
+    }
+
+    /*
+   Called for every store change
+    */
+    updateState() {
+        const expense = this.store.getState().expense;
+
+        // combine auth state with component state
+        const state = {...this.state, ...expense};
+
+        //log('state updated' + JSON.stringify(state));
+
+        // set new state
+        this.setState(state);
+    }
+
+
+    /*
+  Error popup
+   */
+    errorMessage(message) {
+        const action = () => this.store.dispatch(clearIssue());
+        displayAlert("Error", message, action);
+    }
+
+    /*
+    notification popup
+     */
+    notificationMessage(message){
+        const action = () => this.store.dispatch(clearNotification());
+        displayAlert("Success", message, action);
+    }
+
+    /*
+    Delete the currently selected expense
+     */
+    deleteExpensePressed(){
+
+    }
+}

@@ -16,6 +16,7 @@ import {ExpenseMenu} from "./src/expense/ExpenseMenu";
 import {expenseReducer} from "./src/expense/service";
 import {ListExpenses} from "./src/expense/ListExpenses";
 import {AddExpense} from "./src/expense/AddExpense";
+import {ExpenseDetail} from "./src/expense/ExpenseDetail";
 
 
 // reducers for redux
@@ -44,6 +45,9 @@ const Navigator = StackNavigator({
     },
     AddExpense: {
         screen: AddExpense
+    },
+    ExpenseDetail: {
+        screen: ExpenseDetail
     }
 
     },

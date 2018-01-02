@@ -73,9 +73,7 @@ export class ListExpenses extends Component {
         log('componentWillUnmount');
         this.notificationClient.disconnect();
 
-        if (this.state.isLoading){
-            this.store.dispatch(cancelLoadExpenses());
-        }
+        this.cancelCalls();
 
         this.unsubscribe();
     }
@@ -105,7 +103,18 @@ export class ListExpenses extends Component {
         displayAlert("Success", message, action);
     }
 
+    cancelCalls(){
+        if (this.state.isLoading){
+            this.store.dispatch(cancelLoadExpenses());
+        }
+    }
+
     onExpensePressed(expense){
         log(JSON.stringify(expense) + ' pressed');
+
+        this.cancelCalls();
+
+        const {navigate} = this.props.navigation;
+        navigate('ExpenseDetail', {expense: expense});
     }
 }
