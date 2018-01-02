@@ -72,7 +72,6 @@ export class TagSave extends Component{
 
     addTagPressed(){
         log('Save tag');
-
         this.store.dispatch(addTag(new Tag(null, this.state.tagName, null)));
     }
 }

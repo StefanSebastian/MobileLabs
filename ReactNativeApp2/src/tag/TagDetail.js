@@ -3,8 +3,9 @@ import {Button, View, TextInput, ActivityIndicator} from "react-native";
 
 import {styles} from "../core/styles";
 import {displayAlert} from "../core/popups";
-import {cancelDeleteTag, deleteTag} from "./service";
+import {cancelDeleteTag, cancelUpdateTag, deleteTag, updateTag} from "./service";
 import {getLogger} from "../core/utils";
+import {Tag} from "./Tag";
 
 const log = getLogger('tag/detail');
 
@@ -47,6 +48,7 @@ export class TagDetail extends Component {
 
                 <TextInput
                     style={styles.textInput}
+                    placeholder = "New name for tag"
                     onChangeText={(text) => this.setState({...state, tagName: text})}
                 />
 
@@ -56,7 +58,15 @@ export class TagDetail extends Component {
                         title="Delete tag"
                         color="#841584"
                         disabled={state.isLoading}
-                        accessibilityLabel="Open tag menu"
+                    />
+                </View>
+
+                <View style={styles.button}>
+                    <Button
+                        onPress={() => this.updateTagPressed()}
+                        title="Update tag"
+                        color="#841584"
+                        disabled={state.isLoading}
                     />
                 </View>
             </View>
@@ -71,6 +81,7 @@ export class TagDetail extends Component {
         if (this.state.isLoading){
             log('Canceling delete call');
             this.store.dispatch(cancelDeleteTag());
+            this.store.dispatch(cancelUpdateTag());
         }
 
         this.unsubscribe();
@@ -101,5 +112,18 @@ export class TagDetail extends Component {
                 goBack();
             }
         });
+    }
+
+    /*
+    Update the currently selected tag
+     */
+    updateTagPressed(){
+        let newTag = new Tag(this.tag.id, this.state.tagName, this.tag.version);
+        this.store.dispatch(updateTag(newTag)).then(() => {
+            if (this.state.issue === null){
+                const {goBack} = this.props.navigation;
+                goBack();
+            }
+        })
     }
 }

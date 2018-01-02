@@ -105,6 +105,25 @@ export const deleteTag = (tag) => async(dispatch, getState) => {
     }
 };
 
+export const updateTag = (tag) => async(dispatch, getState) => {
+    log('update tag');
+
+    const state = getState();
+
+    try {
+        dispatch(action(UPDATE_TAG_STARTED));
+        await saveOrUpdateCall(state.auth.server, state.auth.token, tag);
+
+        if (!getState().tag.isUpdateCancelled){
+            dispatch(action(UPDATE_TAG_SUCCEEDED));
+        }
+    } catch (err){
+        if (!getState().tag.isUpdateCancelled){
+            dispatch(action(UPDATE_TAG_FAILED, errorPayload(err)));
+        }
+    }
+};
+
 // cancel operations
 export const cancelLoadTags = () => action(CANCEL_LOAD_TAGS);
 export const cancelAddTag = () => action(CANCEL_ADD_TAG);
@@ -164,6 +183,12 @@ export const tagReducer = (state = initialState, action) => {
             return {...state, isLoading: false, isAddCancelled: true};
 
         // update
+        case UPDATE_TAG_STARTED:
+            return {...state, isLoading: true, issue: null, isUpdateCancelled: false};
+        case UPDATE_TAG_SUCCEEDED:
+            return {...state, isLoading: false, notification:'Successful update'};
+        case UPDATE_TAG_FAILED:
+            return {...state, isLoading: false, issue: action.payload.issue};
         case CANCEL_UPDATE_TAG:
             return {...state, isLoading: false, isUpdateCancelled: true};
 

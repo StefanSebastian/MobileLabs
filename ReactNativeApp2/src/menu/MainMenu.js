@@ -46,7 +46,8 @@ export class MainMenu extends Component {
     }
 
     openExpenseMenu(){
-
+        const {navigate} = this.props.navigation;
+        navigate('ExpenseMenu');
     }
 
     openTagMenu(){

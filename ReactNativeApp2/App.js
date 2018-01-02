@@ -12,10 +12,13 @@ import {authReducer} from "./src/auth/service";
 import {tagReducer} from "./src/tag/service";
 import {TagList} from "./src/tag/TagList";
 import {TagDetail} from "./src/tag/TagDetail";
+import {ExpenseMenu} from "./src/expense/ExpenseMenu";
+import {expenseReducer} from "./src/expense/service";
+import {ListExpenses} from "./src/expense/ListExpenses";
 
 
 // reducers for redux
-const rootReducer = combineReducers({auth: authReducer, tag: tagReducer});
+const rootReducer = combineReducers({auth: authReducer, tag: tagReducer, expense: expenseReducer});
 // store for redux
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -31,6 +34,12 @@ const Navigator = StackNavigator({
     },
     TagDetail: {
         screen: TagDetail
+    },
+    ExpenseMenu: {
+        screen: ExpenseMenu
+    },
+    ListExpenses: {
+        screen: ListExpenses
     }
 
     },
