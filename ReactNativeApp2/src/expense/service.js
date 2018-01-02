@@ -46,7 +46,8 @@ export const loadExpenses = () => async(dispatch, getState) => {
             dispatch(action(LOAD_EXPENSES_SUCCEEDED, newExpenses));
         }
     } catch(err) {
-        if (!getState().tag.isLoadingCancelled){
+        log('Loading cancelled : ' + getState().expense.isLoadingCancelled);
+        if (!getState().expense.isLoadingCancelled){
             dispatch(action(LOAD_EXPENSES_FAILED, errorPayload(err)));
         }
     }
