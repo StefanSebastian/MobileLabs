@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
-import {getLogger} from "../core/utils";
+import {ActivityIndicator, FlatList, ScrollView} from "react-native";
+
+import {getLogger, issueToText} from "../core/utils";
 import {NotificationClient} from "../tag/NotificationClient";
+import {displayAlert} from "../core/popups";
+import {cancelLoadExpenses, clearIssue, clearNotification, loadExpenses} from "./service";
+import {ExpenseView} from "./ExpenseView";
 
 const log = getLogger('expense/list');
 
@@ -32,12 +37,45 @@ export class ListExpenses extends Component {
         // subscribe to server notifications
         this.notificationClient = new NotificationClient(this.store);
         this.notificationClient.connect();
+
+        // load expenses
+        store.dispatch(loadExpenses());
     }
 
+    render(){
+        log('render');
+        const state = this.state;
+        let message = issueToText(state.issue);
+        let notification = state.notification;
+        return (
+            <ScrollView>
+                { this.state.isLoading && <ActivityIndicator animating={true} size="large"/> }
+
+                {message && this.errorMessage(message)}
+
+                {notification && this.notificationMessage(notification)}
+
+                <FlatList
+                    data = {this.state.items}
+                    keyExtractor = {this._keyExtractor}
+                    // render item with onExpensePressed callback
+                    renderItem = { expense => <ExpenseView expense={expense.item}
+                                                           onExpensePressed = {() => this.onExpensePressed(expense.item)}/> }
+                />
+            </ScrollView>
+        );
+    }
+
+    // sets the key for the FlatList component
+    _keyExtractor = (item, index) => item.id;
 
     componentWillUnmount() {
         log('componentWillUnmount');
         this.notificationClient.disconnect();
+
+        if (this.state.isLoading){
+            this.store.dispatch(cancelLoadExpenses());
+        }
 
         this.unsubscribe();
     }
@@ -55,5 +93,19 @@ export class ListExpenses extends Component {
 
         // set new state
         this.setState(state);
+    }
+
+    errorMessage(message){
+        const action = () => this.store.dispatch(clearIssue());
+        displayAlert("Error", message, action);
+    }
+
+    notificationMessage(message){
+        const action = () => this.store.dispatch(clearNotification());
+        displayAlert("Success", message, action);
+    }
+
+    onExpensePressed(expense){
+        log(JSON.stringify(expense) + ' pressed');
     }
 }

@@ -1,6 +1,5 @@
-import {getLogger} from "../core/utils";
+import {getLogger, interpretResult} from "../core/utils";
 import {authHeaders} from "../core/api";
-import {ResourceError} from "../core/errors";
 
 const log = getLogger('tag/resource');
 
@@ -17,7 +16,7 @@ export const getAllCall = async(server, token) => {
             ok = res.ok;
             return res.json();
         });
-    return interpretResult('GET', url, ok, json);
+    return interpretResult(log, 'GET', url, ok, json);
 
 };
 
@@ -36,7 +35,7 @@ export const saveOrUpdateCall = async(server, token, tag) => {
             ok = res.ok;
             return res.json();
         });
-    return interpretResult(method, url, ok, json);
+    return interpretResult(log, method, url, ok, json);
 };
 
 /*
@@ -53,15 +52,5 @@ export const deleteCall = async(server, token, tag) => {
             ok = res.ok;
             return res.json;
         });
-    return interpretResult(method, url, ok, json);
+    return interpretResult(log, method, url, ok, json);
 };
-
-function interpretResult(method, url, result, json){
-    if (result) {
-        log(`${method} ${url} succeeded`);
-        return json;
-    } else {
-        log(`${method} ${url} failed`);
-        throw new ResourceError('Fetch failed', json.issue);
-    }
-}

@@ -52,7 +52,8 @@ export class ExpenseMenu extends Component {
     }
 
     openListExpenses(){
-
+        const {navigate} = this.props.navigation;
+        navigate('ListExpenses');
     }
 
     openChartExpenses(){
