@@ -16,7 +16,9 @@ export const styles = StyleSheet.create({
     textInput: {
         fontSize: 20,
         paddingTop: 10,
-        height: 50
+        height: 50,
+        marginLeft: 10,
+        marginRight: 10
     },
     listItem: {
         margin: 10,

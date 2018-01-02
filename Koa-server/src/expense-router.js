@@ -43,7 +43,7 @@ export class ExpenseRouter extends Router {
                 this.setExpenseRes(res, OK, expense);
             } else {
                 log('read /:id - 404 Not Found');
-                setIssueRes(res, NOT_FOUND, [{warning: 'Expense not found'}]);
+                setIssueRes(res, NOT_FOUND, [{error: 'Expense not found'}]);
             }
         }).post('/', async(ctx) => {
             let decoded = getDecodedTokenFromRequest(ctx);
@@ -66,7 +66,7 @@ export class ExpenseRouter extends Router {
                 }
             } else {
                     log('invalid tag for user');
-                    setIssueRes(res, NOT_FOUND, [{warning: 'Tag was not found for user'}]);
+                    setIssueRes(res, NOT_FOUND, [{error: 'Tag was not found for user'}]);
             }
         }).put('/:id', async(ctx) => {
             // get the new expense from body

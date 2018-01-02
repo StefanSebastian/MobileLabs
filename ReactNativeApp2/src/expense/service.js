@@ -1,6 +1,6 @@
 import {action} from "../core/redux_utils";
 import {getLogger} from "../core/utils";
-import {getAllCall} from "./resource";
+import {addCall, getAllCall} from "./resource";
 import {errorPayload} from "../core/errors";
 import {Expense} from "./Expense";
 
@@ -11,8 +11,14 @@ const LOAD_EXPENSES_STARTED = 'expense/loadStarted';
 const LOAD_EXPENSES_SUCCEEDED = 'expense/loadSucceeded';
 const LOAD_EXPENSES_FAILED = 'expense/loadFailed';
 
+// Add expense
+const ADD_EXPENSE_STARTED = 'expense/addStarted';
+const ADD_EXPENSE_SUCCEEDED = 'expense/addSucceeded';
+const ADD_EXPENSE_FAILED = 'expense/addFailed';
+
 // cancel operations
 const CANCEL_LOAD_EXPENSES = 'expense/cancelLoad';
+const CANCEL_ADD_EXPENSE = 'expense/cancelAdd';
 
 // clear issues
 const CLEAR_ISSUE = 'expense/clearIssue';
@@ -53,6 +59,26 @@ export const loadExpenses = () => async(dispatch, getState) => {
     }
 };
 
+export const addExpense = (expense) => async(dispatch, getState) => {
+    log('load expenses');
+
+    const state = getState();
+
+    try {
+        dispatch(action(ADD_EXPENSE_STARTED));
+        await addCall(state.auth.server, state.auth.token, expense);
+
+        if (!getState().expense.isAddCancelled){
+            dispatch(action(ADD_EXPENSE_SUCCEEDED));
+        }
+    } catch(err) {
+        if (!getState().expense.isAddCancelled){
+            dispatch(action(ADD_EXPENSE_FAILED, errorPayload(err)));
+        }
+    }
+};
+
+
 function convertExpense(expense){
     return new Expense(expense._id, expense.info, expense.tagId, expense.amount, expense.timestamp);
 }
@@ -64,8 +90,10 @@ export const clearNotification = () => action(CLEAR_NOTIFICATION);
 
 // cancel ops
 export const cancelLoadExpenses = () => action(CANCEL_LOAD_EXPENSES);
+export const cancelAddExpense = () => action(CANCEL_ADD_EXPENSE);
 
-const initialState = {items: [], isLoading: false, issue: null, notification: null, isLoadingCancelled: false};
+const initialState = {items: [], isLoading: false, issue: null,
+    notification: null, isLoadingCancelled: false, isAddCancelled: false};
 
 export const expenseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -78,6 +106,16 @@ export const expenseReducer = (state = initialState, action) => {
             return {...state, isLoading: false, issue: action.payload.issue};
         case CANCEL_LOAD_EXPENSES:
             return {...state, isLoading: false, isLoadingCancelled: true};
+
+        // add expense
+        case ADD_EXPENSE_STARTED:
+            return {...state, isLoading: true, issue: null, isAddCancelled: false};
+        case ADD_EXPENSE_SUCCEEDED:
+            return {...state, isLoading: false, notification: "Add succesful"};
+        case ADD_EXPENSE_FAILED:
+            return {...state, isLoading: false, issue: action.payload.issue};
+        case CANCEL_ADD_EXPENSE:
+            return {...state, isLoading: false, isAddCancelled: true};
 
         // clear messages
         case CLEAR_ISSUE:
