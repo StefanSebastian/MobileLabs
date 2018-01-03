@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Tag;
+import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Popups;
 import com.example.sebi.androidappreactive.utils.Utils;
@@ -90,7 +91,8 @@ public class TagListActivity extends AppCompatActivity implements ServiceConnect
 
         // get realm and the initial values for the tags
         mRealm = Realm.getDefaultInstance();
-        mTags = mRealm.where(Tag.class).findAll();
+        User loggedUser = mRealm.where(User.class).findFirst();
+        mTags = mRealm.where(Tag.class).equalTo("userId", loggedUser.getId()).findAll();
 
         setTitle("Tag list");
 

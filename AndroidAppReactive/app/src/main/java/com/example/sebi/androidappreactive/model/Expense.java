@@ -26,6 +26,9 @@ public class Expense extends RealmObject{
     @Required
     private String tagId;
 
+    @Required
+    private String userId;
+
     public Expense() {
     }
 
@@ -86,5 +89,13 @@ public class Expense extends RealmObject{
                 ", amount=" + amount +
                 ", tagId='" + tagId + '\'' +
                 '}';
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

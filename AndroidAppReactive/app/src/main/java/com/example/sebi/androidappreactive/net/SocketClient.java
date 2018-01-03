@@ -116,6 +116,7 @@ public class SocketClient {
             tagDto.setmId(obj.getString("_id"));
             tagDto.setmName(obj.getString("name"));
             tagDto.setmVersion(obj.getInt("version"));
+            tagDto.setmUserId(obj.getString("user"));
             Log.d(TAG, String.format("readTag %s", obj.toString()));
             return tagDto;
         } catch (JSONException e) {
@@ -132,6 +133,7 @@ public class SocketClient {
             expenseDto.setmInfo(obj.getString("info"));
             expenseDto.setmTagId(obj.getString("tagId"));
             expenseDto.setmAmount(obj.getDouble("amount"));
+            expenseDto.setmUserId(obj.getString("user"));
 
             Date date = Utils.getDefaultDateFormat().parse(obj.getString("timestamp"));
 

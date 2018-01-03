@@ -13,8 +13,12 @@ public class TokenDto {
     @SerializedName("token")
     private String token;
 
-    public TokenDto(String token) {
+    @SerializedName("id")
+    private String userId;
+
+    public TokenDto(String token, String userId) {
         this.token = token;
+        this.userId = userId;
     }
 
     public TokenDto() {
@@ -33,5 +37,13 @@ public class TokenDto {
         return "TokenDto{" +
                 "token='" + token + '\'' +
                 '}';
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

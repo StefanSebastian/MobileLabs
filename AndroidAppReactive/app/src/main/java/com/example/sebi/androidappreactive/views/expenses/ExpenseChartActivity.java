@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.example.sebi.androidappreactive.R;
 import com.example.sebi.androidappreactive.model.Expense;
 import com.example.sebi.androidappreactive.model.Tag;
+import com.example.sebi.androidappreactive.model.User;
 import com.example.sebi.androidappreactive.service.SpenderService;
 import com.example.sebi.androidappreactive.utils.Utils;
 
@@ -53,7 +54,8 @@ public class ExpenseChartActivity extends AppCompatActivity implements ServiceCo
 
         // local storage
         mRealm = Realm.getDefaultInstance();
-        mExpenses = mRealm.where(Expense.class).findAll();
+        User loggedUser = mRealm.where(User.class).findFirst();
+        mExpenses = mRealm.where(Expense.class).equalTo("userId", loggedUser.getId()).findAll();
 
         // init chart
         mPieChart = findViewById(R.id.expenseChart);

@@ -18,6 +18,9 @@ public class Tag extends RealmObject{
     @Required
     private Integer version;
 
+    @Required
+    private String userId;
+
     public Tag() {
     }
 
@@ -58,5 +61,13 @@ public class Tag extends RealmObject{
                 ", name='" + name + '\'' +
                 ", version=" + version +
                 '}';
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

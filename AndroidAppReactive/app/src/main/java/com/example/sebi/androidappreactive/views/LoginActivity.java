@@ -159,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                             mRealm.executeTransactionAsync(
                                 realm -> {
                                     user.setToken(token.getToken());
+                                    user.setId(token.getUserId());
                                     realm.copyToRealmOrUpdate(user);
                                 });
                             showLoading(false);

@@ -25,6 +25,9 @@ public class ExpenseDto {
     @SerializedName("tagId")
     private String mTagId;
 
+    @SerializedName("user")
+    private String mUserId;
+
     public ExpenseDto() {
     }
 
@@ -75,6 +78,15 @@ public class ExpenseDto {
         expense.setInfo(mInfo);
         expense.setTagId(mTagId);
         expense.setTimestamp(mTimestamp);
+        expense.setUserId(mUserId);
         return expense;
+    }
+
+    public String getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
     }
 }

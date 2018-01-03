@@ -30,8 +30,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 
-import static android.view.View.GONE;
-
 /**
  * Created by Sebi on 23-Dec-17.
  */

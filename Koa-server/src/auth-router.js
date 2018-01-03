@@ -75,7 +75,7 @@ export class AuthRouter extends Router {
             let user = await this.userStore.findOne({username:reqBody.username});
             if (user && user.password == reqBody.password){
                 ctx.status = CREATED;
-                ctx.response.body = {token: createToken(user)};
+                ctx.response.body = {token: createToken(user), id: user._id};
                 log('session - token created');
             } else {
                 log('session - wrong password');

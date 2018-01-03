@@ -18,6 +18,9 @@ public class User extends RealmObject{
     @Required
     private String token;
 
+    @Required
+    private String id;
+
     public User() {
     }
 
@@ -49,5 +52,13 @@ public class User extends RealmObject{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

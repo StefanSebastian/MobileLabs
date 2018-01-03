@@ -17,6 +17,9 @@ public class TagDto {
     @SerializedName("version")
     private Integer mVersion;
 
+    @SerializedName("user")
+    private String mUserId;
+
     public TagDto() {
     }
 
@@ -64,8 +67,16 @@ public class TagDto {
         tag.setId(mId);
         tag.setName(mName);
         tag.setVersion(mVersion);
+        tag.setUserId(mUserId);
         return tag;
     }
 
 
+    public String getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
+    }
 }
