@@ -4,6 +4,7 @@ import {getToken, signUpCall} from "./resource";
 import {errorPayload, ResourceError} from "../core/errors";
 import {serverUrl} from "../core/api";
 import {User} from "./User";
+import {readToken, readUser, saveToken, saveUser} from "../core/storage";
 
 const log = getLogger('auth/service');
 
@@ -17,6 +18,8 @@ const SIGNUP_STARTED = 'signup/started';
 const SIGNUP_SUCCEEDED = 'signup/succeeded';
 const SIGNUP_FAILED = 'signup/failed';
 
+const USER_LOADED = 'user/loaded';
+
 /*
 A function that dispatches login actions
  */
@@ -24,9 +27,12 @@ export const login = (user) => async(dispatch) => {
     log('login');
     try {
         dispatch(action(AUTH_STARTED));
+
         let token = await getToken({url:serverUrl}, user);
         log(`login succeeded`);
         dispatch(action(AUTH_SUCCEEDED, {user, token}));
+
+        await Promise.all([saveUser(user), saveToken(token)]);
     } catch (err) {
         log(`login failed`);
         log(JSON.stringify(errorPayload(err)));
@@ -48,6 +54,24 @@ export const signup = (user) => async(dispatch) => {
         log('signup failed');
         log(JSON.stringify(errorPayload(err)));
         dispatch(action(SIGNUP_FAILED, errorPayload(err)));
+    }
+};
+
+/*
+Load user from local storage
+ */
+export const loadUser = () => async(dispatch) => {
+    log('loadUser');
+    try {
+        let result = await Promise.all([readUser(), readToken()]);
+        log('loaded : ' + JSON.stringify(result));
+        let user = result[0];
+        let token = result[1];
+        if (user && token){
+            dispatch(action(USER_LOADED, {user, token}));
+        }
+    } catch (err){
+        log('error loading:' + JSON.stringify(errorPayload(err)));
     }
 };
 
@@ -77,6 +101,8 @@ export const authReducer = (state = initialState, action) => {
             return {...state, issue: payload.issue, isLoading: false};
         case SIGNUP_SUCCEEDED:
             return {...state, issue: 'Successful signup', isLoading: false};
+        case USER_LOADED:
+            return {...state, user: payload.user, token: payload.token};
         default:
             return state;
     }

@@ -78,11 +78,9 @@ export class TagDetail extends Component {
      */
     componentWillUnmount() {
         log(`componentWillUnmount`);
-        if (this.state.isLoading){
-            log('Canceling delete call');
-            this.store.dispatch(cancelDeleteTag());
-            this.store.dispatch(cancelUpdateTag());
-        }
+        log('Canceling calls');
+        this.store.dispatch(cancelDeleteTag());
+        this.store.dispatch(cancelUpdateTag());
 
         this.unsubscribe();
     }

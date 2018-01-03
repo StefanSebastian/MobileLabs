@@ -77,10 +77,10 @@ export class ExpenseDetail extends Component {
      */
     componentWillUnmount() {
         log(`componentWillUnmount`);
-        if (this.state.isLoading){
-            this.store.dispatch(cancelLoadTags());
-            this.store.dispatch(cancelDeleteExpense());
-        }
+
+        this.store.dispatch(cancelLoadTags());
+        this.store.dispatch(cancelDeleteExpense());
+
         this.unsubscribe();
     }
 

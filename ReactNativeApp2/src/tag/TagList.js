@@ -86,10 +86,8 @@ export class TagList extends Component {
     cancels any ongoing calls
      */
     cancelCalls(){
-        if (this.state.isLoading) {
-            this.store.dispatch(cancelLoadTags());
-            this.store.dispatch(cancelAddTag());
-        }
+        this.store.dispatch(cancelLoadTags());
+        this.store.dispatch(cancelAddTag());
     }
 
     /*

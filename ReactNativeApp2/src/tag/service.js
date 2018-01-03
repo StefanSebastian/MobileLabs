@@ -147,20 +147,20 @@ function convertTag(tag) {
     return new Tag(tag._id, tag.name, tag.version);
 }
 
-const initialState = {items: [], isLoading: false, isLoadingCancelled: false,
+const initialState = {items: [], isLoading: false, isLoadingCancelled: false, isRefreshingTags:false,
     isDeleteCancelled: false, isAddCancelled: false, isUpdateCancelled: false};
 
 export const tagReducer = (state = initialState, action) => {
     switch (action.type) {
         // Loading
         case LOAD_TAGS_STARTED:
-            return {...state, isLoading: true, isLoadingCancelled: false, issue: null};
+            return {...state, isRefreshingTags: true, isLoadingCancelled: false};
         case LOAD_TAGS_SUCCEEDED:
-            return {...state, items: action.payload, isLoading: false};
+            return {...state, items: action.payload, isRefreshingTags: false};
         case LOAD_TAGS_FAILED:
-            return {...state, issue: action.payload.issue, isLoading: false};
+            return {...state, isRefreshingTags: false};
         case CANCEL_LOAD_TAGS:
-            return {...state, isLoading: false, isLoadingCancelled: true};
+            return {...state, isRefreshingTags: false, isLoadingCancelled: true};
 
         // delete
         case DELETE_TAG_STARTED:

@@ -99,10 +99,8 @@ export class AddExpense extends Component {
         log('componentWillUnmount');
         this.notificationClient.disconnect();
 
-        if (this.state.isLoading){
-            this.store.dispatch(cancelLoadTags());
-            this.store.dispatch(cancelAddExpense());
-        }
+        this.store.dispatch(cancelLoadTags());
+        this.store.dispatch(cancelAddExpense());
 
         this.unsubscribe();
     }

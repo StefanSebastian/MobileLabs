@@ -118,20 +118,20 @@ export const cancelLoadExpenses = () => action(CANCEL_LOAD_EXPENSES);
 export const cancelAddExpense = () => action(CANCEL_ADD_EXPENSE);
 export const cancelDeleteExpense = () => action(CANCEL_DELETE_EXPENSE);
 
-const initialState = {items: [], isLoading: false, issue: null,
+const initialState = {items: [], isLoading: false, issue: null, isRefreshingExpenses: false,
     notification: null, isLoadingCancelled: false, isAddCancelled: false};
 
 export const expenseReducer = (state = initialState, action) => {
     switch (action.type) {
         // load expenses
         case LOAD_EXPENSES_STARTED:
-            return {...state, isLoading: true, issue: null, isLoadingCancelled: false};
+            return {...state, isRefreshingExpenses: true, isLoadingCancelled: false};
         case LOAD_EXPENSES_SUCCEEDED:
-            return {...state, isLoading: false, items: action.payload};
+            return {...state, isRefreshingExpenses: false, items: action.payload};
         case LOAD_EXPENSES_FAILED:
-            return {...state, isLoading: false, issue: action.payload.issue};
+            return {...state, isRefreshingExpenses: false};
         case CANCEL_LOAD_EXPENSES:
-            return {...state, isLoading: false, isLoadingCancelled: true};
+            return {...state, isRefreshingExpenses: false, isLoadingCancelled: true};
 
         // add expense
         case ADD_EXPENSE_STARTED:

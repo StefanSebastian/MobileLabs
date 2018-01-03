@@ -104,9 +104,7 @@ export class ListExpenses extends Component {
     }
 
     cancelCalls(){
-        if (this.state.isLoading){
-            this.store.dispatch(cancelLoadExpenses());
-        }
+        this.store.dispatch(cancelLoadExpenses());
     }
 
     onExpensePressed(expense){

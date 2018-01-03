@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, TextInput, ActivityIndicator, Button} from 'react-native';
 
 import {getLogger, issueToText} from "../core/utils";
-import {clearIssue, login, signup} from "./service";
+import {clearIssue, loadUser, login, signup} from "./service";
 import {displayAlert} from "../core/popups";
 import {styles} from "../core/styles";
 
@@ -37,6 +37,9 @@ export class Login extends Component {
     componentDidMount() {
         log(`componentDidMount`);
         this.unsubscribe = this.store.subscribe(() => this.updateState());
+
+        // local storage check
+        this.store.dispatch(loadUser());
     }
 
     /*
@@ -115,13 +118,20 @@ export class Login extends Component {
         log('Login');
 
         const state = this.state;
-        this.store.dispatch(login({username: state.username, password: state.password}))
-            .then(() => {
-                if (this.store.getState().auth.token) {
-                    const {navigate} = this.props.navigation;
-                    navigate('MainMenu');
-                }
-            });
+
+        // check local storage
+        if (state.user.username === state.username && state.user.password === state.password && state.token){
+            const {navigate} = this.props.navigation;
+            navigate('MainMenu');
+        } else {
+            this.store.dispatch(login({username: state.username, password: state.password}))
+                .then(() => {
+                    if (this.store.getState().auth.token) {
+                        const {navigate} = this.props.navigation;
+                        navigate('MainMenu');
+                    }
+                });
+        }
     }
 }
 
