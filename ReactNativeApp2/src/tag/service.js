@@ -12,6 +12,7 @@ const log = getLogger('tag/service');
 const LOAD_TAGS_STARTED = 'tag/loadStarted';
 const LOAD_TAGS_SUCCEEDED = 'tag/loadSucceeded';
 const LOAD_TAGS_FAILED = 'tag/loadFailed';
+const CLEAR_TAGS = 'tag/clear';
 
 // cancel operations
 const CANCEL_LOAD_TAGS = 'tag/cancelLoad';
@@ -83,12 +84,9 @@ export const loadTagsFromLocalStorage = () => async(dispatch, getState) => {
 
         if (tags){
             dispatch(action(TAGS_LOADED, tags));
-        } else {
-            dispatch(action(TAGS_LOADED), []);
         }
     } catch (err){
         log('error loading:' + JSON.stringify(errorPayload(err)));
-        dispatch(action(TAGS_LOADED), []);
     }
 };
 
@@ -158,9 +156,10 @@ export const cancelAddTag = () => action(CANCEL_ADD_TAG);
 export const cancelUpdateTag = () => action(CANCEL_UPDATE_TAG);
 export const cancelDeleteTag = () => action(CANCEL_DELETE_TAG);
 
-// clear issue message
+// clear data
 export const clearIssue = () => action(CLEAR_ISSUE);
 export const clearNotification = () => action(CLEAR_NOTIFICATION);
+export const clearTags = () => action(CLEAR_TAGS);
 
 // socket notifications
 // update and add are treaded in the same case
@@ -192,6 +191,8 @@ export const tagReducer = (state = initialState, action) => {
         // from local storage
         case TAGS_LOADED:
             return {...state, items: action.payload};
+        case CLEAR_TAGS:
+            return {...state, items: []};
 
         // delete
         case DELETE_TAG_STARTED:

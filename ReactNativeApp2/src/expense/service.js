@@ -27,9 +27,10 @@ const CANCEL_LOAD_EXPENSES = 'expense/cancelLoad';
 const CANCEL_ADD_EXPENSE = 'expense/cancelAdd';
 const CANCEL_DELETE_EXPENSE = 'expense/cancelDelete';
 
-// clear issues
+// clear data
 const CLEAR_ISSUE = 'expense/clearIssue';
 const CLEAR_NOTIFICATION = 'expense/clearNotification';
+const CLEAR_EXPENSES = 'expense/clear';
 
 // notifications
 const EXPENSE_UPDATED_ADDED = 'expense/updatedAdded';
@@ -84,12 +85,9 @@ export const loadExpensesFromLocalStorage = (expense) => async(dispatch, getStat
 
         if (expenses){
             dispatch(action(EXPENSES_LOADED, expenses));
-        } else {
-            dispatch(action(EXPENSES_LOADED), []);
         }
     } catch (err){
         log('error loading:' + JSON.stringify(errorPayload(err)));
-        dispatch(action(EXPENSES_LOADED), []);
     }
 };
 
@@ -142,6 +140,7 @@ function convertExpense(expense){
 // clear issue message
 export const clearIssue = () => action(CLEAR_ISSUE);
 export const clearNotification = () => action(CLEAR_NOTIFICATION);
+export const clearExpenses = () => action(CLEAR_EXPENSES);
 
 // cancel ops
 export const cancelLoadExpenses = () => action(CANCEL_LOAD_EXPENSES);
@@ -165,6 +164,8 @@ export const expenseReducer = (state = initialState, action) => {
         // local storage
         case EXPENSES_LOADED:
             return {...state, items: action.payload};
+        case CLEAR_EXPENSES:
+            return {...state, items: []};
 
         // add expense
         case ADD_EXPENSE_STARTED:

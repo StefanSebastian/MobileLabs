@@ -5,8 +5,8 @@ import {getLogger} from '../core/utils';
 import {View, Button} from 'react-native';
 import {styles} from "../core/styles";
 import {FadeInView} from "../animations/FadeInView";
-import {loadTagsFromLocalStorage} from "../tag/service";
-import {loadExpensesFromLocalStorage} from "../expense/service";
+import {clearTags, loadTagsFromLocalStorage} from "../tag/service";
+import {clearExpenses, loadExpensesFromLocalStorage} from "../expense/service";
 const log = getLogger('menu/main');
 
 export class MainMenu extends Component {
@@ -27,6 +27,8 @@ export class MainMenu extends Component {
     // sync local storage
     componentDidMount(){
         log('component did mount');
+        this.store.dispatch(clearTags());
+        this.store.dispatch(clearExpenses());
         this.store.dispatch(loadTagsFromLocalStorage());
         this.store.dispatch(loadExpensesFromLocalStorage());
     }
