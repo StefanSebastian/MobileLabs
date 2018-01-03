@@ -5,6 +5,8 @@ import {getLogger} from '../core/utils';
 import {View, Button} from 'react-native';
 import {styles} from "../core/styles";
 import {FadeInView} from "../animations/FadeInView";
+import {loadTagsFromLocalStorage} from "../tag/service";
+import {loadExpensesFromLocalStorage} from "../expense/service";
 const log = getLogger('menu/main');
 
 export class MainMenu extends Component {
@@ -18,6 +20,15 @@ export class MainMenu extends Component {
 
         // hide keyboard if open
         Keyboard.dismiss();
+
+        this.store = this.props.screenProps.store;
+    }
+
+    // sync local storage
+    componentDidMount(){
+        log('component did mount');
+        this.store.dispatch(loadTagsFromLocalStorage());
+        this.store.dispatch(loadExpensesFromLocalStorage());
     }
 
     render() {

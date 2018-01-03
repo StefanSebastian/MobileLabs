@@ -3,6 +3,7 @@ import {getLogger} from "../core/utils";
 import {addCall, deleteCall, getAllCall} from "./resource";
 import {errorPayload} from "../core/errors";
 import {Expense} from "./Expense";
+import {read, save} from "../core/storage";
 
 const log = getLogger('expense/service');
 
@@ -34,6 +35,9 @@ const CLEAR_NOTIFICATION = 'expense/clearNotification';
 const EXPENSE_UPDATED_ADDED = 'expense/updatedAdded';
 const EXPENSE_DELETED = 'expense/deleted';
 
+// local storage
+const EXPENSES_LOADED = 'expenses/loaded';
+
 // socket notifications
 // update and add are treaded in the same case
 export const expenseCreated = (createdExpense) => action(EXPENSE_UPDATED_ADDED, convertExpense(createdExpense));
@@ -56,12 +60,36 @@ export const loadExpenses = () => async(dispatch, getState) => {
                 newExpenses.push(convertExpense(expenses[i]));
             }
             dispatch(action(LOAD_EXPENSES_SUCCEEDED, newExpenses));
+
+            //save in local storage
+            let key = state.auth.user.username + 'expense';
+            await Promise(save(key, newExpenses));
         }
     } catch(err) {
         log('Loading cancelled : ' + getState().expense.isLoadingCancelled);
         if (!getState().expense.isLoadingCancelled){
             dispatch(action(LOAD_EXPENSES_FAILED, errorPayload(err)));
         }
+    }
+};
+
+export const loadExpensesFromLocalStorage = (expense) => async(dispatch, getState) => {
+    log('loadExpensesFromLocalStorage');
+    try {
+        const state = getState();
+        let key = state.auth.user.username + 'expense';
+        let result = await Promise.all([read(key)]);
+        let expenses = result[0];
+        log('loaded : ' + JSON.stringify(expenses));
+
+        if (expenses){
+            dispatch(action(EXPENSES_LOADED, expenses));
+        } else {
+            dispatch(action(EXPENSES_LOADED), []);
+        }
+    } catch (err){
+        log('error loading:' + JSON.stringify(errorPayload(err)));
+        dispatch(action(EXPENSES_LOADED), []);
     }
 };
 
@@ -104,6 +132,8 @@ export const deleteExpense = (expense) => async(dispatch, getState) => {
 };
 
 
+
+
 function convertExpense(expense){
     return new Expense(expense._id, expense.info, expense.tagId, expense.amount, expense.timestamp);
 }
@@ -132,6 +162,9 @@ export const expenseReducer = (state = initialState, action) => {
             return {...state, isRefreshingExpenses: false};
         case CANCEL_LOAD_EXPENSES:
             return {...state, isRefreshingExpenses: false, isLoadingCancelled: true};
+        // local storage
+        case EXPENSES_LOADED:
+            return {...state, items: action.payload};
 
         // add expense
         case ADD_EXPENSE_STARTED:

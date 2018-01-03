@@ -4,6 +4,7 @@ import {action} from "../core/redux_utils";
 import {deleteCall, getAllCall, saveOrUpdateCall} from "./resource";
 import {errorPayload} from "../core/errors";
 import {Tag} from "./Tag";
+import {read, save} from "../core/storage";
 
 const log = getLogger('tag/service');
 
@@ -39,6 +40,9 @@ const TAG_UPDATED_ADDED = 'tag/updated';
 const CLEAR_ISSUE = 'tag/clearIssue';
 const CLEAR_NOTIFICATION = 'tag/clearNotification';
 
+// from local storage
+const TAGS_LOADED = 'tag/loaded';
+
 // network calls
 export const loadTags = () => async(dispatch, getState) => {
     log('load tags');
@@ -56,11 +60,35 @@ export const loadTags = () => async(dispatch, getState) => {
                 newTags.push(convertTag(tags[i]));
             }
             dispatch(action(LOAD_TAGS_SUCCEEDED, newTags));
+
+            //save in local storage
+            let key = state.auth.user.username + 'tag';
+            await Promise(save(key, newTags));
         }
     } catch(err) {
         if (!getState().tag.isLoadingCancelled){
             dispatch(action(LOAD_TAGS_FAILED, errorPayload(err)));
         }
+    }
+};
+
+export const loadTagsFromLocalStorage = () => async(dispatch, getState) => {
+    log('loadTagsFromLocalStorage');
+    try {
+        const state = getState();
+        let key = state.auth.user.username + 'tag';
+        let result = await Promise.all([read(key)]);
+        let tags = result[0];
+        log('loaded : ' + JSON.stringify(tags));
+
+        if (tags){
+            dispatch(action(TAGS_LOADED, tags));
+        } else {
+            dispatch(action(TAGS_LOADED), []);
+        }
+    } catch (err){
+        log('error loading:' + JSON.stringify(errorPayload(err)));
+        dispatch(action(TAGS_LOADED), []);
     }
 };
 
@@ -161,6 +189,9 @@ export const tagReducer = (state = initialState, action) => {
             return {...state, isRefreshingTags: false};
         case CANCEL_LOAD_TAGS:
             return {...state, isRefreshingTags: false, isLoadingCancelled: true};
+        // from local storage
+        case TAGS_LOADED:
+            return {...state, items: action.payload};
 
         // delete
         case DELETE_TAG_STARTED:
