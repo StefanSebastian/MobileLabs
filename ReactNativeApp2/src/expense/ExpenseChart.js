@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button, View} from 'react-native';
 import { Bar } from 'react-native-pathjs-charts'
+import email from 'react-native-email'
 
 import {getLogger} from "../core/utils";
 import {cancelLoadTags, loadTags} from "../tag/service";
@@ -48,6 +49,7 @@ export class ExpenseChart extends Component {
                          accessorKey="amount"
                     />
                 }
+                <Button title="Mail data" onPress={this.handleEmail} />
             </View>
         )
     }
@@ -59,10 +61,15 @@ export class ExpenseChart extends Component {
         this.unsubscribe();
     }
 
-    /*
-   Called for every store change
-    */
-    updateState() {
+    handleEmail = () => {
+        const to = [''];
+        email(to, {
+            subject: 'My spending report',
+            body: JSON.stringify(this.getData())
+        }).catch(console.error)
+    };
+
+    getData(){
         const expenseStore = this.store.getState().expense;
         const tagStore = this.store.getState().tag;
         const tags = tagStore.items;
@@ -93,9 +100,15 @@ export class ExpenseChart extends Component {
         }
 
         log('data array ' + JSON.stringify(data));
+        return data;
+    }
 
+    /*
+   Called for every store change
+    */
+    updateState() {
         // combine auth state with component state
-        const state = {...this.state, data: data};
+        const state = {...this.state, data: this.getData()};
 
         //log('state updated' + JSON.stringify(state));
 
