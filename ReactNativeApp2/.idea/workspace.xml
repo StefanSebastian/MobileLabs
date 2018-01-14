@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/src/auth/Login.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="295">
-              <caret line="133" column="13" lean-forward="true" selection-start-line="133" selection-start-column="13" selection-end-line="133" selection-end-column="13" />
+              <caret line="133" column="20" lean-forward="true" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -56,33 +56,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExpenseChart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/expense/ExpenseChart.js">
+      <file leaf-file-name="FadeInView.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/animations/FadeInView.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="64" column="21" lean-forward="false" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/api.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="47" lean-forward="false" selection-start-line="0" selection-start-column="47" selection-end-line="0" selection-end-column="47" />
+            <state relative-caret-position="227">
+              <caret line="27" column="12" lean-forward="true" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FadeInView.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/animations/FadeInView.js">
+      <file leaf-file-name="ListExpenses.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/expense/ListExpenses.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6">
-              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="267">
+              <caret line="59" column="44" lean-forward="true" selection-start-line="59" selection-start-column="44" selection-end-line="59" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TagList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tag/TagList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="66" column="44" lean-forward="false" selection-start-line="66" selection-start-column="44" selection-end-line="66" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -172,8 +170,6 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/animations/FadeInView.js" />
         <option value="$PROJECT_DIR$/src/animations/MoveBackView.js" />
-        <option value="$PROJECT_DIR$/src/tag/TagList.js" />
-        <option value="$PROJECT_DIR$/src/expense/ListExpenses.js" />
         <option value="$PROJECT_DIR$/src/expense/AddExpense.js" />
         <option value="$PROJECT_DIR$/src/expense/ExpenseDetail.js" />
         <option value="$PROJECT_DIR$/src/auth/service.js" />
@@ -185,6 +181,8 @@
         <option value="$PROJECT_DIR$/src/expense/service.js" />
         <option value="$PROJECT_DIR$/src/tag/service.js" />
         <option value="$PROJECT_DIR$/src/core/storage.js" />
+        <option value="$PROJECT_DIR$/src/expense/ListExpenses.js" />
+        <option value="$PROJECT_DIR$/src/tag/TagList.js" />
       </list>
     </option>
   </component>
@@ -206,7 +204,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="735" />
@@ -332,6 +330,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="75a716a9-e80b-408c-81d2-a564e2fce757" name="Default" comment="" />
@@ -348,15 +349,15 @@
       <workItem from="1515159768606" duration="951000" />
       <workItem from="1515164426025" duration="711000" />
       <workItem from="1515166549826" duration="1884000" />
-      <workItem from="1515923713803" duration="1857000" />
+      <workItem from="1515923713803" duration="3402000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78907000" />
+    <option name="totallyTimeSpent" value="80452000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -601,20 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/expense/ListExpenses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="106" column="50" lean-forward="false" selection-start-line="106" selection-start-column="50" selection-end-line="106" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tag/TagList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="107" column="4" lean-forward="false" selection-start-line="107" selection-start-column="4" selection-end-line="121" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tag/TagDetail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
@@ -682,14 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/animations/FadeInView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/expense/ExpenseMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="829">
@@ -740,10 +719,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/animations/FadeInView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="27" column="12" lean-forward="true" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/expense/ListExpenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="59" column="44" lean-forward="true" selection-start-line="59" selection-start-column="44" selection-end-line="59" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tag/TagList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="66" column="44" lean-forward="false" selection-start-line="66" selection-start-column="44" selection-end-line="66" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/auth/Login.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
-          <caret line="133" column="13" lean-forward="true" selection-start-line="133" selection-start-column="13" selection-end-line="133" selection-end-column="13" />
+          <caret line="133" column="20" lean-forward="true" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

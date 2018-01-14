@@ -57,6 +57,7 @@ export class ListExpenses extends Component {
 
                 <FlatList
                     data = {this.state.items}
+                    extraData = {this.state}
                     keyExtractor = {this._keyExtractor}
                     // render item with onExpensePressed callback
                     renderItem = { expense => <ExpenseView expense={expense.item}

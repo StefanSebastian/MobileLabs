@@ -64,6 +64,7 @@ export class TagList extends Component {
                 <Text style={styles.text}>All tags</Text>
                 <FlatList
                     data = {this.state.items}
+                    extraData = {this.state}
                     keyExtractor = {this._keyExtractor}
                     // render item with onTagPressed callback
                     renderItem = { tag => <TagView tag={tag.item} onTagPressed = {() => this.onTagPressed(tag.item)}/> }/>
