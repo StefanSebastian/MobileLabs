@@ -80,7 +80,7 @@ export const loadTagsFromLocalStorage = () => async(dispatch, getState) => {
         let key = state.auth.user.username + 'tag';
         let result = await Promise.all([read(key)]);
         let tags = result[0];
-        log('loaded : ' + JSON.stringify(tags));
+        log('loaded from local storage : ' + JSON.stringify(tags));
 
         if (tags){
             dispatch(action(TAGS_LOADED, tags));

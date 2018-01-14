@@ -81,7 +81,7 @@ export const loadExpensesFromLocalStorage = (expense) => async(dispatch, getStat
         let key = state.auth.user.username + 'expense';
         let result = await Promise.all([read(key)]);
         let expenses = result[0];
-        log('loaded : ' + JSON.stringify(expenses));
+        log('loaded from local storage : ' + JSON.stringify(expenses));
 
         if (expenses){
             dispatch(action(EXPENSES_LOADED, expenses));

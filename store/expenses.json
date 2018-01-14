@@ -2,10 +2,12 @@
 {"amount":30,"info":"Lord of the rings","tagId":"QVYh1rzreptcQWHF","timestamp":"Jan 3, 2018 14:15:16","user":"BnwiTsjyLWejdZR2","version":1,"updated":1514981713697,"_id":"8rqcPdw2BcjkoEHc"}
 {"amount":11,"info":"Burger","tagId":"VuIDnfjeZlt0sScb","timestamp":"Jan 3, 2018 14:14:58","user":"BnwiTsjyLWejdZR2","version":1,"updated":1514981695038,"_id":"9JfkqDPpFckBWe2l"}
 {"info":"Pizza","amount":12,"tagId":"10B1Ndwar3ljy63k","timestamp":"Jan 03, 2018 14:01:36","user":"Oe8pOLn6xNY5wdHD","version":1,"updated":1514982753189,"_id":"C4HqyKv356Pi2rRw"}
+{"amount":11,"info":"bla","tagId":"WXiE9JRXoCNiY5B4","timestamp":"Jan 7, 2018 15:22:33","user":"UA0qIbat9GVsTvGa","version":1,"updated":1515331352641,"_id":"HIMIWW3HBK7mrOsj"}
+{"info":"The Dark Knight","amount":10,"tagId":"kLbmyPqPBxnfIsm2","timestamp":"Jan 05, 2018 18:01:06","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515168356939,"_id":"L2dxbCvoJUNRgkwH"}
 {"amount":40,"info":"Gas","tagId":"4WlYqxgti7kPZv24","timestamp":"Jan 3, 2018 14:08:06","user":"AWeRWO5XA67rUxCa","version":1,"updated":1514981282960,"_id":"RwIJmevKKftaKQzN"}
 {"amount":11,"info":"Pizza","tagId":"VuIDnfjeZlt0sScb","timestamp":"Jan 3, 2018 14:14:51","user":"BnwiTsjyLWejdZR2","version":1,"updated":1514981688208,"_id":"UnGxAlYKKorvoDns"}
 {"amount":12,"info":"Hamburger","tagId":"VHjuJaVE7T0ZhXty","timestamp":"Jan 3, 2018 14:07:16","user":"AWeRWO5XA67rUxCa","version":1,"updated":1514981233669,"_id":"Yo91bE4MnPoCiEGQ"}
-{"amount":22,"info":"Pizza","tagId":"VHjuJaVE7T0ZhXty","timestamp":"Jan 3, 2018 14:07:25","user":"AWeRWO5XA67rUxCa","version":1,"updated":1514981242657,"_id":"wd2q3h4Y5voiPTg2"}
 {"info":"Lotr","amount":22,"tagId":"kLbmyPqPBxnfIsm2","timestamp":"Jan 05, 2018 18:01:56","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515168046408,"_id":"tAGkzzGCJ6qStRuQ"}
-{"info":"xdgg","amount":11,"tagId":"4WlYqxgti7kPZv24","timestamp":"Jan 05, 2018 18:01:06","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515168116851,"_id":"KakBZjCwO2PDSZ2u"}
-{"$$deleted":true,"_id":"KakBZjCwO2PDSZ2u"}
+{"amount":22,"info":"Pizza","tagId":"VHjuJaVE7T0ZhXty","timestamp":"Jan 3, 2018 14:07:25","user":"AWeRWO5XA67rUxCa","version":1,"updated":1514981242657,"_id":"wd2q3h4Y5voiPTg2"}
+{"info":"tedt","amount":12,"tagId":"1DAzbuwFRQdU4HfS","timestamp":"Jan 14, 2018 12:01:17","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515925336028,"_id":"f58EX95UEXvE33KA"}
+{"$$deleted":true,"_id":"f58EX95UEXvE33KA"}

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">AndroidAppReactive</string>
-    <string name="server_url">http://192.168.1.102:3000/</string>
+    <string name="server_url">http://10.152.4.96:3000/</string>
     <string name="title_activity_expense_menu">ExpenseMenuActivity</string>
 </resources>

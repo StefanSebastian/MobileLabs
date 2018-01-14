@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, ActivityIndicator, Button} from 'react-native';
+import {Text, View, TextInput, ActivityIndicator, Button, NetInfo} from 'react-native';
 
 import {getLogger, issueToText} from "../core/utils";
 import {clearIssue, loadUser, login, signup} from "./service";
@@ -120,18 +120,27 @@ export class Login extends Component {
         const state = this.state;
 
         // check local storage
-        if (state.user.username === state.username && state.user.password === state.password && state.token){
-            const {navigate} = this.props.navigation;
-            navigate('MainMenu');
-        } else {
-            this.store.dispatch(login({username: state.username, password: state.password}))
-                .then(() => {
-                    if (this.store.getState().auth.token) {
-                        const {navigate} = this.props.navigation;
-                        navigate('MainMenu');
-                    }
-                });
-        }
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            log('Connection info : Initial, type: ' +
+                connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+            if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown'){
+                if (state.user.username === state.username && state.user.password === state.password && state.token){
+                    log('Login using local storage');
+                    const {navigate} = this.props.navigation;
+                    navigate('MainMenu');
+                } else {
+                    this.errorMessage("Device is offline. Tried to login using local storage but user was not found.")
+                }
+            } else {
+                this.store.dispatch(login({username: state.username, password: state.password}))
+                    .then(() => {
+                        if (this.store.getState().auth.token) {
+                            const {navigate} = this.props.navigation;
+                            navigate('MainMenu');
+                        }
+                    });
+            }
+        });
     }
 }
 

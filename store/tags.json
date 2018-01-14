@@ -7,6 +7,10 @@
 {"name":"Food","updated":1514981185855,"user":"jh9v8xKygJcL3NF8","version":1,"_id":"TRIimnginyyADMHZ"}
 {"name":"Food","user":"AWeRWO5XA67rUxCa","version":1,"updated":1514981206880,"_id":"VHjuJaVE7T0ZhXty"}
 {"name":"Food","user":"BnwiTsjyLWejdZR2","version":1,"updated":1514981645674,"_id":"VuIDnfjeZlt0sScb"}
+{"name":"Test","user":"UA0qIbat9GVsTvGa","version":1,"updated":1515331319283,"_id":"WXiE9JRXoCNiY5B4"}
 {"name":"Entertainment","updated":1514981185861,"user":"jh9v8xKygJcL3NF8","version":1,"_id":"e0hY2jS9eyZXnJMw"}
-{"name":"Test","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515168026471,"_id":"kLbmyPqPBxnfIsm2"}
+{"name":"Test1","user":"UA0qIbat9GVsTvGa","version":1,"updated":1515331322603,"_id":"jlYK1z53b1azZYiu"}
 {"_id":"kLbmyPqPBxnfIsm2","name":"Movies","version":2,"user":"AWeRWO5XA67rUxCa","updated":1515168034718}
+{"name":"Test","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515924717223,"_id":"Ow3KO4m5sYC3vpwA"}
+{"$$deleted":true,"_id":"Ow3KO4m5sYC3vpwA"}
+{"name":"Games","user":"AWeRWO5XA67rUxCa","version":1,"updated":1515925265187,"_id":"1DAzbuwFRQdU4HfS"}

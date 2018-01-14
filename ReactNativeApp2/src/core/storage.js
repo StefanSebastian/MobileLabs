@@ -12,11 +12,11 @@ export const readToken = async() => await read(TOKEN);
 export const saveToken = async(token) => await save(TOKEN, token);
 
 export const save = async(key, object) => {
-    log(`save ${key}`);
+    log(`save to local storage ${key}`);
     await AsyncStorage.setItem(key, JSON.stringify(object));
 };
 
 export const read = async(key) => {
-    log(`read ${key}`);
+    log(`read from local storage ${key}`);
     return JSON.parse(await AsyncStorage.getItem(key));
 };
