@@ -1,7 +1,10 @@
 package com.example.sebi.androidappreactive.utils;
 
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.JsonArray;
@@ -67,5 +70,17 @@ public class Utils {
             }
         }
         return msg;
+    }
+
+    /*
+    Checks if device is connected to the internet
+     */
+    public static boolean isConnected(Context context){
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 }

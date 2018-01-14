@@ -138,10 +138,19 @@ public class LoginActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
 
-        // if the user is saved in local storage , we dont need to make the network call
-        if (checkLocalStorage(username, password)){
+        // if the device is offline, check local storage
+        if (!Utils.isConnected(this)){
+            Popups.displayNotification("Device is offline, trying to retrieve from local storage", this);
+
+            if (checkLocalStorage(username, password)){
+                showLoading(false);
+                startActivity(new Intent(this, MenuActivity.class));
+            } else {
+                Popups.displayNotification("Could not find user in local storage", this);
+            }
+
+            // no need to make network call if we are offline
             showLoading(false);
-            startActivity(new Intent(this, MenuActivity.class));
             return;
         }
 
